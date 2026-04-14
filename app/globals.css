@@ -4,25 +4,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-:root {
-  --background: #fdfaf5;
-  --foreground: #111111;
-  --primary: #ff5a1f;
-  --primary-foreground: #ffffff;
-  --accent: #f4b0f3;
-  --accent-foreground: #000000;
-  --success: #34c759;
-  --radius: 2rem;
-
-  --card: #ffffff;
-  --card-foreground: #111111;
-  --muted: #f3f0ea;
-  --muted-foreground: #666666;
-  --border: #e2e2e2;
-  --input: #e2e2e2;
-  --ring: #ff5a1f;
-}
-
 @theme inline {
   --font-heading: var(--font-heading);
   --font-sans: var(--font-sans);
@@ -47,18 +28,57 @@
 }
 
 @layer base {
+  :root {
+    color-scheme: light;
+    --background: #fdfaf5;
+    --foreground: #111111;
+    --primary: #ff1fff;
+    --primary-foreground: #ffffff;
+    --accent: #f4b0f3;
+    --accent-foreground: #000000;
+    --success: #34c759;
+    --radius: 2rem;
+
+    --card: #ffffff;
+    --card-foreground: #111111;
+    --muted: #f3f0ea;
+    --muted-foreground: #666666;
+    --border: #e2e2e2;
+    --input: #e2e2e2;
+    --ring: #ff5a1f;
+  }
+
+  .dark {
+    color-scheme: dark;
+    --background: #000000;
+    --foreground: #ffffff;
+    --primary: #ff1fff;
+    --primary-foreground: #ffffff;
+    --accent: #f4b0f3;
+    --accent-foreground: #ffffff;
+    --card: #0a0a0a;
+    --card-foreground: #ffffff;
+    --muted: #111111;
+    --muted-foreground: #a1a1aa;
+    --border: #222222;
+    --input: #222222;
+  }
+
   * {
     @apply border-border outline-ring/50;
   }
 
   html {
     @apply scroll-smooth selection:bg-primary selection:text-white;
+    background-color: var(--background);
+    color: var(--foreground);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   body {
     @apply bg-background text-foreground font-sans overflow-x-hidden;
+    background-color: var(--background);
   }
 
   h1,
@@ -105,4 +125,9 @@ html.lenis body {
 
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
+}
+
+::view-transition-old(root), ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
 }

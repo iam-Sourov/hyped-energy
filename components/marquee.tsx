@@ -10,10 +10,10 @@ export const LogoMarquee = () => {
   return (
     <section className="py-24 overflow-hidden bg-background">
       <div className="mb-12 text-center px-6">
-        <span className="text-foreground/20 font-bold tracking-[0.5em] uppercase text-xs">Trusted by Global Icons</span>
+        <span className="text-foreground/30 font-bold tracking-[0.5em] uppercase text-xs">Trusted by Global Icons</span>
       </div>
       
-      <div className="relative flex overflow-x-hidden border-y border-black/5 py-12">
+      <div className="relative flex overflow-x-hidden border-y border-border/50 py-12">
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
           transition={{
@@ -26,7 +26,7 @@ export const LogoMarquee = () => {
           {/* First set of logos */}
           <div className="flex items-center gap-24 px-12">
             {logos.map((logo, idx) => (
-              <span key={idx} className="text-4xl md:text-6xl font-black text-foreground/5 hover:text-foreground/20 transition-colors cursor-default select-none">
+              <span key={idx} className="text-4xl md:text-6xl font-black text-foreground hover:text-foreground/30 transition-colors cursor-default select-none">
                 {logo}
               </span>
             ))}
@@ -35,7 +35,7 @@ export const LogoMarquee = () => {
           {/* Duplicate set for infinite loop */}
           <div className="flex items-center gap-24 px-12">
             {logos.map((logo, idx) => (
-              <span key={`dup-${idx}`} className="text-4xl md:text-6xl font-black text-foreground/5 hover:text-foreground/20 transition-colors cursor-default select-none">
+              <span key={`dup-${idx}`} className="text-4xl md:text-6xl font-black text-foreground hover:text-foreground/30 transition-colors cursor-default select-none">
                 {logo}
               </span>
             ))}

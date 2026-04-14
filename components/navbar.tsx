@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, Flame, ArrowRight } from "lucide-react"
 import Link from "next/link"
@@ -35,37 +36,45 @@ export const Navbar = () => {
       >
         {/* Logo */}
         <Link href="/" className="flex items-center group">
-            <span className="text-2xl md:text-3xl font-[900] tracking-tighter text-foreground transition-transform group-hover:scale-105">GETHYPED</span>
+          <span className="text-2xl md:text-3xl font-[900] tracking-tighter text-foreground transition-transform group-hover:scale-105">GETHYPED</span>
         </Link>
 
         {/* Desktop Menu - Floating Pill */}
-        <div className="hidden md:flex items-center bg-white/40 backdrop-blur-md px-1.5 py-1.5 rounded-full border border-black/5 gap-2 shadow-sm">
+        <div className="hidden md:flex items-center bg-background/40 backdrop-blur-md px-1.5 py-1.5 rounded-full border border-border gap-2 shadow-sm">
           {menuItems.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="text-[13px] font-bold text-foreground/70 hover:text-foreground hover:bg-white/80 px-5 py-2 rounded-full transition-all"
+              className="font-bold text-foreground/70 hover:text-foreground hover:bg-white/80 px-5 py-2 rounded-full transition-all"
+              style={{ fontSize: "clamp(0.875rem, 1vw, 1rem)" }}
             >
               {item.name}
             </Link>
           ))}
         </div>
-
         {/* Action Button */}
         <div className="hidden md:flex items-center gap-4">
-            <Link href="#contact" className="bg-[#f4b0f3] hover:bg-[#ef9ded] text-black px-6 py-3 rounded-full text-sm font-bold flex items-center gap-2 transition-all shadow-lg shadow-accent/10 active:scale-95">
-                Get Results
-                <Flame size={16} className="text-[#ff5a1f] fill-[#ff5a1f]" />
-            </Link>
+          <AnimatedThemeToggler />
+          <Link
+            href="#contact"
+            className="bg-[#f4b0f3] hover:bg-[#ef9ded] text-black px-6 py-3 rounded-full font-bold flex items-center gap-2 transition-all shadow-lg shadow-accent/10 active:scale-95"
+            style={{ fontSize: "clamp(0.875rem, 1vw, 1rem)" }}
+          >
+            Get Results
+            <Flame size={16} className="text-[#ff5a1f] fill-[#ff5a1f]" />
+          </Link>
         </div>
 
         {/* Mobile Toggle */}
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="md:hidden bg-white/80 backdrop-blur-md p-3 rounded-2xl border border-black/5 shadow-sm active:scale-90 transition-transform"
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="flex items-center gap-3 md:hidden">
+          <AnimatedThemeToggler />
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="bg-background/80 backdrop-blur-md p-3 rounded-2xl border border-border shadow-sm active:scale-90 transition-transform"
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile Menu Overlay */}
@@ -78,16 +87,16 @@ export const Navbar = () => {
             className="fixed inset-0 z-[100] bg-background flex flex-col p-6"
           >
             <div className="flex justify-between items-center py-4">
-                 <span className="text-2xl font-[900] tracking-tighter">GETHYPED</span>
-                 <button
-                    onClick={() => setIsMenuOpen(false)}
-                    className="p-3 bg-white/50 rounded-2xl border border-black/5"
-                    >
-                    <X size={24} />
-                 </button>
+              <span className="text-2xl font-[900] tracking-tighter">GETHYPED</span>
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="p-3 bg-white/50 rounded-2xl border border-black/5"
+              >
+                <X size={24} />
+              </button>
             </div>
 
-            <div className="flex-1 flex flex-col justify-center items-start gap-12 px-4">
+            <div className="flex-1 flex flex-col justify-center items-start gap-8 md:gap-12 px-4">
               {menuItems.map((item, index) => (
                 <motion.div
                   key={item.name}
@@ -98,29 +107,29 @@ export const Navbar = () => {
                   <Link
                     href={item.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className="text-5xl md:text-7xl font-[900] hover:text-primary transition-colors tracking-tighter flex items-center gap-4 group"
+                    className="text-4xl xs:text-5xl md:text-7xl font-[900] hover:text-primary transition-colors tracking-tighter flex items-center gap-4 group"
                   >
                     {item.name}
-                    <ArrowRight size={40} className="opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
+                    <ArrowRight size={32} className="hidden sm:block opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
                   </Link>
                 </motion.div>
               ))}
             </div>
 
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="pb-12 px-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="pb-12 px-4"
             >
-                <Link 
-                    href="#contact" 
-                    onClick={() => setIsMenuOpen(false)}
-                    className="w-full bg-[#f4b0f3] text-black px-8 py-6 rounded-[2rem] text-2xl font-[900] flex items-center justify-between gap-2 shadow-2xl"
-                >
-                    Get Results
-                    <Flame size={32} className="text-[#ff5a1f] fill-[#ff5a1f]" />
-                </Link>
+              <Link
+                href="#contact"
+                onClick={() => setIsMenuOpen(false)}
+                className="w-full bg-[#f4b0f3] text-black px-8 py-6 rounded-[2rem] text-2xl font-[900] flex items-center justify-between gap-2 shadow-2xl"
+              >
+                Get Results
+                <Flame size={32} className="text-[#ff5a1f] fill-[#ff5a1f]" />
+              </Link>
             </motion.div>
           </motion.div>
         )}

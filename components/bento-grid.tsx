@@ -36,12 +36,18 @@ const WorkCard = ({ title, brand, image, color, className, index }: WorkCardProp
                 style={{ backgroundColor: color }}
             >
                 {/* Brand Tag */}
-                <div className="bg-white/20 backdrop-blur-md px-3 py-1 rounded-lg w-fit text-xs font-bold text-white mb-4">
+                <div 
+                    className="bg-white/20 backdrop-blur-md px-3 py-1 rounded-lg w-fit font-bold text-white mb-4"
+                    style={{ fontSize: "clamp(0.6875rem, 1vw, 0.8125rem)" }}
+                >
                     {brand}
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl md:text-2xl font-black text-white leading-tight pr-10">
+                <h3 
+                    className="font-black text-white leading-tight pr-10"
+                    style={{ fontSize: "clamp(1.125rem, 2vw, 1.75rem)" }}
+                >
                     {title}
                 </h3>
 
@@ -74,7 +80,8 @@ export const BentoGrid = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
-                className="text-6xl md:text-7xl lg:text-[5.5rem] font-[900] tracking-tighter leading-none"
+                className="font-[900] tracking-tighter leading-none"
+                style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}
             >
               Content<br />that performs.
             </motion.h2>
@@ -84,7 +91,8 @@ export const BentoGrid = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 viewport={{ once: true }}
-                className="text-lg md:text-xl text-foreground/70 max-w-md font-medium leading-relaxed"
+                className="text-foreground/70 max-w-md font-medium leading-relaxed"
+                style={{ fontSize: "clamp(0.9375rem, 1vw + 0.5rem, 1.125rem)" }}
             >
               We tell your story in a way that actually connects with your audience. Creative content that works and makes a real difference.
             </motion.p>
@@ -94,7 +102,8 @@ export const BentoGrid = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
                 viewport={{ once: true }}
-                className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full font-bold group hover:opacity-80 transition-all text-sm"
+                className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full font-bold group hover:opacity-80 transition-all"
+                style={{ fontSize: "clamp(0.875rem, 1vw, 1rem)" }}
             >
               View all our work
               <div className="bg-white/20 rounded-full p-1 group-hover:translate-x-1 transition-transform">
@@ -104,10 +113,10 @@ export const BentoGrid = () => {
           </div>
 
           {/* Cards Grid */}
-          <div className="md:col-span-12 lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+          <div className="md:col-span-12 lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 lg:gap-12">
             
             {/* Orange Card (Left/Mid) */}
-            <div className="md:mt-24">
+            <div className="md:mt-32">
                 <WorkCard 
                     index={0}
                     title="From zero to full in 3 weeks"
@@ -118,7 +127,7 @@ export const BentoGrid = () => {
             </div>
 
             {/* Staggered Vertical Column */}
-            <div className="flex flex-col gap-8 md:gap-12">
+            <div className="flex flex-col gap-8 md:gap-10 lg:gap-12">
                 {/* Green Card (Top Right) */}
                 <WorkCard 
                     index={1}
@@ -135,7 +144,7 @@ export const BentoGrid = () => {
                     brand="Roasta"
                     image="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?q=80&w=1000&auto=format&fit=crop"
                     color="#007bff"
-                    className="md:scale-95"
+                    className="md:scale-[0.98] lg:scale-95 origin-top"
                 />
             </div>
           </div>

@@ -13,7 +13,7 @@ export const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="text-[13vw] md:text-[8vw] lg:text-[7.5vw] font-[900] leading-[0.95] tracking-tighter mb-12 text-foreground"
-          style={{ fontSize: "clamp(3.5rem, 10vw + 1rem, 9rem)" }}
+          style={{ fontSize: "clamp(4.5rem, 8vw + 1rem, 6rem)" }}
         >
           Stop posting.<br />
           Start growing.
@@ -23,21 +23,22 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 1 }}
-          className="text-xl md:text-3xl lg:text-4xl text-foreground/80 font-medium max-w-2xl mb-16 md:mb-24 px-1"
+          className="font-medium max-w-2xl mb-16 md:mb-24 px-1 text-foreground/80"
+          style={{ fontSize: "clamp(0.9375rem, 1.5vw, 1.125rem)" }}
         >
           We help ambitious brands not just get seen, but actually grow. No fluff, just results.
         </motion.p>
       </div>
 
       {/* Overlapping Cards Container */}
-      <div className="relative w-full max-w-[1600px] mx-auto min-h-[500px] md:h-[600px] mt-auto">
-        <div className="flex md:block overflow-x-auto md:overflow-visible pb-10 md:pb-0 gap-6 px-4 md:px-0 scrollbar-hide">
+      <div className="relative w-full max-w-[1600px] mx-auto min-h-[480px] md:h-[600px] mt-auto">
+        <div className="flex md:block overflow-x-auto md:overflow-visible pb-12 md:pb-0 gap-6 px-6 md:px-0 scrollbar-hide snap-x snap-mandatory">
             {/* 10M+ Blue Card */}
             <motion.div 
             initial={{ y: 100, rotate: -5 }}
             animate={{ y: 0, rotate: -8 }}
             transition={{ duration: 1, delay: 0.6 }}
-            className="flex-shrink-0 relative md:absolute left-0 md:left-[5%] bottom-0 md:bottom-[10%] w-[280px] md:w-[320px] h-[380px] md:h-[450px] bg-[#007bff] rounded-[3rem] p-10 flex flex-col justify-start z-10 shadow-2xl border-4 border-white/10"
+            className="flex-shrink-0 relative md:absolute left-0 md:left-[5%] bottom-0 md:bottom-[10%] w-[260px] xs:w-[300px] md:w-[320px] h-[350px] md:h-[450px] bg-[#007bff] rounded-[2.5rem] md:rounded-[3rem] p-8 md:p-10 flex flex-col justify-start z-10 shadow-2xl border-4 border-white/10 snap-center"
             >
                 <span className="text-5xl md:text-7xl font-[900] text-foreground tracking-tighter">10M+</span>
                 <p className="mt-4 font-bold text-lg opacity-80 text-foreground uppercase tracking-widest">People Reached</p>
@@ -48,7 +49,7 @@ export const Hero = () => {
             initial={{ y: 150, rotate: 0 }}
             animate={{ y: 0, rotate: -2 }}
             transition={{ duration: 1, delay: 0.7 }}
-            className="flex-shrink-0 relative md:absolute left-0 md:left-[22%] bottom-0 md:bottom-[5%] w-[320px] md:w-[380px] h-[400px] md:h-[500px] rounded-[3rem] overflow-hidden z-20 shadow-2xl border-[12px] border-white/20"
+            className="flex-shrink-0 relative md:absolute left-0 md:left-[22%] bottom-0 md:bottom-[5%] w-[280px] xs:w-[340px] md:w-[380px] h-[380px] md:h-[500px] rounded-[2.5rem] md:rounded-[3rem] overflow-hidden z-20 shadow-2xl border-[8px] md:border-[12px] border-white/20 snap-center"
             >
                 <img 
                     src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1000&auto=format&fit=crop" 
@@ -62,7 +63,7 @@ export const Hero = () => {
             initial={{ y: 100, rotate: 5 }}
             animate={{ y: 0, rotate: 5 }}
             transition={{ duration: 1, delay: 0.8 }}
-            className="flex-shrink-0 relative md:absolute left-0 md:left-[45%] bottom-0 md:bottom-[15%] w-[280px] md:w-[320px] h-[380px] md:h-[450px] bg-[#34c759] rounded-[3rem] p-10 flex flex-col justify-start z-10 shadow-2xl border-4 border-white/10"
+            className="flex-shrink-0 relative md:absolute left-0 md:left-[45%] bottom-0 md:bottom-[15%] w-[260px] xs:w-[300px] md:w-[320px] h-[350px] md:h-[450px] bg-[#34c759] rounded-[2.5rem] md:rounded-[3rem] p-8 md:p-10 flex flex-col justify-start z-10 shadow-2xl border-4 border-white/10 snap-center"
             >
                 <span className="text-5xl md:text-7xl font-[900] text-foreground tracking-tighter">30+</span>
                 <p className="mt-4 font-bold text-lg opacity-80 text-foreground uppercase tracking-widest">Brands Helped</p>
@@ -73,7 +74,7 @@ export const Hero = () => {
             initial={{ y: 150, rotate: 10 }}
             animate={{ y: 0, rotate: 8 }}
             transition={{ duration: 1, delay: 0.9 }}
-            className="flex-shrink-0 relative md:absolute left-0 md:left-[62%] bottom-0 md:bottom-[-5%] w-[320px] md:w-[400px] h-[420px] md:h-[550px] rounded-[3rem] overflow-hidden z-20 shadow-2xl border-[12px] border-white/20"
+            className="flex-shrink-0 relative md:absolute left-0 md:left-[62%] bottom-0 md:bottom-[-5%] w-[280px] xs:w-[360px] md:w-[400px] h-[400px] md:h-[550px] rounded-[2.5rem] md:rounded-[3rem] overflow-hidden z-20 shadow-2xl border-[8px] md:border-[12px] border-white/20 snap-center"
             >
                 <img 
                     src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1000&auto=format&fit=crop" 

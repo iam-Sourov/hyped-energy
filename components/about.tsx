@@ -13,8 +13,8 @@ export const About = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           viewport={{ once: true }}
-          className="text-4xl md:text-7xl lg:text-[6.5vw] font-[900] tracking-tighter leading-[1.05] mb-20 md:mb-32 max-w-[1250px]"
-          style={{ fontSize: "clamp(2.5rem, 8vw + 0.5rem, 8rem)" }}
+          className="font-[900] tracking-tighter leading-[1.05] mb-20 md:mb-32 max-w-[1250px]"
+          style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}
         >
           We don't scream for attention. We earn it. With content that sticks and a strategy that <span className="text-foreground/20">delivers actual growth.</span>
         </motion.h2>
@@ -26,12 +26,12 @@ export const About = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
             viewport={{ once: true }}
-            className="w-full lg:w-2/5 aspect-[16/10] md:aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl"
+            className="w-full lg:w-2/5 aspect-[4/3] md:aspect-[4/5] rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-2xl border border-border/50"
           >
             <img 
               src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" 
               alt="Team" 
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-transform duration-1000 hover:scale-110"
             />
           </motion.div>
 
@@ -42,12 +42,18 @@ export const About = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.2 }}
               viewport={{ once: true }}
-              className="space-y-6"
+              className="space-y-6 md:space-y-8"
             >
-                <p className="text-xl md:text-3xl font-bold leading-tight max-w-xl text-foreground/90">
+                <p 
+                    className="font-bold leading-tight max-w-xl text-foreground"
+                    style={{ fontSize: "clamp(1.5rem, 4vw, 3rem)" }}
+                >
                 Let's be honest: a pretty picture isn't enough. 
                 </p>
-                <p className="text-lg md:text-xl font-medium leading-relaxed max-w-xl text-foreground/60">
+                <p 
+                    className="font-medium leading-relaxed max-w-xl text-foreground/60"
+                    style={{ fontSize: "clamp(0.9375rem, 1vw + 0.5rem, 1.125rem)" }}
+                >
                 We combine creativity with data to find out what your followers actually want to see. No guesswork—just a plan you can grow on.
                 </p>
             </motion.div>
@@ -57,10 +63,11 @@ export const About = () => {
                whileInView={{ opacity: 1 }}
                transition={{ duration: 1, delay: 0.4 }}
                viewport={{ once: true }}
-               className="flex items-center gap-3 bg-white border border-black/10 px-8 py-4 rounded-full font-bold group hover:bg-black hover:text-white transition-all duration-300 shadow-sm"
+               className="flex items-center gap-3 bg-card border border-border px-8 py-4 rounded-full font-bold group hover:bg-foreground hover:text-background transition-all duration-300 shadow-sm"
+               style={{ fontSize: "clamp(0.875rem, 1vw, 1rem)" }}
             >
               Get to know us
-              <div className="bg-black text-white rounded-full p-1.5 group-hover:bg-white group-hover:text-black transition-colors">
+              <div className="bg-foreground text-background rounded-full p-1.5 transition-colors">
                 <ArrowRight size={18} />
               </div>
             </motion.button>
