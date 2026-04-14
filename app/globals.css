@@ -5,21 +5,22 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
-  --primary: #9d00ff;
+  --background: #fdfaf5;
+  --foreground: #111111;
+  --primary: #ff5a1f;
   --primary-foreground: #ffffff;
-  --accent: #00ff66;
+  --accent: #f4b0f3;
   --accent-foreground: #000000;
+  --success: #34c759;
   --radius: 2rem;
 
-  --card: #0a0a0a;
-  --card-foreground: #ffffff;
-  --muted: #1a1a1a;
-  --muted-foreground: #a0a0a0;
-  --border: #262626;
-  --input: #262626;
-  --ring: #9d00ff;
+  --card: #ffffff;
+  --card-foreground: #111111;
+  --muted: #f3f0ea;
+  --muted-foreground: #666666;
+  --border: #e2e2e2;
+  --input: #e2e2e2;
+  --ring: #ff5a1f;
 }
 
 @theme inline {
@@ -30,6 +31,7 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-accent: var(--accent);
+  --color-success: var(--success);
   --color-border: var(--border);
   --color-ring: var(--ring);
   --color-card: var(--card);
@@ -37,9 +39,6 @@
 
   --radius-3xl: 1.5rem;
   --radius-4xl: 2rem;
-
-  /* Keep this if you want, but NOT usable via @apply */
-  --letter-spacing-tightest: -0.04em;
 
   --spacing-18: 4.5rem;
   --spacing-22: 5.5rem;

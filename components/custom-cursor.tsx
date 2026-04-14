@@ -5,7 +5,6 @@ import { motion, useSpring, useMotionValue } from "framer-motion"
 
 export const CustomCursor = () => {
   const [isHovering, setIsHovering] = useState(false)
-  const [hoverText, setHoverText] = useState("")
   
   const cursorX = useMotionValue(-100)
   const cursorY = useMotionValue(-100)
@@ -22,17 +21,7 @@ export const CustomCursor = () => {
       const target = e.target as HTMLElement
       const isPickable = target.closest("a, button, .group, [role='button']")
       
-      if (isPickable) {
-        setIsHovering(true)
-        if (target.closest(".group")) {
-            setHoverText("VIEW")
-        } else {
-            setHoverText("")
-        }
-      } else {
-        setIsHovering(false)
-        setHoverText("")
-      }
+      setIsHovering(!!isPickable)
     }
 
     window.addEventListener("mousemove", moveCursor)
@@ -41,7 +30,7 @@ export const CustomCursor = () => {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 w-4 h-4 bg-primary rounded-full pointer-events-none z-[9999] flex items-center justify-center text-[8px] font-bold text-black mix-blend-difference"
+      className="fixed top-0 left-0 w-3 h-3 bg-primary rounded-full pointer-events-none z-[9999] shadow-lg shadow-primary/20"
       style={{
         x,
         y,
@@ -49,18 +38,10 @@ export const CustomCursor = () => {
         translateY: "-50%",
       }}
       animate={{
-        scale: isHovering ? 5 : 1,
+        scale: isHovering ? 4 : 1,
+        opacity: [0, 1],
       }}
-    >
-        {isHovering && hoverText && (
-            <motion.span 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="mix-blend-normal"
-            >
-                {hoverText}
-            </motion.span>
-        )}
-    </motion.div>
+    />
   )
 }
+

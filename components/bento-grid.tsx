@@ -1,145 +1,148 @@
 "use client"
 
-import { motion, useInView } from "framer-motion"
-import { useRef, useState, useEffect } from "react"
-import { cn } from "@/lib/utils"
+import { motion } from "framer-motion"
+import { ArrowRight, ArrowUpRight } from "lucide-react"
 
-interface BentoCardProps {
+interface WorkCardProps {
   title: string
-  subtitle: string
-  videoUrl: string
+  brand: string
+  image: string
+  color: string
   className?: string
   index: number
 }
 
-const BentoCard = ({ title, subtitle, videoUrl, className, index }: BentoCardProps) => {
-  const [isHovered, setIsHovered] = useState(false)
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const isInView = useInView(containerRef, { amount: 0.5 })
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-
-    if (isInView || isHovered) {
-      const playPromise = video.play()
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // Handle play interruption/browser policy
-        })
-      }
-    } else {
-      video.pause()
-    }
-  }, [isInView, isHovered])
-
-  const handleMouseEnter = () => setIsHovered(true)
-  const handleMouseLeave = () => setIsHovered(false)
-
+const WorkCard = ({ title, brand, image, color, className, index }: WorkCardProps) => {
   return (
     <motion.div
-      ref={containerRef}
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay: index * 0.1 }}
       viewport={{ once: true }}
-      className={cn(
-        "relative rounded-[2rem] overflow-hidden group cursor-pointer bg-muted border border-white/5",
-        className
-      )}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      className={`relative group cursor-pointer rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border-[6px] border-${color}/20 h-full min-h-[450px] md:min-h-[550px] ${className}`}
+      style={{ borderColor: `${color}33` }}
     >
-      {/* Background Video (plays on hover) */}
-      <video
-        ref={videoRef}
-        muted
-        loop
-        playsInline
-        className={cn(
-          "absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out",
-          isHovered ? "scale-105 opacity-80" : "scale-100 opacity-40 grayscale"
-        )}
-      >
-        <source src={videoUrl} type="video/mp4" />
-      </video>
+        {/* Background Image */}
+        <img 
+            src={image} 
+            alt={title} 
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />
+        {/* Content Block */}
+        <div className="absolute bottom-6 left-6 right-6">
+            <div 
+                className="rounded-[2rem] p-6 lg:p-8 relative overflow-hidden shadow-2xl"
+                style={{ backgroundColor: color }}
+            >
+                {/* Brand Tag */}
+                <div className="bg-white/20 backdrop-blur-md px-3 py-1 rounded-lg w-fit text-xs font-bold text-white mb-4">
+                    {brand}
+                </div>
 
-      {/* Content */}
-      <div className="absolute inset-0 p-8 flex flex-col justify-end">
-        <motion.p
-          animate={{ x: isHovered ? 10 : 0 }}
-          className="text-xs font-bold tracking-[0.3em] uppercase text-primary mb-2"
-        >
-          {subtitle}
-        </motion.p>
-        <motion.h3
-          animate={{ y: isHovered ? -5 : 0 }}
-          className="text-3xl font-black leading-none mb-4"
-        >
-          {title}
-        </motion.h3>
+                {/* Title */}
+                <h3 className="text-xl md:text-2xl font-black text-white leading-tight pr-10">
+                    {title}
+                </h3>
+
+                {/* Corner Icon */}
+                <div className="absolute top-6 right-6 lg:top-8 lg:right-8 bg-white rounded-full p-2 text-black transition-transform group-hover:rotate-12">
+                   <ArrowUpRight size={20} />
+                </div>
+            </div>
+        </div>
         
-        <div className="h-0.5 w-0 group-hover:w-full bg-primary transition-all duration-500 rounded-full" />
-      </div>
+        {/* Hover Border Overlay */}
+        <div 
+            className="absolute inset-0 border-[6px] rounded-[2.5rem] md:rounded-[3rem] transition-all duration-300 pointer-events-none opacity-0 group-hover:opacity-100"
+            style={{ borderColor: color }}
+        />
     </motion.div>
   )
 }
 
 export const BentoGrid = () => {
-  const cards = [
-    {
-      title: "LUXURY CONTENT",
-      subtitle: "Production",
-      videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-fashion-model-posing-in-neon-lights-42503-large.mp4",
-      className: "md:col-span-8 md:row-span-2 min-h-[500px]",
-    },
-    {
-      title: "SOCIAL STRATEGY",
-      subtitle: "Growth",
-      videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-glitchy-urban-video-with-neon-lights-42502-large.mp4",
-      className: "md:col-span-4 md:row-span-1 min-h-[240px]",
-    },
-    {
-      title: "PAID MEDIA",
-      subtitle: "Activation",
-      videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-futuristic-urban-street-view-at-night-42510-large.mp4",
-      className: "md:col-span-4 md:row-span-1 min-h-[240px]",
-    },
-    {
-      title: "CREATIVE DIRECTION",
-      subtitle: "Design",
-      videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-man-walking-on-a-city-street-at-night-42508-large.mp4",
-      className: "md:col-span-4 md:row-span-2 min-h-[500px]",
-    },
-    {
-      title: "INFLUENCER HUB",
-      subtitle: "Connections",
-      videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-smartphone-in-a-dark-room-42506-large.mp4",
-      className: "md:col-span-8 md:row-span-2 min-h-[500px]",
-    },
-  ]
-
   return (
-    <section className="py-24 px-6 lg:px-22 max-w-[1600px] mx-auto">
-      <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-        <div className="max-w-2xl">
-          <span className="text-secondary font-bold tracking-[0.5em] uppercase text-sm mb-4 block">Our Work</span>
-          <h2 className="text-5xl md:text-7xl">ELEVATING BRANDS THROUGH SOCIAL MASTERY.</h2>
-        </div>
-        <button className="border border-white/20 hover:border-primary px-10 py-4 rounded-full text-sm font-bold tracking-widest transition-all">
-          VIEW ALL CASES
-        </button>
-      </div>
+    <section id="work" className="py-24 md:py-32 px-6 lg:px-12 bg-background">
+      <div className="max-w-[1400px] mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12">
+          
+          {/* Text Content Area */}
+          <div className="md:col-span-12 lg:col-span-5 flex flex-col items-start justify-center gap-8 mb-10 lg:mb-0">
+            <motion.h2 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="text-6xl md:text-7xl lg:text-[5.5rem] font-[900] tracking-tighter leading-none"
+            >
+              Content<br />that performs.
+            </motion.h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-min">
-        {cards.map((card, idx) => (
-          <BentoCard key={idx} index={idx} {...card} />
-        ))}
+            <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="text-lg md:text-xl text-foreground/70 max-w-md font-medium leading-relaxed"
+            >
+              We tell your story in a way that actually connects with your audience. Creative content that works and makes a real difference.
+            </motion.p>
+
+            <motion.button 
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                viewport={{ once: true }}
+                className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full font-bold group hover:opacity-80 transition-all text-sm"
+            >
+              View all our work
+              <div className="bg-white/20 rounded-full p-1 group-hover:translate-x-1 transition-transform">
+                <ArrowRight size={16} />
+              </div>
+            </motion.button>
+          </div>
+
+          {/* Cards Grid */}
+          <div className="md:col-span-12 lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            
+            {/* Orange Card (Left/Mid) */}
+            <div className="md:mt-24">
+                <WorkCard 
+                    index={0}
+                    title="From zero to full in 3 weeks"
+                    brand="Buildit"
+                    image="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1000&auto=format&fit=crop"
+                    color="#ff5a1f"
+                />
+            </div>
+
+            {/* Staggered Vertical Column */}
+            <div className="flex flex-col gap-8 md:gap-12">
+                {/* Green Card (Top Right) */}
+                <WorkCard 
+                    index={1}
+                    title="Content that truly hits the spot"
+                    brand="Laco"
+                    image="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop"
+                    color="#34c759"
+                />
+
+                {/* Blue Card (Bottom Right) */}
+                <WorkCard 
+                    index={2}
+                    title="Smooth taste, strong visuals"
+                    brand="Roasta"
+                    image="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?q=80&w=1000&auto=format&fit=crop"
+                    color="#007bff"
+                    className="md:scale-95"
+                />
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
   )
 }
+
