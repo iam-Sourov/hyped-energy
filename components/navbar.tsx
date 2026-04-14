@@ -1,23 +1,53 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, Flame, ArrowRight } from "lucide-react"
+import { Flame, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import gsap from "gsap"
+import { Logo } from "./logo"
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null)
+
+  const navRef = useRef<HTMLDivElement>(null)
+  const lastScrollY = useRef(0)
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
+      const currentScrollY = window.scrollY
+      const velocity = currentScrollY - lastScrollY.current
+
+      // backdrop logic
+      setIsScrolled(currentScrollY > 20)
+
+      // GSAP hide/show logic
+      if (currentScrollY > 100 && velocity > 0 && !isMenuOpen) {
+        // Scrolling down - hide
+        gsap.to(navRef.current, {
+          yPercent: -100,
+          duration: 0.4,
+          ease: "power2.out"
+        })
+      } else {
+        // Scrolling up or at top - show
+        gsap.to(navRef.current, {
+          yPercent: 0,
+          duration: 0.4,
+          ease: "power2.out"
+        })
+      }
+
+      lastScrollY.current = currentScrollY
     }
+
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  }, [isMenuOpen])
 
   const menuItems = [
     { name: "Expertises", href: "#expertise" },
@@ -28,37 +58,62 @@ export const Navbar = () => {
 
   return (
     <>
-      <nav
+      <nav 
+        ref={navRef}
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-500 py-4 px-6 lg:px-12 flex justify-between items-center",
-          isScrolled ? "py-4" : "bg-transparent py-6"
+          "fixed top-0 left-0 right-0 z-[100] transition-all duration-300 flex justify-between items-center",
+          isScrolled ? "bg-background/80 backdrop-blur-md" : "bg-transparent"
         )}
+        style={{ 
+          paddingInline: "2.73vw",
+          height: "9.02vh",
+          paddingBlock: "2.51vh",
+          marginBottom: "2.51vh"
+        }}
       >
         {/* Logo */}
-        <Link href="/" className="flex items-center group">
-          <span className="text-2xl md:text-3xl font-[900] tracking-tighter text-foreground transition-transform group-hover:scale-105">GETHYPED</span>
-        </Link>
+        <div className="flex-1 h-full flex items-center">
+          <Link href="/" className="flex items-center group w-fit h-[4.76vh]">
+            <Logo className="h-full transition-transform group-hover:scale-105" />
+          </Link>
+        </div>
 
         {/* Desktop Menu - Floating Pill */}
-        <div className="hidden md:flex items-center bg-background/40 backdrop-blur-md px-1.5 py-1.5 rounded-full border border-border gap-2 shadow-sm">
+        <div className="hidden md:flex items-center bg-white px-[1vw] py-[0.5vh] rounded-full border border-black/5 gap-1 shadow-2xl relative" style={{ borderRadius: "1.14vw" }}>
           {menuItems.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="font-bold text-foreground/70 hover:text-foreground hover:bg-white/80 px-5 py-2 rounded-full transition-all"
-              style={{ fontSize: "clamp(0.875rem, 1vw, 1rem)" }}
+              onMouseEnter={() => setHoveredItem(item.name)}
+              onMouseLeave={() => setHoveredItem(null)}
+              className="relative font-bold text-black hover:text-foreground px-[1.5vw] py-[1vh] rounded-full transition-colors z-10"
+              style={{ fontSize: "0.85vw" }}
             >
-              {item.name}
+              <span className="relative z-20">{item.name}</span>
+              {hoveredItem === item.name && (
+                <motion.div
+                  layoutId="nav-highlight"
+                  className="absolute inset-0 bg-black/5 rounded-full z-10"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                />
+              )}
             </Link>
           ))}
         </div>
-        {/* Action Button */}
-        <div className="hidden md:flex items-center gap-4">
+
+        {/* Action Button & Toggler */}
+        <div className="hidden md:flex flex-1 justify-end items-center gap-[1.5vw]">
           <AnimatedThemeToggler />
           <Link
             href="#contact"
-            className="bg-[#f4b0f3] hover:bg-[#ef9ded] text-black px-6 py-3 rounded-full font-bold flex items-center gap-2 transition-all shadow-lg shadow-accent/10 active:scale-95"
-            style={{ fontSize: "clamp(0.875rem, 1vw, 1rem)" }}
+            className="bg-[#f4b0f3] hover:bg-[#ef9ded] text-black px-[2.5vw] py-[1.5vh] font-bold flex items-center gap-[0.5vw] transition-all shadow-lg active:scale-95"
+            style={{ 
+              fontSize: "0.85vw",
+              borderRadius: "1.36vw"
+            }}
           >
             Get Results
             <Flame size={16} className="text-[#ff5a1f] fill-[#ff5a1f]" />
@@ -66,13 +121,20 @@ export const Navbar = () => {
         </div>
 
         {/* Mobile Toggle */}
-        <div className="flex items-center gap-3 md:hidden">
+        <div className="flex items-center gap-4 md:hidden">
           <AnimatedThemeToggler />
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="bg-background/80 backdrop-blur-md p-3 rounded-2xl border border-border shadow-sm active:scale-90 transition-transform"
+            className="relative w-[10vw] h-[10vw] max-w-10 max-h-10 flex flex-col justify-center items-center gap-[0.5vh] z-[110]"
           >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            <motion.span
+              animate={isMenuOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }}
+              className="w-[6vw] max-w-6 h-0.5 bg-foreground rounded-full block"
+            />
+            <motion.span
+              animate={isMenuOpen ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }}
+              className="w-[6vw] max-w-6 h-0.5 bg-foreground rounded-full block"
+            />
           </button>
         </div>
       </nav>
@@ -81,51 +143,42 @@ export const Navbar = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-background flex flex-col p-6"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-0 z-[105] bg-background/95 backdrop-blur-2xl flex flex-col p-[5vw] pt-[15vh]"
           >
-            <div className="flex justify-between items-center py-4">
-              <span className="text-2xl font-[900] tracking-tighter">GETHYPED</span>
-              <button
-                onClick={() => setIsMenuOpen(false)}
-                className="p-3 bg-white/50 rounded-2xl border border-black/5"
-              >
-                <X size={24} />
-              </button>
-            </div>
-
-            <div className="flex-1 flex flex-col justify-center items-start gap-8 md:gap-12 px-4">
+            <div className="flex-1 flex flex-col justify-center items-center gap-[4vh] px-[5vw]">
               {menuItems.map((item, index) => (
                 <motion.div
                   key={item.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.2 + index * 0.1, ease: "easeOut" }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
                 >
                   <Link
                     href={item.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className="text-4xl xs:text-5xl md:text-7xl font-[900] hover:text-primary transition-colors tracking-tighter flex items-center gap-4 group"
+                    className="font-[900] hover:text-primary transition-colors tracking-tighter"
+                    style={{ fontSize: "clamp(3rem, 15vw, 6rem)" }}
                   >
                     {item.name}
-                    <ArrowRight size={32} className="hidden sm:block opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
                   </Link>
                 </motion.div>
               ))}
             </div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="pb-12 px-4"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.4 }}
+              className="pb-[5vh] px-[5vw]"
             >
               <Link
                 href="#contact"
                 onClick={() => setIsMenuOpen(false)}
-                className="w-full bg-[#f4b0f3] text-black px-8 py-6 rounded-[2rem] text-2xl font-[900] flex items-center justify-between gap-2 shadow-2xl"
+                className="w-full bg-[#f4b0f3] text-black px-[8vw] py-[3vh] rounded-[2rem] font-[900] flex items-center justify-between shadow-2xl"
+                style={{ fontSize: "var(--fluid-h3)" }}
               >
                 Get Results
                 <Flame size={32} className="text-[#ff5a1f] fill-[#ff5a1f]" />
@@ -137,5 +190,3 @@ export const Navbar = () => {
     </>
   )
 }
-
-

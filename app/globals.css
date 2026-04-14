@@ -25,19 +25,39 @@
   --spacing-22: 5.5rem;
   --spacing-26: 6.5rem;
   --spacing-30: 7.5rem;
+
+  --animate-spin-slow: spin 10s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @layer base {
   :root {
     color-scheme: light;
-    --background: #fdfaf5;
-    --foreground: #111111;
+    --background: #fcfaf4;
+    --foreground: #000000;
     --primary: #ff1fff;
     --primary-foreground: #ffffff;
     --accent: #f4b0f3;
     --accent-foreground: #000000;
     --success: #34c759;
-    --radius: 2rem;
+    --radius: clamp(1rem, 2vw, 2.5rem);
+
+    /* Precise Fluid Typography Scale (Based on User Map) */
+    --fluid-h1: 7.84vw;
+    --fluid-h2: 5.00vw;
+    --fluid-h3: 1.14vw;
+    --fluid-p: 1.02vw;
+    --fluid-small: 0.85vw;
+    --fluid-tiny: 0.68vw;
+
+    /* Spacing Units */
+    --fluid-section-py: 12vh;
+    --fluid-container-px: 5vw;
+    --fluid-gap: 3vw;
 
     --card: #ffffff;
     --card-foreground: #111111;
@@ -99,10 +119,9 @@
     @apply bg-black/80 backdrop-blur-xl border-b border-white/10;
   }
 
-  .text-reveal {
-    mask-image: linear-gradient(to bottom, white 50%, transparent 50%);
-    mask-size: 100% 200%;
-    mask-position: 0 0;
+  .text-outline {
+    -webkit-text-stroke: 1px black;
+    color: transparent;
   }
 }
 
