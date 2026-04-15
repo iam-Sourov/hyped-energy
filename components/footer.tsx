@@ -1,4 +1,4 @@
-import { Mail, Flame, Instagram, Youtube, Linkedin } from "lucide-react"
+import { Mail, Flame } from "lucide-react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { Logo } from "./logo"
