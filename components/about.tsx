@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
+import Image from "next/image"
 
 export const About = () => {
   const sectionRef = useRef<HTMLElement>(null)
@@ -29,12 +30,13 @@ export const About = () => {
             initial={{ x: "-2.77vw", opacity: 0 }}
             animate={isInView ? { x: 0, opacity: 1 } : {}}
             transition={{ duration: 0.7 }}
-            className="h-[300px] w-full md:h-[400px] md:w-1/2 lg:h-[32.77vh] lg:w-[15vw] overflow-hidden rounded-[1.11vw]"
+            className="relative h-[300px] w-full md:h-[400px] md:w-1/2 lg:h-[32.77vh] lg:w-[15vw] overflow-hidden rounded-[1.11vw]"
           >
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop"
               alt="Portrait"
-              className="h-full w-full object-cover"
+              fill
+              className="object-cover"
             />
           </motion.div>
 

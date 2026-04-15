@@ -175,7 +175,7 @@ export const Navbar = () => {
                   href="#contact"
                   className="flex h-16 w-full items-center justify-center gap-2 rounded-2xl bg-black text-xl font-bold text-white shadow-xl"
                 >
-                  Get Results <Flame size={20} className="text-[#ff5a1f] fill-[#ff5a1f]" />
+                  Get Results <Flame size={20} className=" bg-white text-[#ff5a1f] fill-[#ff5a1f]" />
                 </Link>
               </motion.div>
             </motion.div>

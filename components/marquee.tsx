@@ -1,70 +1,70 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Image from "next/image"
 
-const logos = [
-  "LVMH", "PRADA", "FERRARI", "ROLEX", "GUCCI", "BALENCIAGA", "DIOR", "PORSCHE", "HERMES", "CARTIER"
-]
+// Assuming you have these logos in public/assets/marque/
+// If you don't have 11, just add more placeholders or reduce the number
+const logos = Array.from({ length: 11 }, (_, i) => `/assets/marque/marque- (${i + 1}).svg`)
 
 export const LogoMarquee = () => {
   return (
     <section 
-        className="overflow-hidden bg-background" 
-        style={{ 
-            marginTop: "150px",
-            paddingTop: "80px",
-            paddingBottom: "80px"
-        }}
+      className="overflow-hidden bg-[#F0EBE1] py-[10vh]"
     >
-      <div 
-        className="mb-[6vh] text-left" 
-        style={{ paddingLeft: "5.68vw" }}
-      >
-        <span className="text-foreground/30 font-bold tracking-[0.5em] uppercase" style={{ fontSize: "2.27vw" }}>These brands got hyped.</span>
+      <div className="w-full max-w-[1440px] mx-auto px-[5vw] mb-[6vh]">
+        {/* Title - Matching the "Content dat scoort" style */}
+        <h2 className="text-[#1A1A1A] tracking-tighter font-black leading-[0.9] text-left" 
+            style={{ fontSize: "clamp(3rem, 6vw, 5.5rem)" }}>
+          These brands<br />got hyped.
+        </h2>
       </div>
       
-      <div className="relative flex overflow-x-hidden border-y border-black/5" style={{ height: "37.59vh" }}>
+      {/* Marquee Container */}
+      <div className="relative flex overflow-x-hidden w-full group">
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
           transition={{
-            duration: 30,
+            duration: 40, // Slower duration for a more premium feel
             ease: "linear",
             repeat: Infinity,
           }}
-          className="flex whitespace-nowrap h-full"
+          className="flex whitespace-nowrap"
         >
-          {/* First set of logos */}
-          <div className="flex items-center h-full" style={{ paddingInline: "2vw", gap: "40px" }}>
+          {/* First Set of Logos */}
+          <div className="flex items-center gap-[clamp(12px,1vw,20px)] px-[clamp(12px,1vw,20px)]">
             {logos.map((logo, idx) => (
               <div 
                 key={idx} 
-                className="flex items-center justify-center bg-white border border-black/10 font-black text-black select-none hover:bg-gray-50 transition-colors"
+                className="flex relative items-center justify-center bg-transparent border border-black/10 transition-transform duration-300 hover:scale-[1.02] cursor-default"
                 style={{ 
-                    width: "17.05vw",
-                    height: "30vh",
-                    borderRadius: "0.91vw",
-                    fontSize: "2vw"
+                  width: "clamp(220px, 24vw, 300px)",
+                  height: "clamp(220px, 24vw, 300px)",
+                  borderRadius: "8px",
+                  padding: "clamp(16px, 2vw, 32px)",
+                  flexShrink: 0
                 }}
               >
-                {logo}
+                <Image src={logo} alt={`Brand Logo ${idx + 1}`} fill className="object-contain pointer-events-none opacity-90 hover:opacity-100 transition-opacity p-[clamp(16px,2vw,32px)]" />
               </div>
             ))}
           </div>
           
-          {/* Duplicate set for infinite loop */}
-          <div className="flex items-center h-full" style={{ paddingInline: "2vw", gap: "40px" }}>
+          {/* Duplicate Set for Infinite Loop */}
+          <div className="flex items-center gap-[clamp(12px,1vw,20px)] px-[clamp(12px,1vw,20px)]">
             {logos.map((logo, idx) => (
               <div 
                 key={`dup-${idx}`} 
-                className="flex items-center justify-center bg-white border border-black/10 font-black text-black select-none hover:bg-gray-50 transition-colors"
+                className="flex relative items-center justify-center bg-transparent border border-black/10 transition-transform duration-300 hover:scale-[1.02] cursor-default"
                 style={{ 
-                    width: "17.05vw",
-                    height: "30vh",
-                    borderRadius: "0.91vw",
-                    fontSize: "2vw"
+                  width: "clamp(220px, 24vw, 300px)",
+                  height: "clamp(220px, 24vw, 300px)",
+                  borderRadius: "8px",
+                  padding: "clamp(16px, 2vw, 32px)",
+                  flexShrink: 0
                 }}
               >
-                {logo}
+                <Image src={logo} alt={`Brand Logo ${idx + 1}`} fill className="object-contain pointer-events-none opacity-90 hover:opacity-100 transition-opacity p-[clamp(16px,2vw,32px)]" />
               </div>
             ))}
           </div>

@@ -58,7 +58,7 @@ export const Hero = () => {
   return (
     <section
       className="relative min-h-screen w-full flex flex-col items-center justify-start overflow-hidden bg-[#F0EBE1]" // Light gray background similar to screenshot
-      style={{ paddingTop: "clamp(80px, 10vh, 120px)" }}
+      style={{ paddingTop: "clamp(120px, 10vh, 120px)" }}
     >
       {/* --- Header Content --- */}
       <div className="relative z-50 text-left w-full max-w-[1440px] px-[5vw] mb-[2vh]">
@@ -92,26 +92,22 @@ export const Hero = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          // Flex row ensures they sit side by side. 
-          // Negative margins or absolute positioning can be used for tighter overlap, 
-          // but flex with negative gap or transform translate-x is cleaner for responsiveness.
-          // Here we use standard flex with negative margin-right on children to create the "deck" overlap.
-          className="flex flex-row items-end justify-center w-full max-w-[1600px] px-[5vw]"
+          className="flex flex-col md:flex-row items-center md:items-end justify-center w-full max-w-[1600px] px-[5vw] gap-y-[4vh] md:gap-y-0"
         >
 
           {/* CARD 1: 10M+ Views (Blue) */}
           <motion.div
             custom={0}
             variants={getItemVariants(0)}
-            className="relative flex-shrink-0 w-[22vw] min-w-[200px] aspect-[9/16] bg-[#0d8dff] rounded-[2rem] shadow-xl z-10 mr-[-4vw] md:mr-[-6vw]"
+            className="relative flex-shrink-0 w-[70vw] md:w-[22vw] max-w-[320px] md:max-w-none aspect-[9/16] bg-[#0d8dff] rounded-[clamp(1.5rem,2vw,2rem)] shadow-xl z-10 mb-[-15vh] md:mb-0 mr-0 md:mr-[-4vw] lg:mr-[-6vw]"
           >
-             <div className="absolute inset-0 p-[1.5rem] flex flex-col justify-between h-full">
+             <div className="absolute inset-0 p-[clamp(1rem,2vw,1.5rem)] flex flex-col justify-between h-full">
                 <div>
-                  <h2 className="text-white font-black tracking-tighter text-[3.5rem] leading-none">10M+</h2>
+                  <h2 className="text-white font-black tracking-tighter text-[clamp(2.5rem,4vw,3.5rem)] leading-none">10M+</h2>
                 </div>
                 <div className="border-t border-white/30 pt-4">
-                  <p className="text-white font-bold text-lg leading-tight">Organische views</p>
-                  <p className="text-white/80 text-sm mt-1">Groei door slimme content</p>
+                  <p className="text-white font-bold text-[clamp(1rem,1.5vw,1.125rem)] leading-tight">Organische views</p>
+                  <p className="text-white/80 text-[clamp(0.75rem,1vw,0.875rem)] mt-1">Groei door slimme content</p>
                 </div>
              </div>
           </motion.div>
@@ -120,10 +116,10 @@ export const Hero = () => {
           <motion.div
             custom={1}
             variants={getItemVariants(1)}
-            className="relative flex-shrink-0 w-[22vw] min-w-[200px] aspect-[9/16] bg-white rounded-[2rem] shadow-2xl z-20 mr-[-4vw] md:mr-[-6vw] border-[6px] border-white overflow-hidden"
+            className="relative flex-shrink-0 w-[70vw] md:w-[22vw] max-w-[320px] md:max-w-none aspect-[9/16] bg-white rounded-[clamp(1.5rem,2vw,2rem)] shadow-2xl z-20 mb-[-15vh] md:mb-0 mr-0 md:mr-[-4vw] lg:mr-[-6vw] border-[clamp(4px,0.5vw,6px)] border-white overflow-hidden"
           >
             <AutoPlayVideo 
-              src="/assets/video-lifestyle.mp4" 
+              src="/assets/hero/hero-1.mp4" 
               className="w-full h-full object-cover" 
             />
           </motion.div>
@@ -132,15 +128,15 @@ export const Hero = () => {
           <motion.div
             custom={2}
             variants={getItemVariants(2)}
-            className="relative flex-shrink-0 w-[22vw] min-w-[200px] aspect-[9/16] bg-[#33c791] rounded-[2rem] shadow-xl z-30 mr-[-4vw] md:mr-[-6vw]"
+            className="relative flex-shrink-0 w-[70vw] md:w-[22vw] max-w-[320px] md:max-w-none aspect-[9/16] bg-[#33c791] rounded-[clamp(1.5rem,2vw,2rem)] shadow-xl z-30 mb-[-15vh] md:mb-0 mr-0 md:mr-[-4vw] lg:mr-[-6vw]"
           >
-             <div className="absolute inset-0 p-[1.5rem] flex flex-col justify-between h-full">
+             <div className="absolute inset-0 p-[clamp(1rem,2vw,1.5rem)] flex flex-col justify-between h-full">
                 <div>
-                  <h2 className="text-white font-black tracking-tighter text-[3.5rem] leading-none">30+</h2>
+                  <h2 className="text-white font-black tracking-tighter text-[clamp(2.5rem,4vw,3.5rem)] leading-none">30+</h2>
                 </div>
                 <div className="border-t border-white/30 pt-4">
-                  <p className="text-white font-bold text-lg leading-tight">Merken geholpen</p>
-                  <p className="text-white/80 text-sm mt-1">Van start-up tot multinational</p>
+                  <p className="text-white font-bold text-[clamp(1rem,1.5vw,1.125rem)] leading-tight">Merken geholpen</p>
+                  <p className="text-white/80 text-[clamp(0.75rem,1vw,0.875rem)] mt-1">Van start-up tot multinational</p>
                 </div>
              </div>
           </motion.div>
@@ -149,16 +145,16 @@ export const Hero = () => {
           <motion.div
             custom={3}
             variants={getItemVariants(3)}
-            className="relative flex-shrink-0 w-[22vw] min-w-[200px] aspect-[9/16] bg-white rounded-[2rem] shadow-2xl z-40 border-[6px] border-white overflow-hidden"
+            className="relative flex-shrink-0 w-[70vw] md:w-[22vw] max-w-[320px] md:max-w-none aspect-[9/16] bg-white rounded-[clamp(1.5rem,2vw,2rem)] shadow-2xl z-40 border-[clamp(4px,0.5vw,6px)] border-white overflow-hidden"
           >
             <AutoPlayVideo 
-              src="/assets/video-car.mp4" 
+              src="/assets/hero/hero2.mp4" 
               className="w-full h-full object-cover" 
             />
             
             {/* Optional Caption Overlay for Video 2 */}
-            <div className="absolute bottom-6 left-0 right-0 text-center z-50 pointer-events-none">
-               <span className="bg-black/50 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
+            <div className="absolute bottom-[clamp(1rem,2vw,1.5rem)] left-0 right-0 text-center z-50 pointer-events-none">
+               <span className="bg-black/50 backdrop-blur-md text-white px-3 py-1 rounded-full text-[clamp(0.6rem,0.8vw,0.75rem)] font-bold uppercase tracking-wide">
                  Origineel Natuurlijk
                </span>
             </div>
@@ -172,7 +168,7 @@ export const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50"
+        className="absolute border rounded-full w-10 h-10 flex items-center justify-center bottom-8 left-1/2 -translate-x-1/2 z-50"
       >
         <ArrowDown className="text-gray-400 w-6 h-6 animate-bounce" />
       </motion.div>

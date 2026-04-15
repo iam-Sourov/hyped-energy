@@ -2,85 +2,81 @@
 
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useRef } from "react"
+import { ArrowRight } from "lucide-react"
 
+// --- Data Configuration (Matched to Video Screenshots) ---
 const EXPERTISE_DATA = [
   {
     id: "01",
-    title: "social strategy",
+    title: "Social strategy",
     subtitle: "Slimme strategie. Sterke start.",
-    description: "We duiken diep in jouw merk, doelgroep en doelen. En vertalen data naar een duidelijk plan met formats die echt impact maken.",
+    description: "We duiken diep in jouw merk, doelgroep en doelen. En vertalen data naar een duidelijk plan met formats die écht impact maken. Zo weet je precies waarom het werkt.",
     buttonText: "Meer over social strategie",
-    cardBg: "#FFFFFF",
-    video: "https://player.vimeo.com/external/494252666.sd.mp4?s=2dace0607d727b17316ecb34479e3940c313a373&profile_id=165&oauth2_token_id=57447761",
-    borderColor: "#EA580C",
-    ghost: "rgba(0,0,0,0.05)",
-    cta: "#EA580C",
+    cardBg: "#FFFFFF", // White
+    textColor: "#1A1A1A",
+    subTextColor: "rgba(26, 26, 26, 0.7)",
+    borderColor: "#EA580C", // Orange
+    ghostColor: "rgba(0,0,0,0.05)",
     rotate: "-2deg",
+    // Using a placeholder video that fits the 'strategy' theme
+    videoSrc: "./assets/expertise/expertise-1.mp4",
   },
   {
     id: "02",
-    title: "content creation",
+    title: "Content creation",
     subtitle: "Content die opvalt en raakt.",
     description: "We maken content die opvalt. Blijft hangen. En jouw doelgroep raakt. Creatief, snel en energiek. Altijd met het doel voor ogen.",
     buttonText: "Meer over content creatie",
-    cardBg: "#F9A8D4",
-    video: "https://player.vimeo.com/external/459389137.sd.mp4?s=89e37fb333616233ba357ef7fd6df73111f95d80&profile_id=165&oauth2_token_id=57447761",
-    borderColor: "#FFFFFF",
-    ghost: "rgba(255,255,255,0.3)",
-    cta: "#1A1A1A",
+    cardBg: "#F9A8D4", // Pink
+    textColor: "#1A1A1A",
+    subTextColor: "rgba(26, 26, 26, 0.7)",
+    borderColor: "#FFFFFF", // White border for contrast on pink
+    ghostColor: "rgba(255,255,255,0.4)",
     rotate: "2deg",
+    videoSrc: "./assets/expertise/expertise-2.mp4",
   },
   {
     id: "03",
-    title: "activation",
+    title: "Activation",
     subtitle: "Zichtbaar waar en wanneer het telt.",
     description: "De juiste content verdient het om gezien te worden. We verspreiden de content waar jouw doelgroep is. Zo raakt jouw merk de juiste mensen.",
     buttonText: "Meer over activatie",
-    cardBg: "#34D399",
-    video: "https://player.vimeo.com/external/517090025.sd.mp4?s=d00ca4164b3c0a52be9e6c276f5346e279313042&profile_id=165&oauth2_token_id=57447761",
+    cardBg: "#34D399", // Green
+    textColor: "#1A1A1A",
+    subTextColor: "rgba(26, 26, 26, 0.7)",
     borderColor: "#FFFFFF",
-    ghost: "rgba(255,255,255,0.25)",
-    cta: "#1A1A1A",
+    ghostColor: "rgba(255,255,255,0.4)",
     rotate: "-1deg",
+    videoSrc: "./assets/expertise/expertise-3.mp4",
   },
   {
     id: "04",
-    title: "data",
+    title: "Data",
     subtitle: "Inzichten die impact maken.",
     description: "We duiken in de cijfers om te snappen wat echt werkt. En sturen jouw content scherp bij voor maximaal resultaat.",
     buttonText: "Meer over data",
-    cardBg: "#3B82F6",
-    video: "https://player.vimeo.com/external/494252666.sd.mp4?s=2dace0607d727b17316ecb34479e3940c313a373&profile_id=165&oauth2_token_id=57447761",
+    cardBg: "#3B82F6", // Blue
+    textColor: "#FFFFFF", // White text for blue card
+    subTextColor: "rgba(255,255,255,0.8)",
     borderColor: "#FFFFFF",
-    ghost: "rgba(255,255,255,0.25)",
-    cta: "#1A1A1A",
+    ghostColor: "rgba(255,255,255,0.25)",
     rotate: "3deg",
+    videoSrc: "./assets/expertise/expertise-4.mp4",
   },
 ]
 
 export const Expertise = () => {
-  const container = useRef<HTMLElement | null>(null)
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ["start start", "end end"],
-  })
+  const containerRef = useRef<HTMLDivElement>(null)
 
   return (
-    <section ref={container} className="relative h-[380vh] bg-[#F0EBE1]">
-      {EXPERTISE_DATA.map((item, index) => {
-        const depthDrop = [0.1, 0.075, 0.05, 0.03][index] ?? 0.03
-        
-        return (
-          <Card
-            key={item.id}
-            item={item}
-            index={index}
-            progress={scrollYProgress}
-            totalCards={EXPERTISE_DATA.length}
-            depthDrop={depthDrop}
-          />
-        )
-      })}
+    // The section height determines how long the user scrolls through the cards.
+    // 350vh gives enough room for 4 cards to stack comfortably.
+    <section ref={containerRef} className="relative bg-[#FDFBF7]">
+      <div className="h-[350vh] relative">
+        {EXPERTISE_DATA.map((item, index) => (
+          <Card key={item.id} item={item} index={index} />
+        ))}
+      </div>
     </section>
   )
 }
@@ -88,96 +84,143 @@ export const Expertise = () => {
 type CardProps = {
   item: (typeof EXPERTISE_DATA)[number]
   index: number
-  totalCards: number
-  progress: ReturnType<typeof useScroll>["scrollYProgress"]
-  depthDrop: number
 }
 
-const Card = ({ item, index, totalCards, progress, depthDrop }: CardProps) => {
-  const segment = 1 / totalCards
-  const start = index * segment
-  const end = Math.min(start + segment, 1)
-  const scale = useTransform(progress, [start, end], [1, 1 - depthDrop])
-  const opacity = useTransform(progress, [start, end], [1, 0.86])
-  const cardTop = `calc(10vh + ${index * 20}px)`
+const Card = ({ item, index }: CardProps) => {
+  const cardRef = useRef<HTMLDivElement>(null)
+
+  // Scroll progress for this specific card
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start start", "end start"], 
+  })
+
+  // Animation: As the next card covers this one, scale it down and fade it slightly
+  // This creates the "deck stacking" depth effect
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.96])
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.85])
+  
+  // Determine button colors based on card background brightness
+  const isDarkCard = item.cardBg === "#3B82F6" // Only the blue card is dark in this set
+  const buttonBg = isDarkCard ? "#FFFFFF" : item.borderColor
+  const buttonText = isDarkCard ? "#1A1A1A" : "#FFFFFF"
+  const iconBg = isDarkCard ? "#1A1A1A" : "rgba(255,255,255,0.2)"
+  const iconColor = isDarkCard ? "#FFFFFF" : "#FFFFFF"
 
   return (
-    <div className="sticky top-0 h-screen">
-      <motion.article
-        style={{
-          scale,
-          opacity,
-          backgroundColor: item.cardBg,
-          top: cardTop,
-          height: "calc(100vh - 14vh)",
-          zIndex: 30 + index
+    <motion.div
+      ref={cardRef}
+      style={{
+        backgroundColor: item.cardBg,
+        zIndex: 10 + index, // Ensure newer cards are on top
+        scale,
+        opacity,
+        // Sticky positioning makes the card stay in place while scrolling until the next one covers it
+        position: "sticky",
+        top: "10vh", // Sticks 10% from the top of the viewport
+        height: "calc(100vh - 20vh)", // Height of the card itself
+        marginBottom: "10vh", // Space between cards in the DOM flow
+      }}
+      className="w-full max-w-[1440px] mx-auto rounded-4xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col lg:flex-row items-center px-[clamp(20px,5vw,60px)] py-[clamp(30px,5vh,60px)] gap-12 lg:gap-20 "
+    >
+      
+      {/* --- GHOST NUMBER (Background) --- */}
+      <div 
+        className="absolute top-[20px] right-[30px] select-none pointer-events-none z-0 font-black leading-none tracking-tighter"
+        style={{ 
+          color: item.ghostColor,
+          fontSize: "clamp(6rem, 12vw, 10rem)",
         }}
-        className="absolute left-1/2 w-[92vw] max-w-[1400px] -translate-x-1/2 overflow-hidden rounded-[40px] shadow-[0_22px_72px_rgba(0,0,0,0.14)]"
       >
-        <div className="relative flex h-full w-full flex-col px-[6vw] py-[8vh] lg:flex-row">
-          
-          {/* Expertise Badge */}
-          <div className="absolute left-[6vw] top-[5vh] flex items-center gap-2">
-            <span className="rounded-md bg-[#F3F0E8] px-3 py-1 text-[12px] font-bold uppercase tracking-wider text-black/50 border border-black/5">
-              Expertise
-            </span>
-          </div>
+        {item.id}
+      </div>
 
-          {/* Ghost ID Number */}
+      {/* --- LEFT CONTENT --- */}
+      <div className="flex-1 flex flex-col justify-center z-10 order-2 lg:order-1 pt-10 lg:pt-0">
+        
+        {/* Badge */}
+        <span 
+          className="inline-block px-3 py-1.5 rounded-md text-[12px] font-bold uppercase tracking-wide mb-8 w-fit bg-[#F3F0E8] text-black/60 border border-black/5"
+        >
+          Expertise
+        </span>
+
+        {/* Title */}
+        <h2 
+          className="font-black leading-[0.85] tracking-tighter mb-6"
+          style={{ 
+            fontSize: "clamp(3rem, 6vw, 5.5rem)",
+            color: item.textColor 
+          }}
+        >
+          {item.title}
+        </h2>
+
+        {/* Subtitle */}
+        <h3 
+          className="text-xl md:text-2xl font-bold mb-4"
+          style={{ color: item.textColor }}
+        >
+          {item.subtitle}
+        </h3>
+
+        {/* Description */}
+        <p 
+          className="text-base md:text-lg leading-relaxed max-w-lg mb-10"
+          style={{ color: item.subTextColor }}
+        >
+          {item.description}
+        </p>
+
+        {/* CTA Button */}
+        <button className="group flex items-center gap-3 self-start">
           <div 
-            className="absolute right-[4vw] top-[2vh] select-none text-[15vw] font-black leading-none lg:text-[10vw]"
-            style={{ color: item.ghost }}
+            className="rounded-xl px-6 py-3.5 text-[15px] font-bold flex items-center gap-3 transition-transform hover:scale-105 active:scale-95 shadow-lg"
+            style={{ 
+              backgroundColor: buttonBg,
+              color: buttonText
+            }}
           >
-            {item.id}
-          </div>
-
-          {/* Left Content: Titles & Description */}
-          <div className="z-10 flex flex-col justify-center lg:w-[60%]">
-            <h3 
-              className="mb-[4vh] font-extrabold leading-[0.85] tracking-tighter text-[#1A1A1A]" 
-              style={{ fontSize: "clamp(3.5rem, 8vw, 10rem)" }}
+            {item.buttonText}
+            
+            {/* Icon Circle */}
+            <div 
+              className="rounded-full h-8 w-8 flex items-center justify-center transition-colors group-hover:bg-white/30"
+              style={{ 
+                backgroundColor: iconBg,
+                color: iconColor
+              }}
             >
-              {item.title}
-            </h3>
-
-            <div className="mt-auto max-w-xl">
-              <h4 className="mb-4 text-[24px] font-bold text-[#1A1A1A] lg:text-[32px]">
-                {item.subtitle}
-              </h4>
-              <p className="mb-8 text-[18px] leading-relaxed text-[#1A1A1A]/70 lg:text-[20px]">
-                {item.description}
-              </p>
-              
-              <button
-                className="group flex items-center gap-4 rounded-full py-4 pl-8 pr-3 text-[16px] font-bold text-white transition-all hover:pr-8"
-                style={{ background: item.cta }}
-              >
-                {item.buttonText}
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white">
-                  →
-                </div>
-              </button>
+              <ArrowRight size={16} strokeWidth={3} />
             </div>
           </div>
+        </button>
+      </div>
 
-          {/* Right Content: Floating Video Card */}
-          <div className="relative z-10 mt-12 flex items-center justify-center lg:mt-0 lg:w-[40%]">
-            <motion.div
-              className="h-[40vh] w-[280px] overflow-hidden rounded-[32px] border-[6px] shadow-2xl lg:h-[55vh] lg:w-[320px]"
-              style={{ borderColor: item.borderColor, rotate: item.rotate }}
-            >
-              <video
-                src={item.video}
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="h-full w-full object-cover"
-              />
-            </motion.div>
-          </div>
-        </div>
-      </motion.article>
-    </div>
+      {/* --- RIGHT VISUAL (Video/Image) --- */}
+      <div className="flex-1 relative order-1 lg:order-2 flex justify-center lg:justify-end">
+        <motion.div
+          whileHover={{ rotate: "0deg", scale: 1.02 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20 }}
+          className="relative w-[60vw] h-[60vw] min-w-[240px] min-h-[240px] md:w-[320px] md:h-[420px] rounded-[30px] overflow-hidden shadow-2xl"
+          style={{ 
+            rotate: item.rotate,
+            border: `clamp(4px, 1vw, 8px) solid ${item.borderColor}`
+          }}
+        >
+          <video
+            src={item.videoSrc}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+          />
+          {/* Subtle overlay for depth */}
+          <div className="absolute inset-0 bg-black/5 pointer-events-none" />
+        </motion.div>
+      </div>
+
+    </motion.div>
   )
 }
