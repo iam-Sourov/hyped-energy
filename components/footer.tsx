@@ -1,104 +1,226 @@
+"use client"
+
+import React, { useState, useEffect, useRef } from "react"
 import { Mail, Flame } from "lucide-react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import { Logo } from "./logo"
+import { cn } from "@/lib/utils"
+
+// --- Types ---
+interface PopLogo {
+  id: number
+  x: number
+  y: number
+  rotate: number
+  color: string
+}
 
 export const Footer = () => {
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null)
+  const [logos, setLogos] = useState<PopLogo[]>([])
+  const lastPos = useRef({ x: 0, y: 0 })
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  // Vibrant colors for the shadows
+  const shadowColors = ["#f4b0f3", "#ff5a1f", "#4ade80", "#60a5fa", "#fbbf24", "#ff0055"]
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!containerRef.current) return
+
+      const rect = containerRef.current.getBoundingClientRect()
+      
+      // Calculate mouse position RELATIVE to the footer container
+      const relativeX = e.clientX - rect.left
+      const relativeY = e.clientY - rect.top
+
+      // Distance moved since last spawn
+      const dist = Math.hypot(e.clientX - lastPos.current.x, e.clientY - lastPos.current.y)
+
+      // Only spawn if mouse is inside the footer and moved > 80px
+      const isInside = e.clientX >= rect.left && e.clientX <= rect.right && 
+                       e.clientY >= rect.top && e.clientY <= rect.bottom
+
+      // Logic: Spawn in the upper section of the footer
+      if (dist > 80 && isInside && relativeY < rect.height * 0.7) {
+        const newLogo: PopLogo = {
+          id: Date.now(),
+          x: relativeX,
+          y: relativeY,
+          rotate: Math.random() * 40 - 20,
+          color: shadowColors[Math.floor(Math.random() * shadowColors.length)]
+        }
+
+        setLogos((prev) => [...prev.slice(-10), newLogo]) // Keep last 11 for better trail
+        lastPos.current = { x: e.clientX, y: e.clientY }
+      }
+    }
+
+    window.addEventListener("mousemove", handleMouseMove)
+    return () => window.removeEventListener("mousemove", handleMouseMove)
+  }, [])
+
   return (
-    <footer className="relative w-full bg-background overflow-hidden pt-[10vh] pb-[5vh]">
-      {/* Top CTA Section */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center px-[5vw] mb-[15vh]">
-        <h2 className="font-black tracking-[-0.05em] leading-[0.9] mb-[4vh]" style={{ fontSize: "5.00vw" }}>
+    <footer 
+      ref={containerRef} 
+      className="relative w-full bg-[#fbf7ef] overflow-hidden pt-[15vh] pb-[5vh] cursor-default"
+    >
+      
+      {/* 1. Randomized Popping Logo Layer */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <AnimatePresence>
+          {logos.map((logo) => (
+            <motion.div
+              key={logo.id}
+              initial={{ scale: 0, opacity: 0, rotate: logo.rotate - 10 }}
+              animate={{ scale: 1, opacity: 1, rotate: logo.rotate }}
+              exit={{ scale: 0, opacity: 0, transition: { duration: 0.3 } }}
+              className="absolute"
+              style={{
+                left: logo.x,
+                top: logo.y,
+                x: "-50%",
+                y: "-50%",
+                filter: `drop-shadow(10px 10px 0px ${logo.color})`,
+              }}
+            >
+              <div className="p-2">
+                <Logo className="w-[140px] h-auto" />
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
+
+      {/* 2. Top CTA Section */}
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-[5vw] mb-[20vh]">
+        <h2 className="font-black tracking-[-0.04em] leading-[1] mb-[6vh] text-black select-none" style={{ fontSize: "clamp(48px, 8vw, 120px)" }}>
           Let&apos;s Get Hyped!
         </h2>
 
-        <div className="flex flex-wrap items-center justify-center gap-[2vw]">
-          <button className="bg-white border border-black/10 rounded-full px-[2vw] py-[1.5vh] flex items-center gap-[1vw] font-black hover:bg-gray-50 transition-all shadow-sm group">
-            <span style={{ fontSize: "0.91vw" }}>Mail ons direct</span>
-            <div className="bg-black text-white p-[0.5vw] rounded-[0.5vw] group-hover:scale-110 transition-transform">
-              <MailIcon />
-            </div>
-          </button>
+        <div className="flex items-center justify-center gap-[1.2vw]">
+          <Link href="#contact">
+            <motion.div whileHover="hover" initial="rest" className="relative cursor-pointer">
+              <motion.div
+                variants={{ rest: { skewX: 0 }, hover: { skewX: -12 } }}
+                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                className="bg-white border-[2.5px] border-black pl-6 pr-2 py-2 font-bold flex items-center gap-3 shadow-lg origin-center rounded-[14px]"
+              >
+                <motion.div
+                  className="flex items-center gap-3 text-black"
+                  variants={{ rest: { skewX: 0 }, hover: { skewX: 12 } }}
+                  style={{ fontSize: "clamp(14px, 1.1vw, 20px)" }}
+                >
+                  Mail ons direct
+                  <div className="bg-black text-white p-2 rounded-[10px]">
+                    <Mail size={18} strokeWidth={3} />
+                  </div>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          </Link>
 
-          <button className="bg-[#ff5a1f] text-white rounded-full px-[2vw] py-[1.5vh] flex items-center gap-[1vw] font-black hover:bg-[#e64a10] transition-all shadow-xl group">
-            <span style={{ fontSize: "0.91vw" }}>Get Results</span>
-            <div className="bg-white text-[#ff5a1f] p-[0.5vw] rounded-[0.5vw] group-hover:scale-110 transition-transform">
-              <FlameIcon />
-            </div>
-          </button>
+          <Link href="#contact">
+            <motion.div whileHover="hover" initial="rest" className="relative cursor-pointer">
+              <motion.div
+                variants={{ rest: { skewX: 0 }, hover: { skewX: -12 } }}
+                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                className="bg-[#ff5a1f] border-[2.5px] border-black pl-6 pr-2 py-2 font-bold flex items-center gap-3 shadow-lg origin-center rounded-[14px]"
+              >
+                <motion.div
+                  className="flex items-center gap-3 text-white"
+                  variants={{ rest: { skewX: 0 }, hover: { skewX: 12 } }}
+                  style={{ fontSize: "clamp(14px, 1.1vw, 20px)" }}
+                >
+                  Get Results
+                  <div className="bg-white text-[#ff5a1f] p-2 rounded-[10px]">
+                    <Flame size={18} fill="currentColor" strokeWidth={3} />
+                  </div>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          </Link>
         </div>
       </div>
 
-      {/* Slanted Bottom Section */}
-      <div className="relative">
+      {/* 3. Bottom Slanted Layout */}
+      <div className="relative mt-[10vh]">
         <div
-          className="absolute inset-0 bg-[#f3f0ea] origin-bottom-left"
+          className="absolute inset-0 bg-[#ebe6de]"
           style={{
-            clipPath: "polygon(0 20%, 100% 0, 100% 100%, 0 100%)",
-            top: "-15vw",
-            height: "calc(100% + 15vw)"
+            clipPath: "polygon(0 15%, 100% 0, 100% 100%, 0 100%)",
+            top: "-5vw",
+            height: "calc(100% + 5vw)"
           }}
         />
 
-        {/* Circular Badge */}
-        <div className="absolute top-[-22vw] right-[8vw] z-20">
+        <div className="absolute top-[-12vw] right-[10vw] z-20">
           <CircularBadge />
         </div>
 
-        {/* Info Content */}
-        <div className="relative z-10 mx-auto max-w-[88.88vw] px-[5vw] pt-[5vh]">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-[5vw]">
-
-            {/* Massive Logo */}
-            <div className="w-full md:w-1/2">
-              <Link href="/" className="block w-fit">
-                <Logo className="w-[15vw] h-auto text-black" />
-              </Link>
+        <div className="relative z-10 mx-auto max-w-[95vw] px-[5vw] pt-[12vh] pb-[4vh]">
+          <div className="flex flex-col md:flex-row justify-between items-end gap-10">
+            <div className="w-fit">
+              <Logo className="w-[18vw] min-w-[180px] h-auto text-black mb-[-10px]" />
             </div>
 
-            {/* Right Side Content Container */}
-            <div className="flex flex-col gap-[3vh] w-full md:w-[45%]">
-
-              <div className="flex flex-wrap items-center justify-between gap-[3vw]">
-                {/* Menu Pills */}
-                <div className="flex flex-wrap gap-[0.5vw]">
+            <div className="flex flex-col gap-12 w-full md:w-auto">
+              <div className="flex flex-wrap items-center gap-8 justify-between">
+                <div
+                  className="flex bg-white relative shadow-[0px_10px_30px_rgba(0,0,0,0.08)] border border-black/5"
+                  style={{ borderRadius: "24px", padding: "8px 16px", gap: "12px" }}
+                  onMouseLeave={() => setHoveredLink(null)}
+                >
                   {["Expertises", "Work", "About", "Contact"].map((item) => (
-                    <Link key={item} href={`#${item.toLowerCase()}`} className="bg-white px-[1.5vw] py-[0.8vh] rounded-full font-bold shadow-sm hover:translate-y-[-0.22vh] transition-all border border-black/5" style={{ fontSize: "0.85vw" }}>
-                      {item}
+                    <Link
+                      key={item}
+                      href={`#${item.toLowerCase()}`}
+                      onMouseEnter={() => setHoveredLink(item)}
+                      className={cn(
+                        "relative font-extrabold px-5 py-2 transition-colors duration-300 z-10 text-sm",
+                        hoveredLink === item ? "text-white" : "text-black"
+                      )}
+                    >
+                      <span className="relative z-20">{item}</span>
+                      {hoveredLink === item && (
+                        <motion.div
+                          layoutId="footer-pill"
+                          className="absolute inset-0 bg-black z-10"
+                          style={{ borderRadius: "14px" }}
+                          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                        />
+                      )}
                     </Link>
                   ))}
                 </div>
 
-                {/* Contact/Adres Columns */}
-                <div className="flex gap-[4vw]">
-                  <div>
-                    <p className="font-black mb-[1vh] uppercase tracking-wider" style={{ fontSize: "0.91vw" }}>Contact</p>
-                    <p className="font-bold whitespace-nowrap" style={{ fontSize: "0.80vw" }}>info@gethyped.nl</p>
-                    <p className="font-bold whitespace-nowrap" style={{ fontSize: "0.80vw" }}>+31 6 1533 7496</p>
+                <div className="flex gap-12">
+                  <div className="text-black">
+                    <p className="font-black text-[10px] uppercase tracking-widest mb-2 opacity-50">Contact</p>
+                    <p className="font-bold text-sm">info@gethyped.nl</p>
+                    <p className="font-bold text-sm">+31 6 1533 7496</p>
                   </div>
-                  <div>
-                    <p className="font-black mb-[1vh] uppercase tracking-wider" style={{ fontSize: "0.91vw" }}>Adres</p>
-                    <p className="font-bold opacity-80 leading-relaxed" style={{ fontSize: "0.80vw" }}>Beltrumsestraat 6,<br />7141 AL Groenlo</p>
+                  <div className="text-black">
+                    <p className="font-black text-[10px] uppercase tracking-widest mb-2 opacity-50">Adres</p>
+                    <p className="font-bold text-sm leading-relaxed">Beltrumsestraat 6,<br />7141 AL Groenlo</p>
                   </div>
                 </div>
               </div>
 
-              {/* Socials and Sub-links */}
-              <div className="flex flex-wrap items-center justify-between gap-[3vw]">
-                <div className="flex items-center gap-[2vw]">
-                  <span className="font-black uppercase tracking-widest" style={{ fontSize: "0.91vw" }}>Follow us</span>
-                  <div className="flex gap-[0.8vw]">
-                    <SocialCircle><LinkedinIcon /></SocialCircle>
-                    <SocialCircle><TikTokIcon /></SocialCircle>
-                    <SocialCircle><InstagramIcon /></SocialCircle>
-                    <SocialCircle><YoutubeIcon /></SocialCircle>
+              <div className="flex flex-wrap items-center justify-between gap-6 pt-6 border-t border-black/5">
+                <div className="flex items-center gap-6">
+                  <span className="font-black text-[10px] uppercase tracking-widest text-black/50">Follow us</span>
+                  <div className="flex gap-3">
+                    <SocialIcon path="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z M2 9h4v12H2z M4 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" />
+                    <SocialIcon path="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                    <SocialIcon path="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z M17.5 6.5h.01 M2 2h20v20H2z" />
                   </div>
                 </div>
-
-                <div className="flex gap-[2vw] font-black opacity-40 uppercase tracking-[0.2em]" style={{ fontSize: "0.68vw" }}>
-                  <p>© 2025 Get Hyped</p>
-                  <p>© Design by Dylan</p>
-                  <Link href="#" className="hover:opacity-100 transition-opacity">Privacyvoorwaarden</Link>
+                <div className="flex gap-6 font-bold text-black/30 uppercase text-[9px] tracking-widest">
+                  <p>© 2026 Get Hyped</p>
+                  <p>Design by Dylan</p>
+                  <Link href="#" className="hover:text-black transition-colors text-[9px]">Privacyvoorwaarden</Link>
                 </div>
               </div>
             </div>
@@ -109,68 +231,22 @@ export const Footer = () => {
   )
 }
 
-const SocialCircle = ({ children }: { children: React.ReactNode }) => (
-  <Link href="#" className="bg-white w-[3vw] h-[3vw] rounded-full flex items-center justify-center shadow-md hover:scale-110 hover:shadow-lg transition-all border border-black/5">
-    {children}
+const SocialIcon = ({ path }: { path: string }) => (
+  <Link href="#" className="bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-sm hover:scale-110 hover:bg-black hover:text-white transition-all border border-black/5 text-black">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d={path} /></svg>
   </Link>
-)
-const MailIcon = () => (
-  <svg width="1.2vw" height="1.2vw" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <rect width="20" height="16" x="2" y="4" rx="2" />
-    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-  </svg>
-)
-
-const FlameIcon = () => (
-  <svg width="1.2vw" height="1.2vw" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
-  </svg>
-)
-
-const TikTokIcon = () => (
-  <svg width="1vw" height="1vw" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
-  </svg>
-)
-
-const InstagramIcon = () => (
-  <svg width="1vw" height="1vw" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-  </svg>
-)
-
-const LinkedinIcon = () => (
-  <svg width="1vw" height="1vw" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <rect x="2" y="9" width="4" height="12" />
-    <circle cx="4" cy="4" r="2" />
-  </svg>
-)
-
-const YoutubeIcon = () => (
-  <svg width="1vw" height="1vw" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2C1 8.11 1 12 1 12s0 3.89.46 5.58a2.78 2.78 0 0 0 1.94 2c1.72.42 8.6.42 8.6.42s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2C23 15.89 23 12 23 12s0-3.89-.46-5.58z" />
-    <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" />
-  </svg>
 )
 
 const CircularBadge = () => (
-  <div className="relative w-[10vw] h-[10vw] flex items-center justify-center animate-spin-slow">
-    <div className="absolute inset-0 rounded-full bg-[#f4b0f3] flex items-center justify-center shadow-2xl border-[0.2vw] border-white/20">
-      <span className="font-black text-[2.5vw] tracking-tighter text-black">GH</span>
+  <div className="relative w-[13vw] h-[13vw] max-w-[180px] max-h-[180px] flex items-center justify-center">
+    <motion.div animate={{ rotate: 360 }} transition={{ duration: 12, repeat: Infinity, ease: "linear" }} className="absolute inset-0">
+      <svg className="w-full h-full fill-black" viewBox="0 0 100 100">
+        <defs><path id="badgePath" d="M 50, 50 m -38, 0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" /></defs>
+        <text className="text-[7.5px] font-black uppercase tracking-[0.35em]"><textPath xlinkHref="#badgePath">GET HYPED • GET RESULTS • GET NOTICED •</textPath></text>
+      </svg>
+    </motion.div>
+    <div className="w-[60%] h-[60%] rounded-full bg-[#f4b0f3] border-[3px] border-black flex items-center justify-center z-10">
+      <span className="font-black text-2xl tracking-tighter text-black">GH</span>
     </div>
-    <svg className="absolute inset-0 w-full h-full fill-black" viewBox="0 0 100 100">
-      <defs>
-        <path id="circlePath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" />
-      </defs>
-      <text className="text-[0.69vw] font-black uppercase tracking-[0.25em]">
-        <textPath xlinkHref="#circlePath">
-          GET HYPED • GET RESULTS • GET NOTICED •
-        </textPath>
-      </text>
-    </svg>
   </div>
 )
-
