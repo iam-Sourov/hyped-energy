@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, Variants } from "framer-motion"
 import { ArrowDown } from "lucide-react"
 
 // --- Reusable Video Component ---
@@ -24,7 +24,7 @@ const AutoPlayVideo = ({ src, className }: AutoPlayVideoProps) => (
 
 export const Hero = () => {
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -35,7 +35,7 @@ export const Hero = () => {
     },
   }
 
-  const getItemVariants = (index: number) => {
+  const getItemVariants = (index: number): Variants => {
     const rotations = [-6, 4, -8, 6] 
     const rotate = rotations[index] || 0
     
