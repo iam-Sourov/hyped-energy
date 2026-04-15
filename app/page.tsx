@@ -5,33 +5,16 @@ import { Expertise } from "@/components/expertise"
 import { BentoGrid } from "@/components/bento-grid"
 import { LogoMarquee } from "@/components/marquee"
 import { Footer } from "@/components/footer"
-import { SmoothScroll } from "@/components/smooth-scroll"
 
 export default function Page() {
   return (
-    <main className="relative min-h-screen bg-background overflow-hidden selection:bg-primary selection:text-white">
-      {/* Visual Enhancers */}
-      <SmoothScroll />
-      
-      {/* Navigation */}
+    <main className="relative min-h-screen overflow-hidden bg-[#F0EBE1] text-[#1A1A1A]">
       <Navbar />
-
-      {/* Hero Section */}
       <Hero />
-
-      {/* About Section */}
       <About />
-
-      {/* Expertise Section (Stacked Cards) */}
       <Expertise />
-
-      {/* Work Section (Bento Grid) */}
       <BentoGrid />
-
-      {/* Marquee Section */}
       <LogoMarquee />
-
-      {/* Footer Section */}
       <Footer />
     </main>
   )

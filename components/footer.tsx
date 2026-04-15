@@ -46,7 +46,7 @@ export const Footer = () => {
         </div>
 
         {/* Info Content */}
-        <div className="relative z-10 pt-[5vh] px-[5vw] max-w-[1600px] mx-auto">
+        <div className="relative z-10 mx-auto max-w-[88.88vw] px-[5vw] pt-[5vh]">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-[5vw]">
 
             {/* Massive Logo */}
@@ -63,7 +63,7 @@ export const Footer = () => {
                 {/* Menu Pills */}
                 <div className="flex flex-wrap gap-[0.5vw]">
                   {["Expertises", "Work", "About", "Contact"].map((item) => (
-                    <Link key={item} href={`#${item.toLowerCase()}`} className="bg-white px-[1.5vw] py-[0.8vh] rounded-full font-bold shadow-sm hover:translate-y-[-2px] transition-all border border-black/5" style={{ fontSize: "0.85vw" }}>
+                    <Link key={item} href={`#${item.toLowerCase()}`} className="bg-white px-[1.5vw] py-[0.8vh] rounded-full font-bold shadow-sm hover:translate-y-[-0.22vh] transition-all border border-black/5" style={{ fontSize: "0.85vw" }}>
                       {item}
                     </Link>
                   ))}
@@ -114,7 +114,6 @@ const SocialCircle = ({ children }: { children: React.ReactNode }) => (
     {children}
   </Link>
 )
-
 const MailIcon = () => (
   <svg width="1.2vw" height="1.2vw" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
     <rect width="20" height="16" x="2" y="4" rx="2" />
@@ -166,7 +165,7 @@ const CircularBadge = () => (
       <defs>
         <path id="circlePath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" />
       </defs>
-      <text className="text-[10px] font-black uppercase tracking-[0.25em]">
+      <text className="text-[0.69vw] font-black uppercase tracking-[0.25em]">
         <textPath xlinkHref="#circlePath">
           GET HYPED • GET RESULTS • GET NOTICED •
         </textPath>
@@ -174,3 +173,4 @@ const CircularBadge = () => (
     </svg>
   </div>
 )
+

@@ -11,8 +11,9 @@ export const LogoMarquee = () => {
     <section 
         className="overflow-hidden bg-background" 
         style={{ 
-            height: "47.62vh",
-            paddingTop: "7.52vh"
+            marginTop: "150px",
+            paddingTop: "80px",
+            paddingBottom: "80px"
         }}
     >
       <div 
@@ -33,7 +34,7 @@ export const LogoMarquee = () => {
           className="flex whitespace-nowrap h-full"
         >
           {/* First set of logos */}
-          <div className="flex items-center gap-[1.36vw] h-full" style={{ paddingInline: "0.68vw" }}>
+          <div className="flex items-center h-full" style={{ paddingInline: "0.68vw", gap: "40px" }}>
             {logos.map((logo, idx) => (
               <div 
                 key={idx} 
@@ -51,7 +52,7 @@ export const LogoMarquee = () => {
           </div>
           
           {/* Duplicate set for infinite loop */}
-          <div className="flex items-center gap-[1.36vw] h-full" style={{ paddingInline: "0.68vw" }}>
+          <div className="flex items-center h-full" style={{ paddingInline: "0.68vw", gap: "40px" }}>
             {logos.map((logo, idx) => (
               <div 
                 key={`dup-${idx}`} 

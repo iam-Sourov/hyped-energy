@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { ArrowRight, ArrowUpRight } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 
 interface WorkCardProps {
   title: string
@@ -12,159 +12,75 @@ interface WorkCardProps {
   index: number
 }
 
-const WorkCard = ({ title, brand, image, color, className, index }: WorkCardProps) => {
+const WorkCard = ({ title, brand, image, color, index }: WorkCardProps) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 60, rotate: -4 }}
+      whileInView={{ opacity: 1, y: 0, rotate: 0 }}
       transition={{ duration: 0.8, delay: index * 0.1 }}
       viewport={{ once: true }}
-      className={`relative group cursor-pointer overflow-hidden ${className}`}
-      style={{ 
-        width: "19.32vw",
-        height: "55.14vh",
-        borderRadius: "1.14vw",
-        border: "3px solid transparent"
-      }}
+      whileHover={{ y: "-1.11vh", scale: 1.02 }}
+      className="group relative h-[48.88vh] w-[19.3vw] overflow-hidden rounded-[1.38vw] border-[0.21vw]"
+      style={{ borderColor: color }}
     >
-        {/* Background Image */}
-        <img 
-            src={image} 
-            alt={title} 
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-
-        {/* Content Block / Caption Overlay */}
-        <div 
-            className="absolute bottom-0 left-0 right-0 flex flex-col justify-end p-[1.5vw] transition-transform duration-500"
-            style={{ 
-                height: "20.05vh",
-                backgroundColor: `${color}E6`,
-                borderRadius: "0 0 1.02vw 1.02vw"
-            }}
-        >
-            {/* Brand Tag */}
-            <div 
-                className="bg-white/20 backdrop-blur-md px-[1vw] flex items-center justify-center font-bold text-white mb-[1.5vh] w-fit"
-                style={{ 
-                    fontSize: "0.74vw",
-                    height: "3.26vh",
-                    borderRadius: "0.34vw"
-                }}
-            >
-                {brand}
-            </div>
-
-            {/* Title */}
-            <h3 
-                className="font-black text-white leading-tight pr-[3vw]"
-                style={{ fontSize: "1.59vw" }}
-            >
-                {title}
-            </h3>
-
-            {/* Corner Icon */}
-            <div 
-                className="absolute top-[2vh] right-[1.5vw] bg-white rounded-full text-black flex items-center justify-center transition-transform group-hover:rotate-12"
-                style={{ 
-                    width: "2.05vw",
-                    height: "4.51vh"
-                }}
-            >
-               <ArrowUpRight size={18} />
-            </div>
+      <img src={image} alt={title} className="h-[31.11vh] w-full object-cover" />
+      <div className="absolute bottom-0 left-0 right-0 h-[17.77vh]" style={{ backgroundColor: color, borderRadius: "0 0 1.25vw 1.25vw", padding: "clamp(24px, 2vw, 40px)" }}>
+        <h3 className="mb-[0.88vh] pr-[2.5vw] text-[1.66vw] font-bold text-white">{title}</h3>
+        <span className="rounded-[0.41vw] bg-white/25 px-[0.52vw] py-[0.33vh] text-[0.9vw] text-white">{brand}</span>
+        <div className="absolute right-[0.83vw] top-[0.88vh] flex h-[4vh] w-[2vw] items-center justify-center rounded-full bg-white" style={{ color }}>
+          <ArrowUpRight size={16} />
         </div>
+      </div>
     </motion.div>
   )
 }
 
 export const BentoGrid = () => {
   return (
-    <section 
-      id="work" 
-      className="bg-background overflow-hidden"
-      style={{ 
-        height: "137.84vh",
-        paddingTop: "10.03vh",
-        paddingLeft: "5.68vw"
-      }}
+    <section
+      id="work"
+      className="bg-[#F0EBE1] pb-[10.66vh] pt-[8.88vh]"
+      style={{ marginTop: "150px", paddingInline: "5vw", paddingTop: "clamp(120px, 12vh, 150px)", paddingBottom: "clamp(120px, 12vh, 150px)" }}
     >
-      <div className="w-full h-full flex flex-col items-start">
-        <div className="flex flex-col lg:flex-row items-end gap-[5vw] mb-[8vh] w-full pr-[5vw]">
-          <div className="flex-1">
-            <motion.h2 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="font-[900] tracking-tighter leading-none"
-                style={{ fontSize: "5.68vw" }}
-            >
-              Content<br />that performs.
-            </motion.h2>
-          </div>
+      <h2 className="text-[#1A1A1A]" style={{ fontSize: "clamp(5vw, 5.68vw, 6.94vw)", fontWeight: 800, lineHeight: 1 }}>
+        Content
+        <br />
+        dat scoort.
+      </h2>
 
-          <div className="flex-1 flex flex-col items-start gap-[3vh]">
-            <motion.p 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="text-foreground/70 max-w-md font-medium leading-relaxed"
-                style={{ fontSize: "1.25vw" }}
-            >
-              We tell your story in a way that actually connects with your audience. Creative content that works and makes a real difference.
-            </motion.p>
+      <div className="mt-[3.55vh] max-w-[27.77vw]">
+        <p className="mb-[3.55vh] text-[#1A1A1A]" style={{ fontSize: "1.52vw", fontWeight: 400, lineHeight: 1.6 }}>
+          Wij vertellen jouw verhaal. Op een manier die echt past bij jouw doelgroep. Met creatieve content die werkt en het verschil maakt.
+        </p>
+        <button className="inline-flex items-center gap-[0.62vw] rounded-full border-[0.14vw] border-[#1A1A1A] bg-transparent px-[1.04vw] py-[1.33vh] text-[1.04vw] text-[#1A1A1A]">
+          <span>Bekijk al ons werk</span>
+          <span className="flex h-[3.11vh] w-[1.52vw] items-center justify-center rounded-[0.35vw] bg-black text-white">→</span>
+        </button>
+      </div>
 
-            <motion.button 
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                viewport={{ once: true }}
-                className="flex items-center gap-[1vw] bg-black text-white px-[3vw] py-[1.5vh] rounded-full font-bold group hover:opacity-80 transition-all font-heading uppercase"
-                style={{ fontSize: "0.85vw", letterSpacing: "0.1em" }}
-            >
-              View all our work
-              <div className="bg-white/20 rounded-full p-2 group-hover:translate-x-1 transition-transform">
-                <ArrowRight size={20} />
-              </div>
-            </motion.button>
-          </div>
-        </div>
-
-        {/* Horizontal Scroll / Grid Area */}
-        <div className="w-full flex gap-[1.70vw] overflow-x-auto no-scrollbar pb-[5vh]">
-            <WorkCard 
-                index={0}
-                title="From zero to full in 3 weeks"
-                brand="Buildit"
-                image="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1000&auto=format&fit=crop"
-                color="#ff5a1f"
-            />
-            <WorkCard 
-                index={1}
-                title="Content that truly hits the spot"
-                brand="Laco"
-                image="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop"
-                color="#34c759"
-            />
-            <WorkCard 
-                index={2}
-                title="Smooth taste, strong visuals"
-                brand="Roasta"
-                image="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?q=80&w=1000&auto=format&fit=crop"
-                color="#007bff"
-            />
-             <WorkCard 
-                index={3}
-                title="Bold taste, bold results"
-                brand="Bullit"
-                image="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1000&auto=format&fit=crop"
-                color="#ff0000"
-            />
-        </div>
+      <div className="mt-[5.33vh] flex overflow-visible" style={{ gap: "32px" }}>
+        <WorkCard
+          index={0}
+          title="Van nul naar vol, binnen 3 weken"
+          brand="Bullit"
+          image="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1000&auto=format&fit=crop"
+          color="#EF4444"
+        />
+        <WorkCard
+          index={1}
+          title="Zacht in smaak, sterk in beeld"
+          brand="Roasta"
+          image="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?q=80&w=1000&auto=format&fit=crop"
+          color="#3B82F6"
+        />
+        <WorkCard
+          index={2}
+          title="Content die echt smaakt (en raakt)"
+          brand="Loco"
+          image="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop"
+          color="#22C55E"
+        />
       </div>
     </section>
   )
 }
-

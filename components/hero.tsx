@@ -7,11 +7,11 @@ export const Hero = () => {
   return (
     <section
       className="relative min-h-screen w-full flex flex-col items-start justify-start overflow-hidden bg-background"
-      style={{ paddingTop: "10vh", paddingBottom: "10vh" }}
+      style={{ paddingTop: "clamp(120px, 14vh, 150px)", paddingBottom: "clamp(80px, 9vh, 100px)" }}
     >
       {/* Content */}
       <div
-        className="relative z-10 text-left w-full max-w-[1400px]"
+        className="relative z-10 text-left w-full max-w-[1440px]"
         style={{ paddingInline: "5vw" }}
       >
         <motion.h1
@@ -30,7 +30,7 @@ export const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 1 }}
           className="font-bold max-w-2xl mb-[5vh] text-foreground/90"
-          style={{ fontSize: "1.14vw" }}
+          style={{ fontSize: "1.14vw", marginTop: "40px" }}
         >
           Klaar met gokken op content<br />
           die niets oplevert?
@@ -38,15 +38,16 @@ export const Hero = () => {
       </div>
 
       {/* Overlapping Cards Container */}
-      <div className="relative w-full mt-auto pt-[8vh]">
-        <div className="flex items-end justify-center perspective-[2000px] gap-[-3vw] px-[5vw] overflow-x-auto md:overflow-visible pb-[5vh] no-scrollbar">
+      <div className="relative w-full mt-auto" style={{ paddingTop: "clamp(80px, 9vh, 100px)", paddingBottom: "clamp(80px, 9vh, 100px)" }}>
+        <div className="flex items-end justify-center perspective-[2000px] px-[5vw] overflow-x-auto md:overflow-visible pb-[5vh] no-scrollbar" style={{ gap: "clamp(24px, 2vw, 32px)" }}>
 
           {/* 10M+ Blue Card */}
           <motion.div
             initial={{ y: 200, rotate: -20, x: 100 }}
             animate={{ y: 0, rotate: -15, x: 0 }}
             transition={{ duration: 1.2, ease: [0.23, 1, 0.32, 1] }}
-            className="flex-shrink-0 w-[65vw] md:w-[22vw] aspect-[2/3] bg-[#007bff] rounded-[2.5vw] p-[3vw] md:p-[2vw] flex flex-col justify-between shadow-2xl relative z-10 -mr-[15vw] md:-mr-[4vw] origin-bottom-right"
+            className="flex-shrink-0 w-[65vw] md:w-[22vw] aspect-[2/3] bg-[#007bff] rounded-[2.5vw] flex flex-col justify-between shadow-2xl relative z-10 origin-bottom-right"
+            style={{ padding: "clamp(26px, 2vw, 40px)" }}
           >
             <div>
               <h2 className="text-white font-black tracking-tighter" style={{ fontSize: "5.68vw" }}>10M+</h2>
@@ -62,7 +63,8 @@ export const Hero = () => {
             initial={{ y: 250, rotate: -10 }}
             animate={{ y: 0, rotate: -5 }}
             transition={{ duration: 1.2, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
-            className="flex-shrink-0 w-[70vw] md:w-[24vw] aspect-[2/3] bg-white rounded-[2.5vw] overflow-hidden shadow-2xl relative z-20 -mr-[15vw] md:-mr-[4vw] border-[1vw] border-white"
+            className="flex-shrink-0 w-[70vw] md:w-[24vw] aspect-[2/3] bg-white rounded-[2.5vw] overflow-hidden shadow-2xl relative z-20 border-[1vw] border-white"
+            style={{ marginTop: "60px" }}
           >
             <div className="absolute top-[1.5vw] left-1/2 -translate-x-1/2 z-30 w-[80%]">
               <DownloadOverlay />
@@ -79,7 +81,8 @@ export const Hero = () => {
             initial={{ y: 200, rotate: 10, x: -100 }}
             animate={{ y: 0, rotate: 5, x: 0 }}
             transition={{ duration: 1.2, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
-            className="flex-shrink-0 w-[65vw] md:w-[22vw] aspect-[2/3] bg-[#34c759] rounded-[2.5vw] p-[3vw] md:p-[2vw] flex flex-col justify-between shadow-2xl relative z-30 -mr-[15vw] md:-mr-[4vw] origin-bottom-left"
+            className="flex-shrink-0 w-[65vw] md:w-[22vw] aspect-[2/3] bg-[#34c759] rounded-[2.5vw] flex flex-col justify-between shadow-2xl relative z-30 origin-bottom-left"
+            style={{ padding: "clamp(26px, 2vw, 40px)" }}
           >
             <div>
               <h2 className="text-white font-black tracking-tighter" style={{ fontSize: "5.68vw" }}>30+</h2>
@@ -115,7 +118,6 @@ export const Hero = () => {
     </section>
   )
 }
-
 const DownloadOverlay = () => (
   <div className="bg-[#f0f0f0] border border-gray-400 rounded-sm px-1 py-0.5 flex items-center gap-1 shadow-sm scale-75 origin-top">
     <div className="bg-blue-600 p-0.5 rounded-sm">
@@ -128,6 +130,3 @@ const DownloadOverlay = () => (
     </div>
   </div>
 )
-
-
-

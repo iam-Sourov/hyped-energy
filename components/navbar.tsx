@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler"
 import { motion, AnimatePresence } from "framer-motion"
-import { Flame, ArrowRight } from "lucide-react"
+import { Flame } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import gsap from "gsap"
@@ -62,13 +62,12 @@ export const Navbar = () => {
         ref={navRef}
         className={cn(
           "fixed top-0 left-0 right-0 z-[100] transition-all duration-300 flex justify-between items-center",
-          isScrolled ? "bg-background/80 backdrop-blur-md" : "bg-transparent"
+          isScrolled ? "bg-background/75 backdrop-blur-xl border-b border-black/10" : "bg-transparent"
         )}
         style={{ 
-          paddingInline: "2.73vw",
-          height: "9.02vh",
-          paddingBlock: "2.51vh",
-          marginBottom: "2.51vh"
+          paddingInline: "5vw",
+          height: "clamp(80px, 9vh, 100px)",
+          paddingBlock: "clamp(20px, 2.2vh, 30px)"
         }}
       >
         {/* Logo */}
@@ -79,7 +78,7 @@ export const Navbar = () => {
         </div>
 
         {/* Desktop Menu - Floating Pill */}
-        <div className="hidden md:flex items-center bg-white px-[1vw] py-[0.5vh] rounded-full border border-black/5 gap-1 shadow-2xl relative" style={{ borderRadius: "1.14vw" }}>
+        <div className="hidden md:flex items-center bg-white px-[1.2vw] py-[0.7vh] rounded-full border border-black/5 shadow-2xl relative" style={{ borderRadius: "1.14vw", gap: "32px" }}>
           {menuItems.map((item) => (
             <Link
               key={item.name}
@@ -116,7 +115,7 @@ export const Navbar = () => {
             }}
           >
             Get Results
-            <Flame size={16} className="text-[#ff5a1f] fill-[#ff5a1f]" />
+            <Flame size={14} className="text-[#ff5a1f] fill-[#ff5a1f]" />
           </Link>
         </div>
 
@@ -125,15 +124,15 @@ export const Navbar = () => {
           <AnimatedThemeToggler />
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="relative w-[10vw] h-[10vw] max-w-10 max-h-10 flex flex-col justify-center items-center gap-[0.5vh] z-[110]"
+            className="relative h-[4.44vh] w-[2.22vw] flex flex-col items-center justify-center gap-[0.5vh] z-[110]"
           >
             <motion.span
               animate={isMenuOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }}
-              className="w-[6vw] max-w-6 h-0.5 bg-foreground rounded-full block"
+              className="h-[0.22vh] w-[1.66vw] rounded-full bg-foreground block"
             />
             <motion.span
               animate={isMenuOpen ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }}
-              className="w-[6vw] max-w-6 h-0.5 bg-foreground rounded-full block"
+              className="h-[0.22vh] w-[1.66vw] rounded-full bg-foreground block"
             />
           </button>
         </div>
@@ -160,7 +159,7 @@ export const Navbar = () => {
                     href={item.href}
                     onClick={() => setIsMenuOpen(false)}
                     className="font-[900] hover:text-primary transition-colors tracking-tighter"
-                    style={{ fontSize: "clamp(3rem, 15vw, 6rem)" }}
+                    style={{ fontSize: "clamp(3.5vw, 10vw, 12vw)" }}
                   >
                     {item.name}
                   </Link>
@@ -177,11 +176,11 @@ export const Navbar = () => {
               <Link
                 href="#contact"
                 onClick={() => setIsMenuOpen(false)}
-                className="w-full bg-[#f4b0f3] text-black px-[8vw] py-[3vh] rounded-[2rem] font-[900] flex items-center justify-between shadow-2xl"
+                className="flex w-full items-center justify-between rounded-[1.11vw] bg-[#f4b0f3] px-[8vw] py-[3vh] font-[900] text-black shadow-2xl"
                 style={{ fontSize: "var(--fluid-h3)" }}
               >
                 Get Results
-                <Flame size={32} className="text-[#ff5a1f] fill-[#ff5a1f]" />
+                <Flame size={24} className="text-[#ff5a1f] fill-[#ff5a1f]" />
               </Link>
             </motion.div>
           </motion.div>
