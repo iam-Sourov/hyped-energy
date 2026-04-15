@@ -3,23 +3,71 @@
 import { motion } from "framer-motion"
 import { ArrowDown } from "lucide-react"
 
+// --- Reusable Video Component ---
+interface AutoPlayVideoProps {
+  src: string
+  className?: string
+}
+
+const AutoPlayVideo = ({ src, className }: AutoPlayVideoProps) => (
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className={className}
+    preload="metadata"
+  >
+    <source src={src} type="video/mp4" />
+  </video>
+)
+
 export const Hero = () => {
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+      },
+    },
+  }
+
+  const getItemVariants = (index: number) => {
+    const rotations = [-6, 4, -8, 6] 
+    const rotate = rotations[index] || 0
+    
+    return {
+      hidden: { y: 150, opacity: 0, rotate: 0 },
+      visible: {
+        y: 0,
+        opacity: 1,
+        rotate: rotate,
+        transition: {
+          type: "spring",
+          stiffness: 100,
+          damping: 20,
+          mass: 1,
+        },
+      },
+    }
+  }
+
   return (
     <section
-      className="relative min-h-screen w-full flex flex-col items-start justify-start overflow-hidden bg-background"
-      style={{ paddingTop: "clamp(120px, 14vh, 150px)", paddingBottom: "clamp(80px, 9vh, 100px)" }}
+      className="relative min-h-screen w-full flex flex-col items-center justify-start overflow-hidden bg-[#F0EBE1]" // Light gray background similar to screenshot
+      style={{ paddingTop: "clamp(80px, 10vh, 120px)" }}
     >
-      {/* Content */}
-      <div
-        className="relative z-10 text-left w-full max-w-[1440px]"
-        style={{ paddingInline: "5vw" }}
-      >
+      {/* --- Header Content --- */}
+      <div className="relative z-50 text-left w-full max-w-[1440px] px-[5vw] mb-[2vh]">
         <motion.h1
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="font-black leading-[0.9] tracking-[-0.04em] mb-[2vh] text-foreground"
-          style={{ fontSize: "7.84vw" }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="font-black leading-[0.9] tracking-[-0.04em] mb-[2vh] text-gray-900"
+          style={{ fontSize: "clamp(3rem, 7vw, 6rem)" }}
         >
           Get Hyped. Get<br />
           Noticed. Get Results.
@@ -28,105 +76,106 @@ export const Hero = () => {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 1 }}
-          className="font-bold max-w-2xl mb-[5vh] text-foreground/90"
-          style={{ fontSize: "1.14vw", marginTop: "40px" }}
+          transition={{ delay: 0.4, duration: 0.8 }}
+          className="font-bold max-w-xl text-gray-600"
+          style={{ fontSize: "clamp(1rem, 1.2vw, 1.5rem)" }}
         >
           Klaar met gokken op content<br />
           die niets oplevert?
         </motion.p>
       </div>
 
-      {/* Overlapping Cards Container */}
-      <div className="relative w-full mt-auto" style={{ paddingTop: "clamp(80px, 9vh, 100px)", paddingBottom: "clamp(80px, 9vh, 100px)" }}>
-        <div className="flex items-end justify-center perspective-[2000px] px-[5vw] overflow-x-auto md:overflow-visible pb-[5vh] no-scrollbar" style={{ gap: "clamp(24px, 2vw, 32px)" }}>
+      {/* --- Cards Deck Container --- */}
+      <div className="relative w-full flex-grow flex items-end justify-center pb-[10vh] perspective-[2000px]">
+        
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          // Flex row ensures they sit side by side. 
+          // Negative margins or absolute positioning can be used for tighter overlap, 
+          // but flex with negative gap or transform translate-x is cleaner for responsiveness.
+          // Here we use standard flex with negative margin-right on children to create the "deck" overlap.
+          className="flex flex-row items-end justify-center w-full max-w-[1600px] px-[5vw]"
+        >
 
-          {/* 10M+ Blue Card */}
+          {/* CARD 1: 10M+ Views (Blue) */}
           <motion.div
-            initial={{ y: 200, rotate: -20, x: 100 }}
-            animate={{ y: 0, rotate: -15, x: 0 }}
-            transition={{ duration: 1.2, ease: [0.23, 1, 0.32, 1] }}
-            className="flex-shrink-0 w-[65vw] md:w-[22vw] aspect-[2/3] bg-[#007bff] rounded-[2.5vw] flex flex-col justify-between shadow-2xl relative z-10 origin-bottom-right"
-            style={{ padding: "clamp(26px, 2vw, 40px)" }}
+            custom={0}
+            variants={getItemVariants(0)}
+            className="relative flex-shrink-0 w-[22vw] min-w-[200px] aspect-[9/16] bg-[#0d8dff] rounded-[2rem] shadow-xl z-10 mr-[-4vw] md:mr-[-6vw]"
           >
-            <div>
-              <h2 className="text-white font-black tracking-tighter" style={{ fontSize: "5.68vw" }}>10M+</h2>
-            </div>
-            <div>
-              <p className="text-white font-black mb-[0.2vw]" style={{ fontSize: "1.36vw" }}>Organische views</p>
-              <p className="text-white/80 font-medium" style={{ fontSize: "0.91vw" }}>Groei door slimme content</p>
-            </div>
+             <div className="absolute inset-0 p-[1.5rem] flex flex-col justify-between h-full">
+                <div>
+                  <h2 className="text-white font-black tracking-tighter text-[3.5rem] leading-none">10M+</h2>
+                </div>
+                <div className="border-t border-white/30 pt-4">
+                  <p className="text-white font-bold text-lg leading-tight">Organische views</p>
+                  <p className="text-white/80 text-sm mt-1">Groei door slimme content</p>
+                </div>
+             </div>
           </motion.div>
 
-          {/* Video Placeholder 1 (Wine glasses) */}
+          {/* VIDEO 1: Lifestyle (Woman) */}
           <motion.div
-            initial={{ y: 250, rotate: -10 }}
-            animate={{ y: 0, rotate: -5 }}
-            transition={{ duration: 1.2, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
-            className="flex-shrink-0 w-[70vw] md:w-[24vw] aspect-[2/3] bg-white rounded-[2.5vw] overflow-hidden shadow-2xl relative z-20 border-[1vw] border-white"
-            style={{ marginTop: "60px" }}
+            custom={1}
+            variants={getItemVariants(1)}
+            className="relative flex-shrink-0 w-[22vw] min-w-[200px] aspect-[9/16] bg-white rounded-[2rem] shadow-2xl z-20 mr-[-4vw] md:mr-[-6vw] border-[6px] border-white overflow-hidden"
           >
-            <div className="absolute top-[1.5vw] left-1/2 -translate-x-1/2 z-30 w-[80%]">
-              <DownloadOverlay />
-            </div>
-            <img
-              src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=1000&auto=format&fit=crop"
-              alt="Lifestyle"
-              className="w-full h-full object-cover"
+            <AutoPlayVideo 
+              src="/assets/video-lifestyle.mp4" 
+              className="w-full h-full object-cover" 
             />
           </motion.div>
 
-          {/* 30+ Green Card */}
+          {/* CARD 2: 30+ Brands (Green) */}
           <motion.div
-            initial={{ y: 200, rotate: 10, x: -100 }}
-            animate={{ y: 0, rotate: 5, x: 0 }}
-            transition={{ duration: 1.2, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
-            className="flex-shrink-0 w-[65vw] md:w-[22vw] aspect-[2/3] bg-[#34c759] rounded-[2.5vw] flex flex-col justify-between shadow-2xl relative z-30 origin-bottom-left"
-            style={{ padding: "clamp(26px, 2vw, 40px)" }}
+            custom={2}
+            variants={getItemVariants(2)}
+            className="relative flex-shrink-0 w-[22vw] min-w-[200px] aspect-[9/16] bg-[#33c791] rounded-[2rem] shadow-xl z-30 mr-[-4vw] md:mr-[-6vw]"
           >
-            <div>
-              <h2 className="text-white font-black tracking-tighter" style={{ fontSize: "5.68vw" }}>30+</h2>
-            </div>
-            <div>
-              <p className="text-white font-black mb-[0.2vw]" style={{ fontSize: "1.36vw" }}>Merken geholpen</p>
-              <p className="text-white/80 font-medium" style={{ fontSize: "0.91vw" }}>Van start-up tot multinational</p>
-            </div>
+             <div className="absolute inset-0 p-[1.5rem] flex flex-col justify-between h-full">
+                <div>
+                  <h2 className="text-white font-black tracking-tighter text-[3.5rem] leading-none">30+</h2>
+                </div>
+                <div className="border-t border-white/30 pt-4">
+                  <p className="text-white font-bold text-lg leading-tight">Merken geholpen</p>
+                  <p className="text-white/80 text-sm mt-1">Van start-up tot multinational</p>
+                </div>
+             </div>
           </motion.div>
 
-          {/* Video Placeholder 2 (Garage/Car) */}
+          {/* VIDEO 2: Car (Man) */}
           <motion.div
-            initial={{ y: 250, rotate: 20, x: -200 }}
-            animate={{ y: 0, rotate: 12, x: 0 }}
-            transition={{ duration: 1.2, delay: 0.3, ease: [0.23, 1, 0.32, 1] }}
-            className="flex-shrink-0 w-[70vw] md:w-[24vw] aspect-[2/3] bg-white rounded-[2.5vw] overflow-hidden shadow-2xl relative z-40 border-[1vw] border-white"
+            custom={3}
+            variants={getItemVariants(3)}
+            className="relative flex-shrink-0 w-[22vw] min-w-[200px] aspect-[9/16] bg-white rounded-[2rem] shadow-2xl z-40 border-[6px] border-white overflow-hidden"
           >
-            <div className="absolute top-[1.5vw] left-1/2 -translate-x-1/2 z-30 w-[80%]">
-              <DownloadOverlay />
-            </div>
-            <img
-              src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1000&auto=format&fit=crop"
-              alt="Car"
-              className="w-full h-full object-cover"
+            <AutoPlayVideo 
+              src="/assets/video-car.mp4" 
+              className="w-full h-full object-cover" 
             />
-            <div className="absolute bottom-[2vw] left-0 right-0 text-center z-30">
-              <p className="text-white font-black tracking-tighter drop-shadow-lg uppercase italic px-[1vw]" style={{ fontSize: "1.36vw" }}>Origineel Natuurlijk</p>
+            
+            {/* Optional Caption Overlay for Video 2 */}
+            <div className="absolute bottom-6 left-0 right-0 text-center z-50 pointer-events-none">
+               <span className="bg-black/50 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
+                 Origineel Natuurlijk
+               </span>
             </div>
           </motion.div>
 
-        </div>
+        </motion.div>
       </div>
+
+      {/* Scroll Indicator */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50"
+      >
+        <ArrowDown className="text-gray-400 w-6 h-6 animate-bounce" />
+      </motion.div>
     </section>
   )
 }
-const DownloadOverlay = () => (
-  <div className="bg-[#f0f0f0] border border-gray-400 rounded-sm px-1 py-0.5 flex items-center gap-1 shadow-sm scale-75 origin-top">
-    <div className="bg-blue-600 p-0.5 rounded-sm">
-      <div className="w-0 h-0 border-t-[4px] border-t-transparent border-l-[6px] border-l-white border-b-[4px] border-b-transparent ml-0.5" />
-    </div>
-    <span className="text-[10px] font-bold text-gray-700 whitespace-nowrap">Download this video</span>
-    <div className="flex gap-0.5 ml-auto">
-      <div className="w-3 h-3 border border-gray-400 flex items-center justify-center text-[8px] text-gray-500">?</div>
-      <div className="w-3 h-3 border border-gray-400 flex items-center justify-center text-[8px] text-gray-500">×</div>
-    </div>
-  </div>
-)

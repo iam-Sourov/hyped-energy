@@ -34,7 +34,7 @@ export const LogoMarquee = () => {
           className="flex whitespace-nowrap h-full"
         >
           {/* First set of logos */}
-          <div className="flex items-center h-full" style={{ paddingInline: "0.68vw", gap: "40px" }}>
+          <div className="flex items-center h-full" style={{ paddingInline: "2vw", gap: "40px" }}>
             {logos.map((logo, idx) => (
               <div 
                 key={idx} 
@@ -52,7 +52,7 @@ export const LogoMarquee = () => {
           </div>
           
           {/* Duplicate set for infinite loop */}
-          <div className="flex items-center h-full" style={{ paddingInline: "0.68vw", gap: "40px" }}>
+          <div className="flex items-center h-full" style={{ paddingInline: "2vw", gap: "40px" }}>
             {logos.map((logo, idx) => (
               <div 
                 key={`dup-${idx}`} 

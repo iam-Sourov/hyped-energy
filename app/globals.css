@@ -5,6 +5,11 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1440px;
+
   --font-sans: var(--font-plus-jakarta);
   --font-heading: var(--font-plus-jakarta);
 
@@ -52,16 +57,16 @@
     --radius: clamp(1rem, 2vw, 2.5rem);
 
     /* Precise Fluid Typography Scale (Based on User Map) */
-    --fluid-h1: 7.84vw;
-    --fluid-h2: 5.00vw;
-    --fluid-h3: 1.14vw;
-    --fluid-p: 1.02vw;
-    --fluid-small: 0.85vw;
-    --fluid-tiny: 0.68vw;
+    --fluid-h1: clamp(2.5rem, 8vw, 7.84vw);
+    --fluid-h2: clamp(2rem, 5vw, 5.00vw);
+    --fluid-h3: clamp(1.25rem, 1.5vw, 2.5rem);
+    --fluid-p: clamp(1rem, 1.2vw, 1.125rem);
+    --fluid-small: clamp(0.875rem, 0.9vw, 1rem);
+    --fluid-tiny: clamp(0.75rem, 0.75vw, 0.875rem);
 
     /* Spacing Units */
-    --fluid-section-py: 12vh;
-    --fluid-container-px: 5vw;
+    --fluid-section-py: clamp(4rem, 12vh, 8rem);
+    --fluid-container-px: clamp(1.5rem, 5vw, 4rem);
     --fluid-gap: 3vw;
 
     --card: #ffffff;

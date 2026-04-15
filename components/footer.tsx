@@ -168,8 +168,8 @@ export const Footer = () => {
             <div className="flex flex-col gap-12 w-full md:w-auto">
               <div className="flex flex-wrap items-center gap-8 justify-between">
                 <div
-                  className="flex bg-white relative shadow-[0px_10px_30px_rgba(0,0,0,0.08)] border border-black/5"
-                  style={{ borderRadius: "24px", padding: "8px 16px", gap: "12px" }}
+                  className="flex flex-wrap md:flex-nowrap bg-white relative shadow-[0px_10px_30px_rgba(0,0,0,0.08)] border border-black/5 w-full md:w-auto justify-center"
+                  style={{ borderRadius: "24px", padding: "8px", gap: "8px" }}
                   onMouseLeave={() => setHoveredLink(null)}
                 >
                   {["Expertises", "Work", "About", "Contact"].map((item) => (
@@ -178,7 +178,7 @@ export const Footer = () => {
                       href={`#${item.toLowerCase()}`}
                       onMouseEnter={() => setHoveredLink(item)}
                       className={cn(
-                        "relative font-extrabold px-5 py-2 transition-colors duration-300 z-10 text-sm",
+                        "relative font-extrabold px-6 py-3 md:px-5 md:py-2 transition-colors duration-300 z-10 text-sm md:text-base flex-1 text-center md:flex-none",
                         hoveredLink === item ? "text-white" : "text-black"
                       )}
                     >
@@ -187,7 +187,7 @@ export const Footer = () => {
                         <motion.div
                           layoutId="footer-pill"
                           className="absolute inset-0 bg-black z-10"
-                          style={{ borderRadius: "14px" }}
+                          style={{ borderRadius: "16px" }}
                           transition={{ type: "spring", stiffness: 400, damping: 30 }}
                         />
                       )}
@@ -195,15 +195,15 @@ export const Footer = () => {
                   ))}
                 </div>
 
-                <div className="flex gap-12">
+                <div className="flex flex-col md:flex-row gap-8 md:gap-12 w-full md:w-auto">
                   <div className="text-black">
-                    <p className="font-black text-[10px] uppercase tracking-widest mb-2 opacity-50">Contact</p>
-                    <p className="font-bold text-sm">info@gethyped.nl</p>
-                    <p className="font-bold text-sm">+31 6 1533 7496</p>
+                    <p className="font-black text-[10px] md:text-xs uppercase tracking-widest mb-2 opacity-50">Contact</p>
+                    <p className="font-bold text-base md:text-sm">info@gethyped.nl</p>
+                    <p className="font-bold text-base md:text-sm">+31 6 1533 7496</p>
                   </div>
                   <div className="text-black">
-                    <p className="font-black text-[10px] uppercase tracking-widest mb-2 opacity-50">Adres</p>
-                    <p className="font-bold text-sm leading-relaxed">Beltrumsestraat 6,<br />7141 AL Groenlo</p>
+                    <p className="font-black text-[10px] md:text-xs uppercase tracking-widest mb-2 opacity-50">Adres</p>
+                    <p className="font-bold text-base md:text-sm leading-relaxed">Beltrumsestraat 6,<br />7141 AL Groenlo</p>
                   </div>
                 </div>
               </div>
