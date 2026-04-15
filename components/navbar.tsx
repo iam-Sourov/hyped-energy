@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, Variants } from "framer-motion"
 import { Flame } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
@@ -49,7 +49,7 @@ export const Navbar = () => {
   ]
 
  
-  const skewVariants = {
+  const skewVariants: Variants = {
     rest: { skewX: 0 },
     hover: { 
       skewX: -12,
@@ -57,7 +57,7 @@ export const Navbar = () => {
     }
   }
 
-  const contentSkewVariants = {
+  const contentSkewVariants: Variants = {
     rest: { skewX: 0 },
     hover: { 
       skewX: 12,
