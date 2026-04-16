@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { motion, AnimatePresence, Variants } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { Flame } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
