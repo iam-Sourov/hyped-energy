@@ -53,7 +53,7 @@ export const Navbar = () => {
       <nav
         ref={navRef}
         className={cn(
-          "fixed top-0 left-0 right-0 z-[110] flex justify-between items-center transition-all duration-300 px-6 md:px-12",
+          "fixed top-0 left-0 right-0 z-[110] flex justify-between items-center transition-all duration-300 px-4 md:px-12",
           isMenuOpen ? "bg-transparent" : "bg-transparent"
         )}
         style={{ height: "100px" }}
@@ -61,7 +61,7 @@ export const Navbar = () => {
         {/* LOGO - Left aligned box ensures center pill stays centered */}
         <div className="flex-1 flex items-center">
           <Link href="/" className="flex items-center group">
-            <Logo className="h-10 md:h-12 w-auto transition-transform group-hover:scale-105" />
+            <Logo className="h-10 md:h-12 w-auto" />
           </Link>
         </div>
 
@@ -104,7 +104,7 @@ export const Navbar = () => {
         <div className="flex items-center lg:hidden">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="relative bg-[#fbbaff] rounded-xl h-12 w-12 flex flex-col items-center justify-center gap-1.5 z-[120] shadow-sm"
+            className="relative bg-[#fbbaff] rounded-xl h-10 w-10 flex flex-col items-center justify-center gap-1.5 z-[120] shadow-sm"
           >
             <motion.span animate={isMenuOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }} className="h-0.5 w-5 bg-black block" />
             <motion.span animate={isMenuOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }} className="h-0.5 w-5 bg-black block" />
