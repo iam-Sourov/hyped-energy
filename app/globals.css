@@ -9,319 +9,126 @@
   --breakpoint-xl: 1440px;
 
   --font-sans: var(--font-plus-jakarta);
-  --font-heading: var(--font-plus-jakarta);
 
+  /* Mapping CSS variables to Tailwind utilities */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
-  --color-accent: var(--accent);
-  --color-success: var(--success);
-  --color-border: var(--border);
-  --color-ring: var(--ring);
-  --color-card: var(--card);
-  --color-muted: var(--muted);
+  /* This creates the 'border-border' utility class */
+  --color-border: var(--border); 
 
   --radius-3xl: 1.5rem;
   --radius-4xl: 2rem;
-
-  --spacing-18: 4.5rem;
-  --spacing-22: 5.5rem;
-  --spacing-26: 6.5rem;
-  --spacing-30: 7.5rem;
-
-  --animate-spin-slow: spin 8s linear infinite;
-  --animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
-}
-
-@keyframes scroll {
-  to {
-    transform: translate(calc(-50% - 0.5rem));
-  }
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes marquee {
-  from {
-    transform: translateX(0%);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
 }
 
 @layer base {
   :root {
-    color-scheme: light;
     --background: #f0ebe1;
     --foreground: #1a1a1a;
     --primary: #ea580c;
-    --primary-foreground: #ffffff;
-    --accent: #f9a8d4;
-    --accent-foreground: #1a1a1a;
-    --success: #34d399;
-    --radius: clamp(1rem, 2vw, 2.5rem);
-
-    /* Precise Fluid Typography Scale (Based on User Map) */
-    --fluid-h1: clamp(2.5rem, 8vw, 7.84vw);
-    --fluid-h2: clamp(2rem, 5vw, 5.00vw);
-    --fluid-h3: clamp(1.25rem, 1.5vw, 2.5rem);
-    --fluid-p: clamp(1rem, 1.2vw, 1.125rem);
-    --fluid-small: clamp(0.875rem, 0.9vw, 1rem);
-    --fluid-tiny: clamp(0.75rem, 0.75vw, 0.875rem);
-
-    /* Spacing Units */
-    --fluid-section-py: clamp(4rem, 12vh, 8rem);
-    --fluid-container-px: clamp(1.5rem, 5vw, 4rem);
-    --fluid-gap: 3vw;
-
-    --card: #ffffff;
-    --card-foreground: #1a1a1a;
-    --muted: #ddd8cc;
-    --muted-foreground: #444444;
     --border: rgba(26, 26, 26, 0.14);
-    --input: #e4dfd3;
-    --ring: #ea580c;
   }
 
   * {
-    @apply border-border outline-ring/50;
-  }
-
-  html {
-    @apply scroll-smooth selection:bg-primary selection:text-white;
-    background-color: var(--background);
-    color: var(--foreground);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    /* Now 'border-border' exists because it's defined in @theme */
+    @apply border-border;
   }
 
   body {
     @apply bg-background text-foreground font-sans overflow-x-hidden;
-    background-color: var(--background);
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-heading;
   }
 }
 
-@layer utilities {
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
+@layer components {
+  /* --- Advanced Center Nav Swoosh Animation --- */
+  .button-color-swoosh {
+    --elastic-ease-out: linear(0, 0.5737 7.6%, 0.8382 11.87%, 0.9463 14.19%, 1.0292 16.54%, 1.0886 18.97%, 1.1258 21.53%, 1.137 22.97%, 1.1424 24.48%, 1.1423 26.1%, 1.1366 27.86%, 1.1165 31.01%, 1.0507 38.62%, 1.0219 42.57%, 0.9995 46.99%, 0.9872 51.63%, 0.9842 58.77%, 1.0011 81.26%, 1);
+    --smooth-ease: cubic-bezier(.32, .72, 0, 1);
+    --color-ease: cubic-bezier(.215, .61, .355, 1);
+    
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 20px;
+    font-weight: 700;
+    font-size: 15px;
+    color: #000000;
+    background: transparent;
+    border-radius: 9999px;
+    overflow: hidden;
+    transition: transform .45s var(--elastic-ease-out);
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
   }
 
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  .button-color-swoosh:active {
+    transform: scaleX(0.955) scaleY(0.954);
   }
 
-  .marquee-track {
-    animation: marquee 40s linear infinite;
+  .button-color-swoosh_bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    transition: scale .45s var(--smooth-ease);
   }
 
-  .animate-scroll {
-    animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+  .button-color-swoosh_bg-inner {
+    position: absolute;
+    inset: 0;
+    background: #000000;
+    translate: -10% 100% 0;
+    rotate: 0 0 1 -12deg;
+    transition: translate .6s var(--smooth-ease), rotate .5s var(--smooth-ease);
+    transition-delay: calc((var(--index) * -1) * .042s);
   }
-}
 
-/* ---------------------------------------------------- */
-/* Global Button Styles                                 */
-/* ---------------------------------------------------- */
+  .button-color-swoosh_inner {
+    position: relative;
+    z-index: 10;
+    display: grid;
+    place-items: center;
+  }
 
-/* 1. Default Button (Solid Black/Dark) */
-.button-default {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 24px;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 1.2;
-  color: #ffffff; /* White text */
-  background-color: transparent; /* Let inner background handle color */
-  border: 2px solid #1a1a1a;
-  border-radius: 9999px; /* Full pill shape */
-  transition: all 0.3s ease;
-  cursor: pointer;
-  text-decoration: none;
-  overflow: hidden; /* Ensures background stays within rounded corners */
-}
+  .button-color-swoosh_text {
+    grid-area: 1 / 1;
+    transition: translate .75s var(--elastic-ease-out), rotate .5s var(--smooth-ease), opacity .2s ease-out;
+  }
 
-/* Outline Variant */
-.button-default.is-outline {
-  background-color: transparent;
-  color: #1a1a1a; /* Dark text */
-  border-color: #1a1a1a;
-}
+  .button-color-swoosh_inner::after {
+    content: attr(data-text);
+    grid-area: 1 / 1;
+    color: #ffffff;
+    display: block;
+    translate: 0 2em 0;
+    rotate: 1 1 .5 -30deg;
+    transform-origin: top right;
+    opacity: 0;
+    transition: translate .75s var(--elastic-ease-out), rotate .5s var(--smooth-ease), opacity .2s ease-out;
+  }
 
-/* Background Layer for Hover Effects */
-.button-default__background {
-  position: absolute;
-  inset: 0;
-  background-color: #ea580c; /* Orange accent on hover for default */
-  z-index: 0;
-  border-radius: inherit;
-  transition: transform 0.3s ease;
-}
+  @media (hover: hover) and (pointer: fine) {
+    .button-color-swoosh:is(:hover, :focus-visible) .button-color-swoosh_bg {
+      scale: 1.065 1.095;
+    }
 
-/* Outline Background Logic */
-.button-default.is-outline .button-default__background {
-  background-color: #1a1a1a;
-  transform: scale(0); /* Hidden by default */
-  transform-origin: center;
-}
+    .button-color-swoosh:is(:hover, :focus-visible) .button-color-swoosh_bg-inner {
+      translate: -10% 0 0;
+      rotate: 0 0 1 0deg;
+      transition-delay: calc(var(--index) * .064s);
+    }
 
-.button-default.is-outline:hover .button-default__background {
-  transform: scale(1); /* Fills in on hover */
-}
+    .button-color-swoosh:is(:hover, :focus-visible) .button-color-swoosh_text {
+      rotate: 1 1 0.45 -60deg;
+      translate: 0 -2em 0;
+      opacity: 0;
+    }
 
-.button-default.is-outline:hover {
-  color: #ffffff;
-  border-color: #1a1a1a;
-}
-
-/* Text Layer */
-.button-default__text {
-  position: relative;
-  z-index: 10;
-}
-
-/* Icon Styling */
-.button-default__icon {
-  position: relative;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-  margin-left: 8px;
-}
-
-.button-default:hover .button-default__icon {
-  transform: translateX(4px);
-}
-
-.button-default.is-outline .button-default__icon {
-  background-color: #1a1a1a;
-  color: #ffffff;
-}
-
-.button-default.is-outline:hover .button-default__icon {
-  background-color: #ffffff;
-  color: #1a1a1a;
-}
-
-
-/* 2. Swoosh Variant (Animated Gradient/Color Shift) */
-.button-color-swoosh {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 24px;
-  font-weight: 700;
-  font-size: 16px;
-  color: #ffffff;
-  background-color: #1a1a1a;
-  border: 2px solid #1a1a1a;
-  border-radius: 9999px;
-  overflow: hidden;
-  cursor: pointer;
-  text-decoration: none;
-  transition: transform 0.2s ease;
-}
-
-.button-color-swoosh:hover {
-  transform: scale(1.02);
-}
-
-/* Swoosh Background Container */
-.button-color-swoosh_bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  border-radius: inherit;
-}
-
-/* Animated Gradient Layers */
-.button-color-swoosh_bg-inner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(45deg, #ea580c, #ff8e53);
-  transform: translateX(-100%);
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.button-color-swoosh_bg-inner.is-second {
-  background: linear-gradient(45deg, #ff8e53, #ea580c);
-  transition-delay: 0.1s;
-}
-
-.button-color-swoosh:hover .button-color-swoosh_bg-inner {
-  transform: translateX(0);
-}
-
-/* Swoosh Content Wrapper */
-.button-color-swoosh_inner {
-  position: relative;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-}
-
-.button-color-swoosh_text {
-  position: relative;
-  z-index: 10;
-}
-
-/* Swoosh Icon */
-.button-color-swoosh_icon {
-  position: relative;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  background-color: #ffffff;
-  color: #ea580c;
-  border-radius: 50%;
-  margin-left: 8px;
-  transition: transform 0.3s ease;
-}
-
-.button-color-swoosh:hover .button-color-swoosh_icon {
-  transform: translateX(4px);
-}
-
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
+    .button-color-swoosh:is(:hover, :focus-visible) .button-color-swoosh_inner::after {
+      rotate: 1 1 .45 0deg;
+      translate: 0 0 0;
+      opacity: 1;
+      transition-delay: .1s;
+    }
+  }
 }

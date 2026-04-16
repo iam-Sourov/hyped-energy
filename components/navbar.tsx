@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 import gsap from "gsap"
 import { GlobalBtn } from "./ui/global-btn"
 import { Logo } from "./logo"
+
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -47,70 +48,78 @@ export const Navbar = () => {
     { name: "Contact", href: "#contact" },
   ]
 
-
-  // Skew animation definitions have been moved to GlobalBtn wrapper.
-
   return (
     <>
       <nav
         ref={navRef}
         className={cn(
-          "fixed left-0 right-0 z-[110] flex justify-between items-center transition-all duration-200",
-          isMenuOpen ? "bg-transparent" : (isScrolled ? "" : "bg-transparent")
+          "fixed top-0 left-0 right-0 z-[110] flex justify-between items-center transition-all duration-300 px-6 md:px-12",
+          isMenuOpen ? "bg-transparent" : "bg-transparent"
         )}
-        style={{ paddingInline: "clamp(16px, 4vw, 40px)", height: "clamp(70px, 9vh, 90px)" }}
+        style={{ height: "100px" }}
       >
-        {/* Logo */}
-        <div className="flex-1 h-full flex items-center">
-          <Link href="/" className="flex items-center group h-full max-h-[50px] md:max-h-[50px]">
-            <Logo className="h-full w-auto transition-transform group-hover:scale-105" />
+        {/* LOGO - Left aligned box ensures center pill stays centered */}
+        <div className="flex-1 flex items-center">
+          <Link href="/" className="flex items-center group">
+            <Logo className="h-10 md:h-12 w-auto transition-transform group-hover:scale-105" />
           </Link>
         </div>
 
-        <div className="hidden lg:flex items-center bg-white shadow-2xl relative rounded-3xl px-2 py-2 gap-1">
+        {/* CENTER NAVIGATION PILL - Desktop Only */}
+        <div className="hidden lg:flex items-center bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-full px-4 py-2 gap-1 border border-gray-50">
           {menuItems.map((item, idx) => (
-            <GlobalBtn
+            <Link
               key={item.name}
               href={item.href}
-              variant="swoosh"
+              className="button-color-swoosh"
               style={{ "--index": idx } as React.CSSProperties}
-              className="text-black overflow-hidden font-bold"
             >
-              {item.name}
-            </GlobalBtn>
+              <span className="button-color-swoosh_bg">
+                <span className="button-color-swoosh_bg-inner"></span>
+              </span>
+              <span className="button-color-swoosh_inner" data-text={item.name}>
+                <span className="button-color-swoosh_text">{item.name}</span>
+              </span>
+            </Link>
           ))}
         </div>
 
-        {/* DESKTOP SKEW BUTTON - HIDDEN ON TABLET (lg and up only) */}
+        {/* CTA BUTTON - Right aligned box */}
         <div className="hidden lg:flex flex-1 justify-end items-center">
           <GlobalBtn
             href="#contact"
-            className="!bg-[#f4b0f3] !text-black border-none rounded-2xl shadow-lg font-bold px-4"
+            className="!bg-[#fbbaff] !text-black border-none rounded-full py-1.5 pl- pr-1.5 shadow-none "
+            icon={true}
             customIcon={
-              <Flame size={16} className="text-[#ff5a1f] fill-[#ff5a1f]" />
+              <div className="bg-white rounded-xl p-2.5 ml-2 flex items-center justify-center shadow-sm">
+                <Flame size={18} className="text-[#ff5a1f] fill-[#ff5a1f]" />
+              </div>
             }
           >
-            Get Results
+            <span className="text-[15px] font-bold">Get Results</span>
           </GlobalBtn>
         </div>
 
-        {/* MOBILE/TABLET TOGGLE - VISIBLE ON MD AND SMALLER */}
+        {/* MOBILE TOGGLE */}
         <div className="flex items-center lg:hidden">
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="relative bg-[#FCB8FA] border rounded-xl h-[50px] w-[50px] flex flex-col  items-center justify-center gap-1.5 z-[120]">
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="relative bg-[#fbbaff] rounded-xl h-12 w-12 flex flex-col items-center justify-center gap-1.5 z-[120] shadow-sm"
+          >
             <motion.span animate={isMenuOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }} className="h-0.5 w-5 bg-black block" />
             <motion.span animate={isMenuOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }} className="h-0.5 w-5 bg-black block" />
           </button>
         </div>
       </nav>
 
-      {/* MOBILE MENU WITH SKEW LOGIC */}
+      {/* MOBILE FULLSCREEN MENU */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[105] bg-[#f4b0f3] flex flex-col items-center justify-center p-6"
+            className="fixed inset-0 z-[105] bg-[#fbbaff] flex flex-col items-center justify-center p-6"
           >
             <motion.div
               initial="rest"
@@ -121,22 +130,20 @@ export const Navbar = () => {
               {menuItems.map((item, idx) => (
                 <motion.div
                   key={item.name}
-                  initial={{ opacity: 0, scale: 0.8, skewX: 10, y: 20 }}
-                  animate={{ opacity: 1, scale: 1, skewX: 0, y: 0 }}
-                  transition={{ delay: idx * 0.05, type: "spring", stiffness: 300 }}
+                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ delay: idx * 0.05 }}
                   className="w-full"
                 >
                   <Link
                     href={item.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className="flex h-16 w-full items-center justify-center rounded-2xl bg-white text-xl font-bold text-black shadow-sm"
+                    className="flex h-14 w-full items-center justify-center rounded-2xl bg-white text-lg font-bold text-black shadow-sm"
                   >
                     {item.name}
                   </Link>
                 </motion.div>
               ))}
-
-              {/* MOBILE SKEW CTA */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -145,10 +152,8 @@ export const Navbar = () => {
               >
                 <GlobalBtn
                   href="#contact"
-                  className="w-full text-center flex justify-center !bg-black !text-white rounded-2xl shadow-xl h-16 font-bold !text-xl"
-                  customIcon={
-                    <Flame size={20} className="bg-white text-[#ff5a1f] fill-[#ff5a1f]" />
-                  }
+                  className="w-full text-center flex justify-center !bg-black !text-white rounded-2xl h-14 font-bold text-lg"
+                  customIcon={<Flame size={20} className="text-[#ff5a1f] fill-[#ff5a1f]" />}
                 >
                   Get Results
                 </GlobalBtn>
