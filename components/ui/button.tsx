@@ -1,8 +1,38 @@
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
-import { Slot } from "radix-ui"
 
 import { cn } from "@/lib/utils"
+
+const SlotRoot = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement> & { children?: React.ReactNode }>(
+  ({ children, ...props }, ref) => {
+    if (React.isValidElement(children)) {
+      return React.cloneElement(children, {
+        ...props,
+        ...(children.props as any),
+        style: {
+          ...props.style,
+          ...(children.props as any).style,
+        },
+        className: cn(props.className, (children.props as any).className),
+        // @ts-ignore
+        ref: (node: any) => {
+          if (ref) {
+            if (typeof ref === "function") ref(node)
+            else (ref as any).current = node
+          }
+          const childRef = (children as any).ref
+          if (childRef) {
+            if (typeof childRef === "function") childRef(node)
+            else childRef.current = node
+          }
+        }
+      } as any)
+    }
+    return null
+  }
+)
+SlotRoot.displayName = "SlotRoot"
+const Slot = { Root: SlotRoot }
 
 const buttonVariants = cva(
   "group/button inline-flex shrink-0 items-center justify-center rounded-4xl border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
