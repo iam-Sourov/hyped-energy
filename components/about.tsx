@@ -3,6 +3,7 @@
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 import Image from "next/image"
+import { ArrowDown, ArrowRight } from "lucide-react"
 
 export const About = () => {
   const sectionRef = useRef<HTMLElement>(null)
@@ -22,7 +23,7 @@ export const About = () => {
           className="mb-[7.11vh] w-full lg:w-[75vw] text-[#1A1A1A] tracking-tight"
           style={{ fontSize: "var(--fluid-h2, clamp(2.5rem, 4.55vw, 5.55vw))", fontWeight: 800, lineHeight: 1.15 }}
         >
-          Wij maken content die opvalt. Die blijft hangen. Die jouw doelgroep raakt en jouw merk in beweging brengt. Snel, krachtig en energiek.
+          We create content that stands out. That sticks. That touches your target audience and gets your brand moving. Fast, powerful, and energetic.
         </motion.h2>
 
         <div className="relative flex flex-col gap-10 lg:gap-[4.44vh] md:flex-row">
@@ -47,14 +48,22 @@ export const About = () => {
             className="md:w-1/2 lg:ml-[10%] lg:w-[50%]"
           >
             <p className="font-normal leading-[1.7] text-[#1A1A1A]" style={{ fontSize: "var(--fluid-p, clamp(1rem, 1.25vw, 1.5rem))" }}>
-              We stoppen niet bij mooie plaatjes en vette beelden. We maken het meetbaar. Zo weet je precies wat werkt en wat niet. Nooit meer content zonder strategie. Nooit meer content zonder resultaat.
+              We do not stop at pretty pictures and cool visuals. We make it measurable. This way you know exactly what works and what doesn&apos;t. No more content without strategy. No more content without results.
             </p>
             <button className="mt-8 lg:mt-[3.55vh] inline-flex items-center gap-2 rounded-xl border border-[#1A1A1A] py-1.5 px-1 font-medium text-[#1A1A1A] transition hover:bg-[#1A1A1A] hover:text-white" style={{ fontSize: "var(--fluid-small, clamp(0.875rem, 1.04vw, 1.125rem))" }}>
-              <span>Leer ons kennen</span>
+              <span>Get to know us</span>
               <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-black text-white hover:bg-white hover:text-black transition">
-                →
+                <ArrowRight className="text-white w-6 h-6 " />
               </span>
             </button>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2, duration: 1 }}
+            className="absolute bg-black border rounded-full w-10 h-10 flex items-center justify-center top-40 right-10 -translate-x-1/2 z-50"
+          >
+            <ArrowDown className="text-white w-6 h-6 animate-bounce" />
           </motion.div>
         </div>
       </div>

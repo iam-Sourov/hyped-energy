@@ -1,51 +1,50 @@
-# GET HYPED | Premium Social First Agency
+# Hyped Energy Agency Website
 
-A high-performance, premium-aesthetic website built for a modern digital agency. This project focuses on "Luxury Social" positioning, featuring advanced animations, fluid typography, and a seamless user experience.
+Welcome to the Hyped Energy agency website repository. This is a highly interactive, responsive, and mobile-first website built with modern web technologies to showcase the agency's creative work, strategy, and expertise.
 
-## ✨ Key Features
+## 🚀 Technologies Used
 
-- **Luxury Aesthetic**: High-end light theme (`#fdfaf5`) with vibrant primary accents (`#ff5a1f`).
-- **Fluid Typography**: Responsive headline sizes using CSS `clamp()` for perfect readability on all screens.
-- **GSAP & Framer Motion**: Advanced scroll-based pinning, staggered entrance animations, and fluid interactions.
-- **Lenis Smooth Scroll**: Silky smooth scrolling experience integrated across the entire application.
-- **Modern Tech Stack**: Built with Next.js 15 (App Router), Tailwind CSS, and Lucide React.
-- **SEO Optimized**: Complete metadata configuration and semantic HTML structure.
-
-## 🚀 Tech Stack
-
-- **Framework**: [Next.js 15](https://nextjs.org/)
+- **Framework**: [Next.js](https://nextjs.org/) (React)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Animations**: [GSAP](https://greensock.com/gsap/) & [Framer Motion](https://www.framer.com/motion/)
-- **Smooth Scrolling**: [Lenis](https://github.com/darkroomengineering/lenis)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/) & [GSAP](https://gsap.com/)
 - **Icons**: [Lucide React](https://lucide.dev/)
+- **Design System**: Custom CSS variables with fluid layout and pixel-perfect clamp configurations.
 
-## 🛠 Project Structure
+## 🌟 Features
 
-- `/app`: Next.js App Router pages and global styles.
-- `/components`: Modular, reusable UI components (Hero, About, Expertise, Work, etc.).
-- `/lib`: Utility functions and configuration.
-- `/public`: Static assets including images and brand elements.
+- **Fluid Responsive Design**: Utilizes `clamp()`, viewport units (`vw`, `vh`) for consistent scaling across devices.
+- **Scroll-Triggered Animations**: Implemented using GSAP ScrollTrigger and Framer Motion for deep, interactive user experiences (e.g., sticky expertise cards).
+- **Interactive Bento Grid**: Engaging video grids leveraging hardware-accelerated 3D tilt effects on desktop and seamless autoplay on mobile devices.
+- **Infinite Moving Cars/Marquees**: Fluid and performant infinite scroll banners displaying partner logos and dynamic cards.
+- **Micro-Interactions**: Enhanced hover effects, dynamic cursors, and custom pop animations across interactive components to deliver a "wow" factor.
+- **Internationalization**: All copy on the website has been localized and translated into English.
 
-## 🏁 Getting Started
+## 📂 Project Structure
 
-First, install the dependencies:
+- `app/` - Next.js App Router providing the primary layout and main page construction.
+- `components/` - React components including individual sections (`hero`, `about`, `expertise`, `bento-grid`, `footer`) and reusable UI elements.
+- `public/` - Static assets including images, videos, and fonts.
+- `lib/` - Utility functions configuring stylistic classes (`utils.ts`).
+
+## 🛠️ Usage & Setup
+
+Ensure you have Node.js installed, then run the following to boot up the project:
 
 ```bash
+# Install dependencies
 npm install
-# or
-yarn install
-```
 
-Then, run the development server:
-
-```bash
+# Start the development server
 npm run dev
-# or
-yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## 📜 License
+## 🎨 Architecture & Styling Notes
 
-This project is licensed under the MIT License.
+- **Aesthetics First**: Designed keeping in mind visual excellence with custom vibrant color palettes, smooth gradient effects, and high contrast tracking text.
+- **Mobile-First Paradigm**: All components are optimized for smaller screens displaying an alternative UX that maintains visual integrity while circumventing performance-heavy effects only suitable on desktop.
+
+---
+
+*Designed and engineered to bring energy right to your fingertips.*

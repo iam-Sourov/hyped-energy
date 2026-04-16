@@ -83,7 +83,7 @@ export const Navbar = () => {
         </div>
 
         {/* DESKTOP NAV - EXACTLY AS BEFORE */}
-        <div className="hidden md:flex items-center bg-white px-2 py-2 border border-black/5 shadow-2xl relative rounded-full gap-1" onMouseLeave={() => setHoveredItem(null)}>
+        <div className="hidden md:flex items-center bg-white shadow-2xl relative rounded-xl" onMouseLeave={() => setHoveredItem(null)}>
           {menuItems.map((item) => (
             <Link
               key={item.name}
@@ -93,7 +93,7 @@ export const Navbar = () => {
             >
               <span className="relative z-20">{item.name}</span>
               {hoveredItem === item.name && (
-                <motion.div layoutId="active-pill" className="absolute inset-0 bg-black z-10 rounded-full" />
+                <motion.div layoutId="active-pill" className="absolute inset-0 bg-black z-10 rounded-xl" />
               )}
             </Link>
           ))}

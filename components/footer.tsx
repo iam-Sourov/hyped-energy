@@ -21,10 +21,19 @@ export const Footer = () => {
   const [logos, setLogos] = useState<PopLogo[]>([])
   const lastPos = useRef({ x: 0, y: 0 })
   const containerRef = useRef<HTMLDivElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
 
   // Mouse Trail Logic
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
+      if (window.innerWidth < 768) return // Disable mouse interaction on mobile
       if (!containerRef.current) return
 
       const rect = containerRef.current.getBoundingClientRect()
@@ -84,11 +93,11 @@ export const Footer = () => {
   return (
     <footer 
       ref={containerRef} 
-      className="relative w-full bg-[#fbf7ef] overflow-hidden pt-[15vh] cursor-default font-sans"
+      className="relative w-full bg-[#fbf7ef] overflow-hidden pt-12 md:pt-[15vh] cursor-default font-sans"
     >
       
       {/* 1. Randomized Popping Logo Layer */}
-      <div className="absolute inset-0 pointer-events-none z-0">
+      <div className="absolute inset-0 pointer-events-none z-0 hidden md:block">
         <AnimatePresence>
           {logos.map((logo) => (
             <motion.div
@@ -134,26 +143,25 @@ export const Footer = () => {
       </div>
 
       {/* 2. Top CTA Section */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center px-[clamp(16px,5vw,40px)] mb-[20vh]">
-        <h2 className="font-black tracking-[-0.04em] leading-[1] mb-[6vh] text-black select-none" style={{ fontSize: "clamp(48px, 8vw, 120px)" }}>
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 md:px-[clamp(16px,5vw,40px)] mb-12 md:mb-[20vh]">
+        <h2 className="font-black tracking-[-0.04em] leading-tight md:leading-[1] mb-8 md:mb-[6vh] text-black select-none text-5xl md:text-[clamp(48px,8vw,120px)]">
           Let&apos;s Get Hyped!
         </h2>
 
-        <div className="flex items-center justify-center gap-[1.2vw] flex-wrap">
+        <div className="flex items-center justify-center gap-4 md:gap-[1.2vw] flex-wrap">
           {/* Mail Button */}
           <Link href="#contact">
-            <motion.div whileHover="hover" initial="rest" className="relative cursor-pointer group">
+            <motion.div whileHover={isMobile ? undefined : "hover"} initial="rest" className="relative cursor-pointer group">
               <motion.div
                 variants={{ rest: { skewX: 0 }, hover: { skewX: -10 } }}
                 transition={{ type: "spring", stiffness: 400, damping: 20 }}
                 className="bg-white border-[2.5px] border-black pl-6 pr-2 py-2 font-bold flex items-center gap-3 shadow-lg origin-center rounded-[14px]"
               >
                 <motion.div
-                  className="flex items-center gap-3 text-black"
+                  className="flex items-center gap-3 text-black text-sm md:text-[clamp(14px,1.1vw,18px)]"
                   variants={{ rest: { skewX: 0 }, hover: { skewX: 10 } }}
-                  style={{ fontSize: "clamp(14px, 1.1vw, 18px)" }}
                 >
-                  Mail ons direct
+                  Email us directly
                   <div className="bg-black text-white p-2 rounded-[10px]">
                     <Mail size={18} strokeWidth={3} />
                   </div>
@@ -164,16 +172,15 @@ export const Footer = () => {
 
           {/* Get Results Button */}
           <Link href="#contact">
-            <motion.div whileHover="hover" initial="rest" className="relative cursor-pointer group">
+            <motion.div whileHover={isMobile ? undefined : "hover"} initial="rest" className="relative cursor-pointer group">
               <motion.div
                 variants={{ rest: { skewX: 0 }, hover: { skewX: -10 } }}
                 transition={{ type: "spring", stiffness: 400, damping: 20 }}
                 className="bg-[#ff5a1f] border-[2.5px] border-black pl-6 pr-2 py-2 font-bold flex items-center gap-3 shadow-lg origin-center rounded-[14px]"
               >
                 <motion.div
-                  className="flex items-center gap-3 text-white"
+                  className="flex items-center gap-3 text-white text-sm md:text-[clamp(14px,1.1vw,18px)]"
                   variants={{ rest: { skewX: 0 }, hover: { skewX: 10 } }}
-                  style={{ fontSize: "clamp(14px, 1.1vw, 18px)" }}
                 >
                   Get Results
                   <div className="bg-white text-[#ff5a1f] p-2 rounded-[10px]">
@@ -201,12 +208,12 @@ export const Footer = () => {
         />
 
         {/* Rotating Badge - Positioning fixed to "sit" on the slant line */}
-        <div className="absolute top-[-12vw] right-[5vw] lg:right-[10vw] z-20">
+        <div className="absolute top-[-12vw] right-[5vw] lg:right-[10vw] z-20 hidden md:block">
           <CircularBadge />
         </div>
 
-        <div className="relative z-10 mx-auto max-w-[1400px] px-[clamp(16px,5vw,40px)] pt-[12vh] pb-[4vh]">
-          <div className="flex flex-col md:flex-row justify-between items-end gap-12">
+        <div className="relative z-10 mx-auto max-w-[1400px] px-4 md:px-[clamp(16px,5vw,40px)] pt-12 md:pt-[12vh] pb-8 md:pb-[4vh]">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 md:gap-12">
             
             {/* Logo: In the image, it is massive and cuts off slightly at the bottom */}
             <div className="w-fit">
@@ -214,16 +221,16 @@ export const Footer = () => {
             </div>
 
             {/* Content Column */}
-            <div className="flex flex-col gap-16 w-full md:w-auto">
+            <div className="flex flex-col gap-12 md:gap-16 w-full md:w-auto">
               
-              <div className="flex flex-col md:flex-row items-end md:items-center gap-10">
+              <div className="flex flex-col w-full md:flex-row items-start md:items-center gap-8 md:gap-10">
                 {/* Navigation Pill */}
-                <nav className="flex bg-white border border-black/5 rounded-[24px] p-2 gap-2 shadow-sm">
+                <nav className="grid grid-cols-2 bg-white border border-black/5 rounded-2xl md:rounded-[24px] p-2 gap-2 shadow-sm w-full md:w-auto md:flex">
                   {["Expertises", "Work", "About", "Contact"].map((item) => (
                     <Link
                       key={item}
                       href="#"
-                      className="px-6 py-3 md:px-5 md:py-2 rounded-[24px] text-sm font-bold transition-all hover:bg-black hover:text-white"
+                      className="px-4 py-2 md:px-5 md:py-2 rounded-xl text-center md:rounded-[24px] text-sm font-bold transition-all hover:bg-black hover:text-white"
                     >
                       {item}
                     </Link>
@@ -231,21 +238,21 @@ export const Footer = () => {
                 </nav>
 
                 {/* Contact Info: Styled with high-contrast tracking */}
-                <div className="flex gap-12 text-sm">
+                <div className="flex flex-col md:flex-row gap-6 md:gap-12 text-xs md:text-sm">
                   <div>
-                    <h4 className="font-black uppercase tracking-[0.2em] text-[10px] mb-3 opacity-60">Contact</h4>
-                    <p className="font-bold leading-tight">info@gethyped.nl</p>
-                    <p className="font-bold">+31 6 1533 7496</p>
+                    <h4 className="font-black uppercase tracking-[0.2em] text-[10px] mb-2 md:mb-3 opacity-60">Contact</h4>
+                    <p className="font-bold leading-snug md:leading-tight">info@gethyped.nl</p>
+                    <p className="font-bold leading-snug md:leading-tight">+31 6 1533 7496</p>
                   </div>
                   <div>
-                    <h4 className="font-black uppercase tracking-[0.2em] text-[10px] mb-3 opacity-60">Adres</h4>
-                    <p className="font-bold leading-tight">Beltrumsestraat 6,<br />7141 AL Groenlo</p>
+                    <h4 className="font-black uppercase tracking-[0.2em] text-[10px] mb-2 md:mb-3 opacity-60">Address</h4>
+                    <p className="font-bold leading-snug md:leading-tight">Beltrumsestraat 6,<br />7141 AL Groenlo</p>
                   </div>
                 </div>
               </div>
 
               {/* Bottom Bar */}
-              <div className="flex flex-wrap items-center justify-between pt-8 border-t border-black/10">
+              <div className="flex flex-col md:flex-row w-full items-start md:items-center justify-between pt-6 md:pt-8 gap-6 md:gap-0 border-t border-black/10">
                 <div className="flex items-center gap-6">
                   <span className="font-black text-[10px] uppercase tracking-widest opacity-40">Follow us</span>
                   <div className="flex gap-4">
@@ -253,10 +260,10 @@ export const Footer = () => {
                     <SocialIcon icon={<Instagram size={18} />} /> */}
                   </div>
                 </div>
-                <div className="flex gap-8 font-bold opacity-30 uppercase text-[10px] tracking-widest">
+                <div className="flex flex-wrap gap-4 md:gap-8 font-bold opacity-30 uppercase text-[10px] tracking-widest">
                   <p>© 2026 Get Hyped</p>
                   <p>Design by Dylan</p>
-                  <p>Privacyvoorwaarden</p>
+                  <p>Privacy Policy</p>
                 </div>
               </div>
             </div>

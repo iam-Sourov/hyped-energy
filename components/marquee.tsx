@@ -7,11 +7,10 @@ const logos = Array.from({ length: 11 }, (_, i) => `/assets/marque/marque- (${i 
 
 export const LogoMarquee = () => {
   return (
-    <section className="overflow-hidden bg-[#F0EBE1] py-[10vh]">
-      <div className="w-full max-width-640px mx-auto px-[5vw] mb-[6vh]">
-        {/* Title - Matching the "Content dat scoort" style */}
-        <h2 className="text-[#1A1A1A] tracking-tighter font-black leading-[0.9] text-left" 
-            style={{ fontSize: "clamp(3rem, 6vw, 5.5rem)" }}>
+    <section className="overflow-hidden bg-[#F0EBE1] py-12 md:py-[10vh]">
+      <div className="w-full max-width-640px mx-auto px-4 md:px-[5vw] mb-4 md:mb-[6vh]">
+        {/* Title - Matching the "Content that scores" style */}
+        <h2 className="text-[#1A1A1A] tracking-tighter font-black leading-tight md:leading-[0.9] text-left text-4xl md:text-[clamp(3rem,6vw,5.5rem)]">
           These brands<br />got hyped.
         </h2>
       </div>
