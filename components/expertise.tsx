@@ -109,15 +109,15 @@ const Card = ({ item, index }: CardProps) => {
         height: "calc(100vh - 20vh)",
         marginBottom: "10vh",
       }}
-      className="w-full max-w-[1440px] mx-auto rounded-4xl overflow-hidden flex flex-col lg:flex-row items-center px-[clamp(20px,7vw,60px)] py-[clamp(30px,5vh,60px)] gap-12 lg:gap-20"
+      className="w-full max-w-[1440px] mx-auto rounded-4xl overflow-hidden flex flex-col lg:flex-row items-center px-[clamp(20px,5vw,60px)] py-[clamp(30px,5vh,60px)] gap-12 lg:gap-20"
     >
       
       {/* Ghost Number */}
       <div 
-        className="absolute -top-[8px] right-[20px] select-none pointer-events-none z-0 font-black leading-none tracking-tighter"
+        className="absolute top-[20px] right-[30px] select-none pointer-events-none z-0 font-black leading-none tracking-tighter"
         style={{ 
           color: item.ghostColor,
-          fontSize: "clamp(6rem, 8vw, 10rem)",
+          fontSize: "clamp(6rem, 12vw, 10rem)",
         }}
       >
         {item.id}
@@ -135,7 +135,7 @@ const Card = ({ item, index }: CardProps) => {
 
         {/* Title */}
         <h2 
-          className="font-black leading-[0.85] tracking-tighter mb-27 "
+          className="font-black leading-[0.85] tracking-tighter mb-6 "
           style={{ 
             fontSize: "clamp(3rem, 6vw, 5.5rem)",
             color: item.textColor 

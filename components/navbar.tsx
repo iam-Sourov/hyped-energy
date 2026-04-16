@@ -73,23 +73,23 @@ export const Navbar = () => {
           "fixed left-0 right-0 z-[110] flex justify-between items-center transition-all duration-200",
           isMenuOpen ? "bg-transparent" : (isScrolled ? "" : "bg-transparent")
         )}
-        style={{ paddingInline: "2vw", height: "clamp(70px, 9vh, 10px)" }}
+        style={{ paddingInline: "clamp(16px, 4vw, 40px)", height: "clamp(70px, 9vh, 90px)" }}
       >
         {/* Logo */}
         <div className="flex-1 h-full flex items-center">
-          <Link href="/" className="flex items-center group h-full max-h-[40px] md:max-h-[80px]">
+          <Link href="/" className="flex items-center group h-full max-h-[40px] md:max-h-[50px]">
             <Logo className="h-full w-auto transition-transform group-hover:scale-105" />
           </Link>
         </div>
 
         {/* DESKTOP NAV - EXACTLY AS BEFORE */}
-        <div className="hidden md:flex items-center bg-white px-2 py-2 border border-black/5 shadow-2xl relative rounded-full gap-2" onMouseLeave={() => setHoveredItem(null)}>
+        <div className="hidden md:flex items-center bg-white px-2 py-2 border border-black/5 shadow-2xl relative rounded-full gap-1" onMouseLeave={() => setHoveredItem(null)}>
           {menuItems.map((item) => (
             <Link
               key={item.name}
               href={item.href}
               onMouseEnter={() => setHoveredItem(item.name)}
-              className={cn("relative font-bold px-4 py-2 rounded-full transition-colors duration-300 z-10", hoveredItem === item.name ? "text-white" : "text-black")}
+              className={cn("relative font-bold px-5 py-2.5 rounded-full transition-colors duration-300 z-10", hoveredItem === item.name ? "text-white" : "text-black")}
             >
               <span className="relative z-20">{item.name}</span>
               {hoveredItem === item.name && (
@@ -109,7 +109,7 @@ export const Navbar = () => {
             >
               <motion.div
                 variants={skewVariants}
-                className="bg-[#f4b0f3] px-6 py-3 font-bold flex items-center gap-2 shadow-lg rounded-xl origin-center"
+                className="bg-[#f4b0f3] px-6 py-3 font-bold flex items-center gap-2 shadow-lg rounded-2xl origin-center"
               >
                 <motion.div 
                   className="flex items-center gap-2 text-black" 

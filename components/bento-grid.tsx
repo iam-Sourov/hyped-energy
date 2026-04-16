@@ -133,7 +133,7 @@ export const BentoGrid = () => {
       id="work"
       className="bg-[#F0EBE1] py-[10vh] overflow-hidden"
     >
-      <div className="w-full max-w-[1440px] mx-auto px-[5vw]">
+      <div className="w-full max-w-[1440px] mx-auto px-[clamp(16px,5vw,40px)]">
 
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-[8vh] gap-8">

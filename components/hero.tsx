@@ -58,16 +58,16 @@ export const Hero = () => {
   return (
     <section
       className="relative min-h-screen w-full flex flex-col items-center justify-start overflow-hidden bg-[#F0EBE1]" // Light gray background similar to screenshot
-      style={{ paddingTop: "clamp(120px, 10vh, 120px)" }}
+      style={{ paddingTop: "clamp(100px, 12vh, 140px)", paddingBottom: "clamp(80px, 9vh, 100px)" }}
     >
       {/* --- Header Content --- */}
-      <div className="relative z-50 text-left w-full max-w-[1440px] px-[5vw] mb-[2vh]">
+      <div className="relative z-50 text-left w-full max-w-[1440px] px-[clamp(16px,5vw,40px)] mb-[2vh]">
         <motion.h1
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="font-black leading-[0.9] tracking-[-0.04em] mb-[2vh] text-gray-900"
-          style={{ fontSize: "clamp(3rem, 7vw, 6rem)" }}
+          style={{ fontSize: "clamp(3rem, 7.84vw, 8rem)" }}
         >
           Get Hyped. Get<br />
           Noticed. Get Results.
@@ -77,8 +77,8 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.8 }}
-          className="font-bold max-w-xl text-gray-600"
-          style={{ fontSize: "clamp(1rem, 1.2vw, 1.5rem)" }}
+          className="font-bold max-w-xl text-gray-600 mt-[40px] mb-[5vh]"
+          style={{ fontSize: "clamp(1rem, 1.14vw, 1.5rem)" }}
         >
           Klaar met gokken op content<br />
           die niets oplevert?
@@ -86,13 +86,13 @@ export const Hero = () => {
       </div>
 
       {/* --- Cards Deck Container --- */}
-      <div className="relative w-full flex-grow flex items-end justify-center pb-[10vh] perspective-[2000px]">
+      <div className="relative w-full flex-grow flex items-end justify-center perspective-[2000px] mt-auto pt-[clamp(80px,9vh,100px)]">
         
         <motion.div 
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="flex flex-col md:flex-row items-center md:items-end justify-center w-full max-w-[1600px] px-[5vw] gap-y-[4vh] md:gap-y-0"
+          className="flex flex-col md:flex-row items-center md:items-end justify-center w-full max-w-[1600px] px-[clamp(16px,5vw,40px)] gap-y-[4vh] md:gap-y-0"
         >
 
           {/* CARD 1: 10M+ Views (Blue) */}

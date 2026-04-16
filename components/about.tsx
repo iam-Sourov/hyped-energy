@@ -49,9 +49,9 @@ export const About = () => {
             <p className="font-normal leading-[1.7] text-[#1A1A1A]" style={{ fontSize: "var(--fluid-p, clamp(1rem, 1.25vw, 1.5rem))" }}>
               We stoppen niet bij mooie plaatjes en vette beelden. We maken het meetbaar. Zo weet je precies wat werkt en wat niet. Nooit meer content zonder strategie. Nooit meer content zonder resultaat.
             </p>
-            <button className="mt-8 lg:mt-[3.55vh] inline-flex items-center gap-2 rounded-full border-2 border-[#1A1A1A] px-6 py-3 font-medium text-[#1A1A1A] transition hover:bg-[#1A1A1A] hover:text-white" style={{ fontSize: "var(--fluid-small, clamp(0.875rem, 1.04vw, 1.125rem))" }}>
+            <button className="mt-8 lg:mt-[3.55vh] inline-flex items-center gap-2 rounded-xl border border-[#1A1A1A] py-1.5 px-1 font-medium text-[#1A1A1A] transition hover:bg-[#1A1A1A] hover:text-white" style={{ fontSize: "var(--fluid-small, clamp(0.875rem, 1.04vw, 1.125rem))" }}>
               <span>Leer ons kennen</span>
-              <span className="flex h-8 w-8 items-center justify-center rounded-sm bg-black text-white hover:bg-white hover:text-black transition">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-black text-white hover:bg-white hover:text-black transition">
                 →
               </span>
             </button>

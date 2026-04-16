@@ -134,7 +134,7 @@ export const Footer = () => {
       </div>
 
       {/* 2. Top CTA Section */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center px-[5vw] mb-[20vh]">
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-[clamp(16px,5vw,40px)] mb-[20vh]">
         <h2 className="font-black tracking-[-0.04em] leading-[1] mb-[6vh] text-black select-none" style={{ fontSize: "clamp(48px, 8vw, 120px)" }}>
           Let&apos;s Get Hyped!
         </h2>
@@ -194,18 +194,18 @@ export const Footer = () => {
           className="absolute inset-0 bg-[#E6E2D9]"
           style={{
             clipPath: "polygon(0 15%, 100% 0, 100% 100%, 0 100%)",
-            top: "-8vw",
-            height: "calc(100% + 8vw)",
+            top: "-5vw",
+            height: "calc(100% + 5vw)",
             zIndex: 0
           }}
         />
 
         {/* Rotating Badge - Positioning fixed to "sit" on the slant line */}
-        <div className="absolute top-[-14vw] right-[8vw] z-20">
+        <div className="absolute top-[-12vw] right-[5vw] lg:right-[10vw] z-20">
           <CircularBadge />
         </div>
 
-        <div className="relative z-10 mx-auto max-w-[1400px] px-[5vw] pt-[18vh] pb-[4vh]">
+        <div className="relative z-10 mx-auto max-w-[1400px] px-[clamp(16px,5vw,40px)] pt-[12vh] pb-[4vh]">
           <div className="flex flex-col md:flex-row justify-between items-end gap-12">
             
             {/* Logo: In the image, it is massive and cuts off slightly at the bottom */}
@@ -218,12 +218,12 @@ export const Footer = () => {
               
               <div className="flex flex-col md:flex-row items-end md:items-center gap-10">
                 {/* Navigation Pill */}
-                <nav className="flex bg-white border border-black/5 rounded-full p-1.5 shadow-sm">
+                <nav className="flex bg-white border border-black/5 rounded-[24px] p-2 gap-2 shadow-sm">
                   {["Expertises", "Work", "About", "Contact"].map((item) => (
                     <Link
                       key={item}
                       href="#"
-                      className="px-6 py-2.5 rounded-full text-sm font-bold transition-all hover:bg-black hover:text-white"
+                      className="px-6 py-3 md:px-5 md:py-2 rounded-[24px] text-sm font-bold transition-all hover:bg-black hover:text-white"
                     >
                       {item}
                     </Link>
