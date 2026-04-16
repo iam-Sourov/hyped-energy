@@ -223,14 +223,14 @@ export const Footer = () => {
             {/* Content Column */}
             <div className="flex flex-col gap-12 md:gap-16 w-full md:w-auto">
               
-              <div className="flex flex-col w-full md:flex-row items-start md:items-center gap-8 md:gap-10">
+              <div className="flex flex-col w-fit md:flex-row items-start md:items-center gap-8 md:gap-10">
                 {/* Navigation Pill */}
-                <nav className="grid grid-cols-2 bg-white border border-black/5 rounded-2xl md:rounded-[24px] p-2 gap-2 shadow-sm w-full md:w-auto md:flex">
+                <nav className="grid grid-cols-2 gap-2 rounded-xl md:rounded-xl bg-transparent gap-2  w-full md:w-fit md:flex">
                   {["Expertises", "Work", "About", "Contact"].map((item) => (
                     <Link
                       key={item}
                       href="#"
-                      className="px-4 py-2 md:px-5 md:py-2 rounded-xl text-center md:rounded-[24px] text-sm font-bold transition-all hover:bg-black hover:text-white"
+                      className="px-4 py-2 bg-white md:px-5 md:py-2 rounded-xl text-center md:rounded-[24px] text-sm font-bold transition-all hover:bg-black hover:text-white"
                     >
                       {item}
                     </Link>
