@@ -67,7 +67,7 @@ export const Hero = () => {
 
   return (
     <section
-      className="relative min-h-screen w-full flex flex-col items-center justify-start overflow-hidden bg-[#F0EBE1] mt-4 pt-12 pb-12 md:pt-[clamp(100px,12vh,140px)] md:pb-[clamp(80px,9vh,100px)]" // Light gray background similar to screenshot
+      className="relative min-h-screen w-full flex flex-col items-center justify-start overflow-hidden bg-[#FAF4EC] mt-4 pt-12 pb-12 md:pt-[clamp(100px,12vh,140px)] md:pb-[clamp(80px,9vh,100px)]" // Light gray background similar to screenshot
     >
       {/* --- Header Content --- */}
       <div className="relative z-50 text-left w-full max-w-[1440px] px-4 md:px-[clamp(16px,5vw,40px)] mb-[2vh]">

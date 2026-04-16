@@ -77,13 +77,12 @@ export const Navbar = () => {
       >
         {/* Logo */}
         <div className="flex-1 h-full flex items-center">
-          <Link href="/" className="flex items-center group h-full max-h-[40px] md:max-h-[50px]">
+          <Link href="/" className="flex items-center group h-full max-h-[50px] md:max-h-[50px]">
             <Logo className="h-full w-auto transition-transform group-hover:scale-105" />
           </Link>
         </div>
 
-        {/* DESKTOP NAV - EXACTLY AS BEFORE */}
-        <div className="hidden md:flex items-center bg-white shadow-2xl relative rounded-xl" onMouseLeave={() => setHoveredItem(null)}>
+        <div className="hidden lg:flex items-center bg-white shadow-2xl relative rounded-xl px-2 py-2 gap-1" onMouseLeave={() => setHoveredItem(null)}>
           {menuItems.map((item) => (
             <Link
               key={item.name}
@@ -93,14 +92,14 @@ export const Navbar = () => {
             >
               <span className="relative z-20">{item.name}</span>
               {hoveredItem === item.name && (
-                <motion.div layoutId="active-pill" className="absolute inset-0 bg-black z-10 rounded-xl" />
+                <motion.div layoutId="active-pill" className="absolute inset-0 bg-black z-10 rounded-full" />
               )}
             </Link>
           ))}
         </div>
 
-        {/* DESKTOP SKEW BUTTON - EXACT LOGIC */}
-        <div className="hidden md:flex flex-1 justify-end items-center">
+        {/* DESKTOP SKEW BUTTON - HIDDEN ON TABLET (lg and up only) */}
+        <div className="hidden lg:flex flex-1 justify-end items-center">
           <Link href="#contact">
             <motion.div 
               whileHover="hover" 
@@ -122,11 +121,11 @@ export const Navbar = () => {
           </Link>
         </div>
 
-        {/* MOBILE TOGGLE */}
-        <div className="flex items-center md:hidden">
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="relative h-12 w-12 flex flex-col items-center justify-center gap-1.5 z-[120]">
-            <motion.span animate={isMenuOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }} className="h-0.5 w-7 bg-black block" />
-            <motion.span animate={isMenuOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }} className="h-0.5 w-7 bg-black block" />
+        {/* MOBILE/TABLET TOGGLE - VISIBLE ON MD AND SMALLER */}
+        <div className="flex items-center lg:hidden">
+          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="relative bg-[#FCB8FA] border rounded-xl h-[50px] w-[50px] flex flex-col  items-center justify-center gap-1.5 z-[120]">
+            <motion.span animate={isMenuOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }} className="h-0.5 w-5 bg-black block" />
+            <motion.span animate={isMenuOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }} className="h-0.5 w-5 bg-black block" />
           </button>
         </div>
       </nav>
