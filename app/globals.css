@@ -133,25 +133,191 @@
   .marquee-track {
     animation: marquee 40s linear infinite;
   }
-}
 
-/* app/globals.css */
-
-@layer utilities {
   .animate-scroll {
     animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
   }
 }
 
-@keyframes scroll {
-  0% {
-    transform: translateX(0);
-  }
+/* ---------------------------------------------------- */
+/* Global Button Styles                                 */
+/* ---------------------------------------------------- */
 
-  100% {
-    transform: translateX(calc(-50% - 1rem));
-    /* Adjust based on gap size */
-  }
+/* 1. Default Button (Solid Black/Dark) */
+.button-default {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.2;
+  color: #ffffff; /* White text */
+  background-color: transparent; /* Let inner background handle color */
+  border: 2px solid #1a1a1a;
+  border-radius: 9999px; /* Full pill shape */
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  overflow: hidden; /* Ensures background stays within rounded corners */
+}
+
+/* Outline Variant */
+.button-default.is-outline {
+  background-color: transparent;
+  color: #1a1a1a; /* Dark text */
+  border-color: #1a1a1a;
+}
+
+/* Background Layer for Hover Effects */
+.button-default__background {
+  position: absolute;
+  inset: 0;
+  background-color: #ea580c; /* Orange accent on hover for default */
+  z-index: 0;
+  border-radius: inherit;
+  transition: transform 0.3s ease;
+}
+
+/* Outline Background Logic */
+.button-default.is-outline .button-default__background {
+  background-color: #1a1a1a;
+  transform: scale(0); /* Hidden by default */
+  transform-origin: center;
+}
+
+.button-default.is-outline:hover .button-default__background {
+  transform: scale(1); /* Fills in on hover */
+}
+
+.button-default.is-outline:hover {
+  color: #ffffff;
+  border-color: #1a1a1a;
+}
+
+/* Text Layer */
+.button-default__text {
+  position: relative;
+  z-index: 10;
+}
+
+/* Icon Styling */
+.button-default__icon {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  margin-left: 8px;
+}
+
+.button-default:hover .button-default__icon {
+  transform: translateX(4px);
+}
+
+.button-default.is-outline .button-default__icon {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.button-default.is-outline:hover .button-default__icon {
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+
+
+/* 2. Swoosh Variant (Animated Gradient/Color Shift) */
+.button-color-swoosh {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #1a1a1a;
+  border: 2px solid #1a1a1a;
+  border-radius: 9999px;
+  overflow: hidden;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.button-color-swoosh:hover {
+  transform: scale(1.02);
+}
+
+/* Swoosh Background Container */
+.button-color-swoosh_bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  border-radius: inherit;
+}
+
+/* Animated Gradient Layers */
+.button-color-swoosh_bg-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #ea580c, #ff8e53);
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.button-color-swoosh_bg-inner.is-second {
+  background: linear-gradient(45deg, #ff8e53, #ea580c);
+  transition-delay: 0.1s;
+}
+
+.button-color-swoosh:hover .button-color-swoosh_bg-inner {
+  transform: translateX(0);
+}
+
+/* Swoosh Content Wrapper */
+.button-color-swoosh_inner {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+}
+
+.button-color-swoosh_text {
+  position: relative;
+  z-index: 10;
+}
+
+/* Swoosh Icon */
+.button-color-swoosh_icon {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background-color: #ffffff;
+  color: #ea580c;
+  border-radius: 50%;
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+}
+
+.button-color-swoosh:hover .button-color-swoosh_icon {
+  transform: translateX(4px);
 }
 
 ::view-transition-old(root),

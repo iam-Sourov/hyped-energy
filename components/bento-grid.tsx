@@ -3,6 +3,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
 import { ArrowUpRight } from "lucide-react"
 import { useRef, useState, useEffect } from "react"
+import { GlobalBtn } from "./ui/global-btn"
 
 interface WorkCardProps {
   title: string
@@ -160,29 +161,11 @@ export const BentoGrid = () => {
             <p className="text-[#1A1A1A]/80 text-lg md:text-xl font-medium leading-relaxed max-w-md">
               We tell your story. In a way that truly fits your target audience. With creative content that works and makes the difference.
             </p>
-            <button className="group flex items-center gap-3 self-start md:self-end mt-6 md:mt-8">
-              <motion.div 
-                initial="rest"
-                whileHover="hover"
-                className="cursor-pointer"
-              >
-                <motion.div 
-                  variants={{ rest: { skewX: 0 }, hover: { skewX: -10 } }}
-                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                  className="rounded-xl px-4 py-2 md:px-1.5 md:py-1 text-sm md:text-[15px] font-bold border-2 border-black text-black flex items-center gap-3 transition-all md:hover:bg-black md:hover:text-white md:hover:border-black origin-center"
-                >
-                  <motion.div
-                    variants={{ rest: { skewX: 0 }, hover: { skewX: 10 } }}
-                    className="flex items-center gap-3"
-                  >
-                    View all our work
-                    <div className="h-8 w-8 rounded-lg bg-black text-white flex items-center justify-center md:group-hover:bg-white md:group-hover:text-black transition-colors">
-                      <ArrowUpRight size={16} strokeWidth={3} />
-                    </div>
-                  </motion.div>
-                </motion.div>
-              </motion.div>
-            </button>
+            <div className="self-start md:self-end mt-6 md:mt-8">
+              <GlobalBtn href="#work" variant="outline">
+                View all our work
+              </GlobalBtn>
+            </div>
           </div>
         </div>
 

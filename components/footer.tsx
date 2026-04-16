@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react"
 import { Mail, Flame } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
+import { GlobalBtn } from "./ui/global-btn"
 import { Logo } from "./logo"
 interface PopLogo {
   id: number
@@ -21,14 +22,7 @@ export const Footer = () => {
   const [logos, setLogos] = useState<PopLogo[]>([])
   const lastPos = useRef({ x: 0, y: 0 })
   const containerRef = useRef<HTMLDivElement>(null)
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
-    checkMobile()
-    window.addEventListener("resize", checkMobile)
-    return () => window.removeEventListener("resize", checkMobile)
-  }, [])
+  // isMobile check removed (previously used for CTA layout logic, no longer needed)
 
   // Mouse Trail Logic
   useEffect(() => {
@@ -150,46 +144,30 @@ export const Footer = () => {
 
         <div className="flex items-center justify-center gap-4 md:gap-[1.2vw] flex-wrap">
           {/* Mail Button */}
-          <Link href="#contact">
-            <motion.div whileHover={isMobile ? undefined : "hover"} initial="rest" className="relative cursor-pointer group">
-              <motion.div
-                variants={{ rest: { skewX: 0 }, hover: { skewX: -10 } }}
-                transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                className="bg-white border-[2.5px] border-black pl-6 pr-2 py-2 font-bold flex items-center gap-3 shadow-lg origin-center rounded-[14px]"
-              >
-                <motion.div
-                  className="flex items-center gap-3 text-black text-sm md:text-[clamp(14px,1.1vw,18px)]"
-                  variants={{ rest: { skewX: 0 }, hover: { skewX: 10 } }}
-                >
-                  Email us directly
-                  <div className="bg-black text-white p-2 rounded-[10px]">
-                    <Mail size={18} strokeWidth={3} />
-                  </div>
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          </Link>
+          <GlobalBtn 
+            href="#contact" 
+            className="border-[2.5px] border-black rounded-[14px] !bg-white !text-black shadow-lg"
+            customIcon={
+              <div className="bg-black text-white p-2 rounded-[10px]">
+                <Mail size={18} strokeWidth={3} />
+              </div>
+            }
+          >
+            Email us directly
+          </GlobalBtn>
 
           {/* Get Results Button */}
-          <Link href="#contact">
-            <motion.div whileHover={isMobile ? undefined : "hover"} initial="rest" className="relative cursor-pointer group">
-              <motion.div
-                variants={{ rest: { skewX: 0 }, hover: { skewX: -10 } }}
-                transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                className="bg-[#ff5a1f] border-[2.5px] border-black pl-6 pr-2 py-2 font-bold flex items-center gap-3 shadow-lg origin-center rounded-[14px]"
-              >
-                <motion.div
-                  className="flex items-center gap-3 text-white text-sm md:text-[clamp(14px,1.1vw,18px)]"
-                  variants={{ rest: { skewX: 0 }, hover: { skewX: 10 } }}
-                >
-                  Get Results
-                  <div className="bg-white text-[#ff5a1f] p-2 rounded-[10px]">
-                    <Flame size={18} fill="currentColor" strokeWidth={3} />
-                  </div>
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          </Link>
+          <GlobalBtn 
+            href="#contact" 
+            className="border-[2.5px] border-black rounded-[14px] !bg-[#ff5a1f] !text-white shadow-lg"
+            customIcon={
+              <div className="bg-white text-[#ff5a1f] p-2 rounded-[10px]">
+                <Flame size={18} fill="currentColor" strokeWidth={3} />
+              </div>
+            }
+          >
+            Get Results
+          </GlobalBtn>
         </div>
       </div>
 

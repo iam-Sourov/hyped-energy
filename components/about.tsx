@@ -3,7 +3,8 @@
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 import Image from "next/image"
-import { ArrowDown, ArrowRight } from "lucide-react"
+import { ArrowDown } from "lucide-react"
+import { GlobalBtn } from "./ui/global-btn"
 
 export const About = () => {
   const sectionRef = useRef<HTMLElement>(null)
@@ -50,12 +51,9 @@ export const About = () => {
             <p className="font-normal leading-[1.7] text-[#1A1A1A]" style={{ fontSize: "var(--fluid-p, clamp(1rem, 1.25vw, 1.5rem))" }}>
               We do not stop at pretty pictures and cool visuals. We make it measurable. This way you know exactly what works and what doesn&apos;t. No more content without strategy. No more content without results.
             </p>
-            <button className="mt-8 lg:mt-[3.55vh] inline-flex items-center gap-2 rounded-xl border border-[#1A1A1A] py-1.5 px-1 font-medium text-[#1A1A1A] transition hover:bg-[#1A1A1A] hover:text-white" style={{ fontSize: "var(--fluid-small, clamp(0.875rem, 1.04vw, 1.125rem))" }}>
-              <span>Get to know us</span>
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-black text-white hover:bg-white hover:text-black transition">
-                <ArrowRight className="text-white w-6 h-6 " />
-              </span>
-            </button>
+            <GlobalBtn href="#contact" variant="outline" className="mt-8 lg:mt-[3.55vh]">
+              Get to know us
+            </GlobalBtn>
           </motion.div>
           <motion.div
             initial={{ opacity: 0 }}

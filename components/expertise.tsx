@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useRef, useState, useEffect } from "react"
-import { ArrowRight } from "lucide-react"
+import { GlobalBtn } from "@/components/ui/global-btn"
 
 // --- Data Configuration ---
 const EXPERTISE_DATA = [
@@ -167,47 +167,18 @@ const Card = ({ item, index }: CardProps) => {
         </p>
 
         {/* EXACT CTA BUTTON FROM IMAGE */}
-        <button className="group w-full md:w-auto md:self-start">
-          <motion.div 
-            initial="rest"
-            whileHover={isMobile ? undefined : "hover"}
-            className="cursor-pointer"
+        <div className="w-full md:w-auto md:self-start">
+          <GlobalBtn 
+            className="w-full md:w-auto"
+            style={{ 
+              "--foreground": isFirstCard ? item.borderColor : "#FFFFFF", 
+              "--background": isFirstCard ? "#FFFFFF" : "#1A1A1A",
+              "color": isFirstCard ? "#FFFFFF" : "#1A1A1A"
+            } as React.CSSProperties}
           >
-            <motion.div 
-              className="relative rounded-xl px-2 py-1 shadow-lg origin-center"
-              variants={{ rest: { skewX: 0 }, hover: { skewX: -10 } }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              style={{ 
-                // LOGIC CHANGE: 
-                // If First Card: Use Border Color (Orange) with White Text.
-                // If Not First Card: Use White Background with Black Text.
-                backgroundColor: isFirstCard ? item.borderColor : "#FFFFFF",
-                color: isFirstCard ? "#FFFFFF" : "#1A1A1A"
-              }}
-            >
-              <motion.div
-                variants={{ rest: { skewX: 0 }, hover: { skewX: 10 } }}
-                className="flex items-center justify-between md:justify-start w-full"
-              >
-                <span className="font-bold text-sm md:text-[15px] flex-1 text-center md:flex-none md:text-left md:mr-2">
-                  {item.buttonText}
-                </span>
-                
-                {/* Circle with Arrow */}
-                <div 
-                  className="h-[32px] w-[32px] rounded-lg flex items-center justify-center shrink-0"
-                  style={{
-
-                    backgroundColor: isFirstCard ? "#FFFFFF" : "#1A1A1A",
-                    color: isFirstCard ? "#1A1A1A" : "#FFFFFF"
-                  }}
-                >
-                  <ArrowRight size={16} strokeWidth={3} />
-                </div>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        </button>
+            {item.buttonText}
+          </GlobalBtn>
+        </div>
       </div>
 
       {/* Right Visual */}

@@ -6,12 +6,11 @@ import { Flame } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import gsap from "gsap"
+import { GlobalBtn } from "./ui/global-btn"
 import { Logo } from "./logo"
-
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null)
 
   const navRef = useRef<HTMLDivElement>(null)
   const lastScrollY = useRef(0)
@@ -48,22 +47,8 @@ export const Navbar = () => {
     { name: "Contact", href: "#contact" },
   ]
 
- 
-  const skewVariants: Variants = {
-    rest: { skewX: 0 },
-    hover: { 
-      skewX: -12,
-      transition: { type: "spring", stiffness: 400, damping: 20 }
-    }
-  }
 
-  const contentSkewVariants: Variants = {
-    rest: { skewX: 0 },
-    hover: { 
-      skewX: 12,
-      transition: { type: "spring", stiffness: 400, damping: 20 }
-    }
-  }
+  // Skew animation definitions have been moved to GlobalBtn wrapper.
 
   return (
     <>
@@ -82,43 +67,31 @@ export const Navbar = () => {
           </Link>
         </div>
 
-        <div className="hidden lg:flex items-center bg-white shadow-2xl relative rounded-xl px-2 py-2 gap-1" onMouseLeave={() => setHoveredItem(null)}>
-          {menuItems.map((item) => (
-            <Link
+        <div className="hidden lg:flex items-center bg-white shadow-2xl relative rounded-3xl px-2 py-2 gap-1">
+          {menuItems.map((item, idx) => (
+            <GlobalBtn
               key={item.name}
               href={item.href}
-              onMouseEnter={() => setHoveredItem(item.name)}
-              className={cn("relative font-bold px-5 py-2.5 rounded-full transition-colors duration-300 z-10", hoveredItem === item.name ? "text-white" : "text-black")}
+              variant="swoosh"
+              style={{ "--index": idx } as React.CSSProperties}
+              className="text-black overflow-hidden font-bold"
             >
-              <span className="relative z-20">{item.name}</span>
-              {hoveredItem === item.name && (
-                <motion.div layoutId="active-pill" className="absolute inset-0 bg-black z-10 rounded-full" />
-              )}
-            </Link>
+              {item.name}
+            </GlobalBtn>
           ))}
         </div>
 
         {/* DESKTOP SKEW BUTTON - HIDDEN ON TABLET (lg and up only) */}
         <div className="hidden lg:flex flex-1 justify-end items-center">
-          <Link href="#contact">
-            <motion.div 
-              whileHover="hover" 
-              initial="rest" 
-              className="relative cursor-pointer"
-            >
-              <motion.div
-                variants={skewVariants}
-                className="bg-[#f4b0f3] px-6 py-3 font-bold flex items-center gap-2 shadow-lg rounded-2xl origin-center"
-              >
-                <motion.div 
-                  className="flex items-center gap-2 text-black" 
-                  variants={contentSkewVariants}
-                >
-                  Get Results <Flame size={16} className="text-[#ff5a1f] fill-[#ff5a1f]" />
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          </Link>
+          <GlobalBtn
+            href="#contact"
+            className="!bg-[#f4b0f3] !text-black border-none rounded-2xl shadow-lg font-bold px-4"
+            customIcon={
+              <Flame size={16} className="text-[#ff5a1f] fill-[#ff5a1f]" />
+            }
+          >
+            Get Results
+          </GlobalBtn>
         </div>
 
         {/* MOBILE/TABLET TOGGLE - VISIBLE ON MD AND SMALLER */}
@@ -139,14 +112,14 @@ export const Navbar = () => {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[105] bg-[#f4b0f3] flex flex-col items-center justify-center p-6"
           >
-            <motion.div 
+            <motion.div
               initial="rest"
               animate="open"
               exit="closed"
               className="flex flex-col items-center gap-4 w-full max-w-[320px]"
             >
               {menuItems.map((item, idx) => (
-                <motion.div 
+                <motion.div
                   key={item.name}
                   initial={{ opacity: 0, scale: 0.8, skewX: 10, y: 20 }}
                   animate={{ opacity: 1, scale: 1, skewX: 0, y: 0 }}
@@ -170,12 +143,15 @@ export const Navbar = () => {
                 transition={{ delay: 0.3 }}
                 className="w-full mt-2"
               >
-                <Link
+                <GlobalBtn
                   href="#contact"
-                  className="flex h-16 w-full items-center justify-center gap-2 rounded-2xl bg-black text-xl font-bold text-white shadow-xl"
+                  className="w-full text-center flex justify-center !bg-black !text-white rounded-2xl shadow-xl h-16 font-bold !text-xl"
+                  customIcon={
+                    <Flame size={20} className="bg-white text-[#ff5a1f] fill-[#ff5a1f]" />
+                  }
                 >
-                  Get Results <Flame size={20} className=" bg-white text-[#ff5a1f] fill-[#ff5a1f]" />
-                </Link>
+                  Get Results
+                </GlobalBtn>
               </motion.div>
             </motion.div>
           </motion.div>
