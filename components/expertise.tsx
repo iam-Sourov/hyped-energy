@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion"
 import { useRef } from "react"
 import { ArrowRight } from "lucide-react"
 
-// --- Data Configuration (Matched to Video Screenshots) ---
+// --- Data Configuration ---
 const EXPERTISE_DATA = [
   {
     id: "01",
@@ -15,10 +15,9 @@ const EXPERTISE_DATA = [
     cardBg: "#FFFFFF", // White
     textColor: "#1A1A1A",
     subTextColor: "rgba(26, 26, 26, 0.7)",
-    borderColor: "#EA580C", // Orange
-    ghostColor: "rgba(0,0,0,0.05)",
+    borderColor: "#fa5424", // Orange
+    ghostColor: "#EAE4D8",
     rotate: "-2deg",
-    // Using a placeholder video that fits the 'strategy' theme
     videoSrc: "./assets/expertise/expertise-1.mp4",
   },
   {
@@ -30,7 +29,7 @@ const EXPERTISE_DATA = [
     cardBg: "#F9A8D4", // Pink
     textColor: "#1A1A1A",
     subTextColor: "rgba(26, 26, 26, 0.7)",
-    borderColor: "#FFFFFF", // White border for contrast on pink
+    borderColor: "#FFFFFF", 
     ghostColor: "rgba(255,255,255,0.4)",
     rotate: "2deg",
     videoSrc: "./assets/expertise/expertise-2.mp4",
@@ -55,9 +54,9 @@ const EXPERTISE_DATA = [
     subtitle: "Inzichten die impact maken.",
     description: "We duiken in de cijfers om te snappen wat echt werkt. En sturen jouw content scherp bij voor maximaal resultaat.",
     buttonText: "Meer over data",
-    cardBg: "#3B82F6", // Blue
-    textColor: "#FFFFFF", // White text for blue card
-    subTextColor: "rgba(255,255,255,0.8)",
+    cardBg: "#0D8DFF", // Blue
+    textColor: "#1A1A1A", // Changed to black for consistency with white button
+    subTextColor: "rgba(0,0,0,0.7)", // Changed to dark grey for readability on blue card if needed, or keep white if text is outside button
     borderColor: "#FFFFFF",
     ghostColor: "rgba(255,255,255,0.25)",
     rotate: "3deg",
@@ -69,9 +68,7 @@ export const Expertise = () => {
   const containerRef = useRef<HTMLDivElement>(null)
 
   return (
-    // The section height determines how long the user scrolls through the cards.
-    // 350vh gives enough room for 4 cards to stack comfortably.
-    <section ref={containerRef} className="relative bg-[#FDFBF7]">
+    <section ref={containerRef} className="relative bg-[#F0EBE1]">
       <div className="h-[350vh] relative">
         {EXPERTISE_DATA.map((item, index) => (
           <Card key={item.id} item={item} index={index} />
@@ -89,54 +86,45 @@ type CardProps = {
 const Card = ({ item, index }: CardProps) => {
   const cardRef = useRef<HTMLDivElement>(null)
 
-  // Scroll progress for this specific card
   const { scrollYProgress } = useScroll({
     target: cardRef,
     offset: ["start start", "end start"], 
   })
 
-  // Animation: As the next card covers this one, scale it down and fade it slightly
-  // This creates the "deck stacking" depth effect
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.96])
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.85])
-  
-  // Determine button colors based on card background brightness
-  const isDarkCard = item.cardBg === "#3B82F6" // Only the blue card is dark in this set
-  const buttonBg = isDarkCard ? "#FFFFFF" : item.borderColor
-  const buttonText = isDarkCard ? "#1A1A1A" : "#FFFFFF"
-  const iconBg = isDarkCard ? "#1A1A1A" : "rgba(255,255,255,0.2)"
-  const iconColor = isDarkCard ? "#FFFFFF" : "#FFFFFF"
+
+  const isFirstCard = index === 0;
 
   return (
     <motion.div
       ref={cardRef}
       style={{
         backgroundColor: item.cardBg,
-        zIndex: 10 + index, // Ensure newer cards are on top
+        zIndex: 10 + index,
         scale,
         opacity,
-        // Sticky positioning makes the card stay in place while scrolling until the next one covers it
         position: "sticky",
-        top: "10vh", // Sticks 10% from the top of the viewport
-        height: "calc(100vh - 20vh)", // Height of the card itself
-        marginBottom: "10vh", // Space between cards in the DOM flow
+        top: "10vh",
+        height: "calc(100vh - 20vh)",
+        marginBottom: "10vh",
       }}
-      className="w-full max-w-[1440px] mx-auto rounded-4xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col lg:flex-row items-center px-[clamp(20px,5vw,60px)] py-[clamp(30px,5vh,60px)] gap-12 lg:gap-20 "
+      className="w-full max-w-[1440px] mx-auto rounded-4xl overflow-hidden flex flex-col lg:flex-row items-center px-[clamp(20px,7vw,60px)] py-[clamp(30px,5vh,60px)] gap-12 lg:gap-20"
     >
       
-      {/* --- GHOST NUMBER (Background) --- */}
+      {/* Ghost Number */}
       <div 
-        className="absolute top-[20px] right-[30px] select-none pointer-events-none z-0 font-black leading-none tracking-tighter"
+        className="absolute -top-[8px] right-[20px] select-none pointer-events-none z-0 font-black leading-none tracking-tighter"
         style={{ 
           color: item.ghostColor,
-          fontSize: "clamp(6rem, 12vw, 10rem)",
+          fontSize: "clamp(6rem, 8vw, 10rem)",
         }}
       >
         {item.id}
       </div>
 
-      {/* --- LEFT CONTENT --- */}
-      <div className="flex-1 flex flex-col justify-center z-10 order-2 lg:order-1 pt-10 lg:pt-0">
+      {/* Left Content */}
+      <div className="  flex flex-col justify-center z-10 order-2 lg:order-1 pt-10 lg:pt-0">
         
         {/* Badge */}
         <span 
@@ -147,7 +135,7 @@ const Card = ({ item, index }: CardProps) => {
 
         {/* Title */}
         <h2 
-          className="font-black leading-[0.85] tracking-tighter mb-6"
+          className="font-black leading-[0.85] tracking-tighter mb-27 "
           style={{ 
             fontSize: "clamp(3rem, 6vw, 5.5rem)",
             color: item.textColor 
@@ -172,23 +160,29 @@ const Card = ({ item, index }: CardProps) => {
           {item.description}
         </p>
 
-        {/* CTA Button */}
-        <button className="group flex items-center gap-3 self-start">
+        {/* EXACT CTA BUTTON FROM IMAGE */}
+        <button className="group self-start">
           <div 
-            className="rounded-xl px-6 py-3.5 text-[15px] font-bold flex items-center gap-3 transition-transform hover:scale-105 active:scale-95 shadow-lg"
+            className="relative flex items-center rounded-xl px-2 py-1 transition-transform hover:scale-105 active:scale-95 shadow-lg"
             style={{ 
-              backgroundColor: buttonBg,
-              color: buttonText
+              // LOGIC CHANGE: 
+              // If First Card: Use Border Color (Orange) with White Text.
+              // If Not First Card: Use White Background with Black Text.
+              backgroundColor: isFirstCard ? item.borderColor : "#FFFFFF",
+              color: isFirstCard ? "#FFFFFF" : "#1A1A1A"
             }}
           >
-            {item.buttonText}
+            <span className="font-bold text-[15px] mr-2">
+              {item.buttonText}
+            </span>
             
-            {/* Icon Circle */}
+            {/* Circle with Arrow */}
             <div 
-              className="rounded-full h-8 w-8 flex items-center justify-center transition-colors group-hover:bg-white/30"
-              style={{ 
-                backgroundColor: iconBg,
-                color: iconColor
+              className="h-[32px] w-[32px] rounded-lg flex items-center justify-center shrink-0"
+              style={{
+
+                backgroundColor: isFirstCard ? "#FFFFFF" : "#1A1A1A",
+                color: isFirstCard ? "#1A1A1A" : "#FFFFFF"
               }}
             >
               <ArrowRight size={16} strokeWidth={3} />
@@ -197,8 +191,8 @@ const Card = ({ item, index }: CardProps) => {
         </button>
       </div>
 
-      {/* --- RIGHT VISUAL (Video/Image) --- */}
-      <div className="flex-1 relative order-1 lg:order-2 flex justify-center lg:justify-end">
+      {/* Right Visual */}
+      <div className="flex-1 relative order-1 lg:order-2 mt-26 flex justify-center lg:justify-end">
         <motion.div
           whileHover={{ rotate: "0deg", scale: 1.02 }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
@@ -216,7 +210,6 @@ const Card = ({ item, index }: CardProps) => {
             playsInline
             className="w-full h-full object-cover"
           />
-          {/* Subtle overlay for depth */}
           <div className="absolute inset-0 bg-black/5 pointer-events-none" />
         </motion.div>
       </div>
