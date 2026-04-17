@@ -10,7 +10,6 @@ import { GlobalBtn } from "./ui/global-btn"
 import { Logo } from "./logo"
 
 export const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const navRef = useRef<HTMLDivElement>(null)
@@ -28,7 +27,6 @@ export const Navbar = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY
       const velocity = currentScrollY - lastScrollY.current
-      setIsScrolled(currentScrollY > 20)
 
       if (currentScrollY > 100 && velocity > 0 && !isMenuOpen) {
         gsap.to(navRef.current, { yPercent: -100, duration: 0.4, ease: "power2.out" })
@@ -42,7 +40,7 @@ export const Navbar = () => {
   }, [isMenuOpen])
 
   const menuItems = [
-    { name: "Expertises", href: "#expertise" },
+    { name: "Expertise", href: "#expertise" },
     { name: "Work", href: "#work" },
     { name: "About", href: "#about" },
     { name: "Contact", href: "#contact" },
@@ -68,17 +66,16 @@ export const Navbar = () => {
         {/* CENTER NAVIGATION PILL - Desktop Only */}
         <div className="hidden lg:flex items-center bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-xl px-2 py-1 gap-1 border border-gray-50">
           {menuItems.map((item, idx) => (
-            <Link
+              <Link
               key={item.name}
               href={item.href}
-              className="button-color-swoosh"
+              className="nav-swoosh-btn relative inline-flex items-center justify-center px-[20px] py-[8px] font-bold text-[15px] text-[#000000] bg-transparent rounded-full"
               style={{ "--index": idx } as React.CSSProperties}
             >
-              <span className="button-color-swoosh_bg">
-                <span className="button-color-swoosh_bg-inner"></span>
-              </span>
-              <span className="button-color-swoosh_inner" data-text={item.name}>
-                <span className="button-color-swoosh_text">{item.name}</span>
+              <span className="nav-swoosh-btn_bg"></span>
+              <span className="nav-swoosh-btn_inner">
+                <span className="nav-swoosh-btn_text nav-swoosh-btn_text--initial">{item.name}</span>
+                <span className="nav-swoosh-btn_text nav-swoosh-btn_text--hover">{item.name}</span>
               </span>
             </Link>
           ))}

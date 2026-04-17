@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import { SmoothScroll } from "@/components/smooth-scroll"
 import { cn } from "@/lib/utils"
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -37,6 +38,7 @@ export default function RootLayout({
       )}
     >
       <body>
+        <SmoothScroll />
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

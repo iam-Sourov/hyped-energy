@@ -7,6 +7,43 @@ import Link from "next/link"
 import { GlobalBtn } from "./ui/global-btn"
 import { Logo } from "./logo"
 
+// --- Custom Icons (Responsive Sizing) ---
+const Linkedin = ({ className, ...props }: React.SVGProps<SVGSVGElement>) => {
+  return (
+    <svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+      <rect width="4" height="12" x="2" y="9" />
+      <circle cx="4" cy="4" r="2" />
+    </svg>
+  );
+};
+
+const Instagram = ({ className, ...props }: React.SVGProps<SVGSVGElement>) => {
+  return (
+    <svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+  );
+};
+
+const Youtube = ({ className, ...props }: React.SVGProps<SVGSVGElement>) => {
+  return (
+    <svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+      <path d="M2.5 7.1C2.1 8.4 2 10.2 2 12s.1 3.6.5 4.9A3.3 3.3 0 0 0 4.8 19.2c1.5.4 6.7.4 7.2.4s5.7 0 7.2-.4a3.3 3.3 0 0 0 2.3-2.3c.4-1.3.5-3.1.5-4.9s-.1-3.6-.5-4.9a3.3 3.3 0 0 0-2.3-2.3C17.7 4.4 12.5 4.4 12 4.4s-5.7 0-7.2.4A3.3 3.3 0 0 0 2.5 7.1z" />
+      <path d="M10 15l5-3-5-3v6z" />
+    </svg>
+  );
+};
+
+const TikTok = ({ className, ...props }: React.SVGProps<SVGSVGElement>) => {
+  return (
+    <svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+      <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+    </svg>
+  );
+};
 
 interface PopLogo {
   id: number
@@ -33,15 +70,15 @@ export const Footer = () => {
       const relativeX = e.clientX - rect.left
       const relativeY = e.clientY - rect.top
       const dist = Math.hypot(e.clientX - lastPos.current.x, e.clientY - lastPos.current.y)
-      const isInside = e.clientX >= rect.left && e.clientX <= rect.right && 
-                       e.clientY >= rect.top && e.clientY <= rect.bottom
+      const isInside = e.clientX >= rect.left && e.clientX <= rect.right &&
+        e.clientY >= rect.top && e.clientY <= rect.bottom
 
       if (dist > 200 && isInside && relativeY < rect.height * 0.75) {
         const newLogo: PopLogo = {
           id: Date.now(),
           x: relativeX,
           y: relativeY,
-          rotate: Math.random() * 60 - 30, 
+          rotate: Math.random() * 60 - 30,
           color: shadowColors[Math.floor(Math.random() * shadowColors.length)],
           timestamp: Date.now()
         }
@@ -63,11 +100,10 @@ export const Footer = () => {
   }, [])
 
   return (
-    <footer 
-      ref={containerRef} 
-      className="relative w-full bg-[#fbf7ef] overflow-hidden pt-12 md:pt-[15vh] cursor-default font-sans"
+    <footer
+      ref={containerRef}
+      className="relative w-full bg-[#fbf7ef] overflow-hidden pt-12 md:pt-[18vh] cursor-default font-sans"
     >
-      
       {/* 1. Desktop Pop Layer */}
       <div className="absolute inset-0 pointer-events-none z-0 hidden md:block">
         <AnimatePresence>
@@ -94,23 +130,25 @@ export const Footer = () => {
         </AnimatePresence>
       </div>
 
-      {/* 2. Top CTA Section (Desktop Only) */}
-      <div className="relative z-10 hidden md:flex flex-col items-center justify-center text-center px-4 mb-[20vh]">
-        <h2 className="font-black tracking-[-0.04em] leading-[1] mb-[6vh] text-black text-[clamp(48px,8vw,120px)]">
+      {/* 2. Top CTA Section */}
+      <div className="relative z-10 flex flex-col bg-transparent items-center justify-center text-center px-4 mb-[20vh] md:mb-[2vh]">
+        <h2 className="font-[700] tracking-[-0.04em] leading-[1] mb-[6vh] text-black text-[clamp(32px,8vw,80px)]">
           Let&apos;s Get Hyped!
         </h2>
-        <div className="flex items-center justify-center gap-[1.2vw] flex-wrap">
-          <GlobalBtn 
-            href="#contact" 
-            variant="outline" 
-            icon={<Mail size={18} strokeWidth={2.5} />}
+        <div className="flex flex-row items-center justify-center gap-[1.2vw] flex-wrap md:flex-nowrap">
+          <GlobalBtn
+            href="#contact"
+            variant="outline"
+            className="border-black text-black bg-white"
+            icon={<div className="bg-black text-white p-1 rounded-md"><Mail size={18} /></div>}
           >
-            Mail ons direct
+            Email us directly
           </GlobalBtn>
-          <GlobalBtn 
-            href="#contact" 
-            variant="secondary" 
-            icon={<Flame size={20} fill="currentColor" />}
+          <GlobalBtn
+            href="#contact"
+            variant="secondary"
+            className="bg-[#FF5A1F] text-white border-none"
+            icon={<div className="bg-white text-[#FF5A1F] p-1 rounded-md"><Flame size={18} fill="currentColor" /></div>}
           >
             Get Results
           </GlobalBtn>
@@ -118,81 +156,91 @@ export const Footer = () => {
       </div>
 
       {/* 3. Bottom Slanted Layout */}
-      <div className="relative">
-        <div
-          className="absolute inset-0 bg-[#E6E2D9]"
-          style={{
-            clipPath: "polygon(0 20%, 100% 0, 100% 100%, 0 100%)",
-            top:"-2.5vw",
-            height: "calc(100% + 2vw)",
-            zIndex: 0
-          }}
-        />
+      <div className="relative w-full mt-20 md:mt-0">
+        <div className="">
+          <div
+            className="absolute inset-0 z-0 pointer-events-none"
+            style={{
+              backgroundImage: `url('/assets/footer/footer-bg.svg')`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover',
+              backgroundPosition: 'bottom',
+              transformOrigin: 'bottom'
+            }}
+          />
+        </div>
 
-        <div className="absolute top-[-12vw] right-[5vw] lg:right-[10vw] z-20 hidden md:block">
+        {/* Circular Badge - Only visible on Desktop */}
+        <div className="absolute top-[-8vw] right-[8vw] z-20 hidden md:block">
           <CircularBadge />
         </div>
 
-        <div className="relative z-10 mx-auto max-w-[1400px] px-4 md:px-[clamp(16px,5vw,40px)] pt-20 md:pt-[12vh] pb-8 md:pb-[4vh]">
+        <div className="relative z-10 mx-auto max-w-[1920px] px-4 md:px-[clamp(16px,5vw,40px)] pt-24">
           <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-10 md:gap-12">
-            
-            <div className="w-full md:w-fit flex justify-center md:justify-start">
-              <Logo className="w-[80vw] md:w-[25vw] h-auto text-black -rotate-[2deg] md:rotate-0 -mb-2" />
+
+            {/* Logo on Left */}
+            <div className="w-[80vw] md:w-[30%] flex justify-center md:justify-start">
+              <Logo className="-rotate-11 md:-rotate-0 w-full h-auto text-black transform md:scale-y-110 origin-bottom" />
             </div>
 
-            <div className="flex flex-col items-center md:items-start gap-8 md:gap-16 w-full md:w-auto text-center md:text-left">
-              
-              {/* Mobile Only Orange Button */}
-              <div className="md:hidden w-full px-2">
-                <GlobalBtn 
-                  href="#contact" 
-                  variant="secondary"
-                  className="w-full h-14 font-black shadow-md border-none"
-                  icon={<Flame size={20} fill="currentColor" />}
-                >
-                  Get Hyped! Neem contact op
-                </GlobalBtn>
-              </div>
+            {/* Content Groups on Right */}
+            <div className="flex flex-col items-center md:items-end gap-6 w-full md:w-auto">
 
-              <div className="flex flex-col items-center md:items-center gap-8 md:gap-10">
-                {/* Nav Links */}
-                <nav className="flex justify-center items-center gap-3 w-full max-w-[340px] md:w-fit md:flex">
-                  {["Expertises", "Work", "About", "Contact"].map((item) => (
-                    <Link
-                      key={item}
-                      href="#"
-                      className="px-4 py-3 bg-white rounded-xl text-sm font-bold shadow-sm md:shadow-none transition-all hover:bg-black hover:text-white"
-                    >
-                      {item}
-                    </Link>
-                  ))}
-                </nav>
+              {/* Navigation Pills */}
+              <nav className="flex justify-center items-center gap-2 flex-wrap">
+                {["Expertise", "Work", "About", "Contact"].map((item, idx) => (
+                  <Link
+                    key={item}
+                    href={`#${item.toLowerCase()}`}
+                    className="nav-swoosh-btn relative inline-flex items-center justify-center px-[20px] py-[8px] font-bold text-[#000000] bg-white rounded-xl shadow-sm md:shadow-none border border-black/5"
+                    style={{ "--index": idx } as React.CSSProperties}
+                  >
+                    <span className="nav-swoosh-btn_bg"></span>
+                    <span className="nav-swoosh-btn_inner text-[clamp(12px,1.2vw,14px)]">
+                      <span className="nav-swoosh-btn_text nav-swoosh-btn_text--initial">{item}</span>
+                      <span className="nav-swoosh-btn_text nav-swoosh-btn_text--hover">{item}</span>
+                    </span>
+                  </Link>
+                ))}
+              </nav>
 
-                {/* Socials: Visible only on mobile per screenshot */}
-                 <div className="flex gap-3">
-                   {[Linkedin, Instagram, Youtube].map((Icon, i) => (
-                      <div key={i} className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
-                         <Icon size={20} strokeWidth={2.5} className="text-black" />
+              {/* Info Grid (Socials, Contact, Address) */}
+              <div className="flex flex-col md:flex-row gap-8 md:gap-16 text-center md:text-left">
+                {/* Socials */}
+                <div className="flex flex-col gap-4">
+                  <p className="text-[clamp(12px,1.2vw,14px)] font-bold text-black/60">Follow us</p>
+                  <div className="flex justify-center md:justify-start gap-2">
+                    {[Linkedin, TikTok, Instagram, Youtube].map((Icon, i) => (
+                      <div key={i} className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm hover:scale-110 transition-transform cursor-pointer">
+                        <Icon className="text-black" />
                       </div>
-                   ))}
-                   <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
-                      <span className="font-bold text-lg">d</span>
-                   </div>
-                </div>
-                {/* Contact Info */}
-                <div className="flex flex-col gap-6 md:flex-row md:gap-12 text-sm">
-                  <div className="space-y-1">
-                    <p className="font-bold opacity-70 md:opacity-100">info@gethyped.nl</p>
-                    <p className="font-bold">+31 6 1533 7496</p>
+                    ))}
                   </div>
-                  <div className="space-y-1">
-                    <p className="font-bold">Beltrumsestraat 6,<br />7141 AL Groenlo</p>
+                </div>
+
+                {/* Contact */}
+                <div className="flex flex-col gap-4">
+                  <p className="text-[clamp(12px,1.2vw,14px)] font-bold text-black/60">Contact</p>
+                  <div className="text-[clamp(13px,1.3vw,16px)] font-semibold">
+                    <p>iam.rakibbishwas@gmail.com</p>
+                    <p>01679714839</p>
+                  </div>
+                </div>
+
+                {/* Address */}
+                <div className="flex flex-col gap-4">
+                  <p className="text-[clamp(12px,1.2vw,14px)] font-bold text-black/60">Address</p>
+                  <div className="text-[clamp(13px,1.3vw,16px)] font-semibold">
+                    <p>Dhaka, Bangladesh</p>
                   </div>
                 </div>
               </div>
-              {/* Privacy/Design Bar */}
-              <div className="flex flex-col items-center w-full pt-6 md:pt-8 gap-4 border-t border-black/5 md:border-black/10">
-                <p className="font-bold opacity-30 text-[10px] uppercase tracking-widest">Privacyvoorwaarden</p>
+
+              {/* Metadata Bar */}
+              <div className="w-full flex flex-col md:flex-row justify-between items-center pt-8 border-t border-black/10 text-[clamp(10px,1vw,12px)] font-bold text-black/40 gap-4">
+                <p>© 2026 Get Hyped</p>
+                <p>Design by Rakib</p>
+                <p className="uppercase tracking-widest">Privacy Policy</p>
               </div>
             </div>
           </div>
@@ -203,38 +251,15 @@ export const Footer = () => {
 }
 
 const CircularBadge = () => (
-  <div className="relative w-[13vw] h-[13vw] left-15 -bottom-5 max-w-[180px] max-h-[180px] flex items-center justify-center">
-    <motion.div animate={{ rotate: 360 }} transition={{ duration: 12, repeat: Infinity, ease: "linear" }} className="absolute inset-0 opacity-40">
+  <div className="relative w-[180px] h-[180px] flex items-center justify-center -rotate-12">
+    <motion.div animate={{ rotate: 360 }} transition={{ duration: 15, repeat: Infinity, ease: "linear" }} className="absolute inset-0">
       <svg className="w-full h-full fill-black" viewBox="0 0 100 100">
         <defs><path id="badgePath" d="M 50, 50 m -38, 0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" /></defs>
-        <text className="text-[7.5px] font-black uppercase tracking-[0.35em]"><textPath xlinkHref="#badgePath">GET HYPED • GET RESULTS • GET NOTICED •</textPath></text>
+        <text className="text-[8px] font-[900] uppercase tracking-[0.3em]"><textPath xlinkHref="#badgePath">GET HYPED • GET RESULTS • GET NOTICED •</textPath></text>
       </svg>
     </motion.div>
-    <div className=" w-[60%] h-[60%] rounded-full bg-[#f4b0f3] border border-black flex items-center justify-center z-10 shadow-md">
-      <span className="font-black text-2xl tracking-tighter text-black ">GH</span>
+    <div className="w-[60px] h-[60px] rounded-full bg-[#f4b0f3] border-2 border-black flex items-center justify-center z-10 shadow-lg">
+      <span className="font-[900] text-xl tracking-tighter text-black">GH</span>
     </div>
   </div>
-)
-
-const Instagram = ({ size = 24, className, ...props }: any) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
-    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
-    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
-  </svg>
-)
-
-const Linkedin = ({ size = 24, className, ...props }: any) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-    <rect width="4" height="12" x="2" y="9"/>
-    <circle cx="4" cy="4" r="2"/>
-  </svg>
-)
-
-const Youtube = ({ size = 24, className, ...props }: any) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
-    <path d="M2.5 7.1C2.1 8.4 2 10.2 2 12s.1 3.6.5 4.9A3.3 3.3 0 0 0 4.8 19.2c1.5.4 6.7.4 7.2.4s5.7 0 7.2-.4a3.3 3.3 0 0 0 2.3-2.3c.4-1.3.5-3.1.5-4.9s-.1-3.6-.5-4.9a3.3 3.3 0 0 0-2.3-2.3C17.7 4.4 12.5 4.4 12 4.4s-5.7 0-7.2.4A3.3 3.3 0 0 0 2.5 7.1z"/>
-    <path d="M10 15l5-3-5-3v6z"/>
-  </svg>
 )

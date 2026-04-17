@@ -38,7 +38,7 @@ const WorkCard = ({ title, brand, videoSrc, color, index, yOffset = "0px" }: Wor
 
   const handlePause = () => {
     if (videoRef.current) {
-      if(!isMobile) {
+      if (!isMobile) {
         videoRef.current.pause()
         videoRef.current.currentTime = 0
       }
@@ -46,8 +46,8 @@ const WorkCard = ({ title, brand, videoSrc, color, index, yOffset = "0px" }: Wor
   }
 
   useEffect(() => {
-    if(isMobile && videoRef.current) {
-      videoRef.current.play().catch(() => {});
+    if (isMobile && videoRef.current) {
+      videoRef.current.play().catch(() => { });
     }
   }, [isMobile]);
 
@@ -89,20 +89,20 @@ const WorkCard = ({ title, brand, videoSrc, color, index, yOffset = "0px" }: Wor
       }}
       // On mobile, cards start rotated and settle into a slight 'messy' rotation
       // On desktop, they settle to 0 for the 3D tilt logic to take over
-      initial={{ 
-        opacity: 0, 
-        y: 60, 
-        rotate: isMobile ? mobileRotate * 2 : -4 
+      initial={{
+        opacity: 0,
+        y: 60,
+        rotate: isMobile ? mobileRotate * 2 : -4
       }}
-      whileInView={{ 
-        opacity: 1, 
-        y: 0, 
-        rotate: isMobile ? mobileRotate : 0 
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        rotate: isMobile ? mobileRotate : 0
       }}
-      transition={{ 
-        duration: 0.8, 
-        delay: isMobile ? 0.1 * index : index * 0.15, 
-        ease: [0.22, 1, 0.36, 1] 
+      transition={{
+        duration: 0.8,
+        delay: isMobile ? 0.1 * index : index * 0.15,
+        ease: [0.22, 1, 0.36, 1]
       }}
       viewport={{ once: true, margin: "-50px" }}
       whileHover={isMobile ? undefined : "hover"}
@@ -118,6 +118,7 @@ const WorkCard = ({ title, brand, videoSrc, color, index, yOffset = "0px" }: Wor
           muted
           loop
           playsInline
+          preload="metadata"
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
 
@@ -156,9 +157,9 @@ export const BentoGrid = () => {
   return (
     <section
       id="work"
-      className="bg-[#FBF7EF] py-12 md:py-[10vh] overflow-hidden"
+      className="bg-[#FBF7EF] md:pb-[10vh] overflow-hidden"
     >
-      <div className="w-full max-w-[1440px] mx-auto px-4 md:px-[clamp(16px,5vw,40px)]">
+      <div className="w-full max-w-[1920px] mx-auto px-4 md:px-[clamp(16px,5vw,40px)]">
 
         <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-8 md:mb-[8vh] gap-8">
           <div className="max-w-2xl">
@@ -169,8 +170,8 @@ export const BentoGrid = () => {
               We tell your story. In a way that truly fits your target audience. With creative content that works and makes the difference.
             </p>
             <div className="self-start md:self-end mt-6 md:mt-8">
-              <GlobalBtn href="#work" variant="outline" icon={<ArrowRight size={20} />}>
-                Bekijk al ons werk
+              <GlobalBtn href="#work" variant="outline" icon={<ArrowRight size={18} />}>
+                View all our work
               </GlobalBtn>
             </div>
           </div>
@@ -184,7 +185,7 @@ export const BentoGrid = () => {
             brand="Bullit"
             videoSrc="./assets/Bullit-Loop.mp4"
             color="#EA580C"
-            yOffset="0px"
+            yOffset="0vh"
           />
 
           <WorkCard
@@ -193,7 +194,7 @@ export const BentoGrid = () => {
             brand="Roasta"
             videoSrc="./assets/new-reach-loop.mp4"
             color="#3B82F6"
-            yOffset="-20vh"
+            yOffset="-25vh"
           />
 
           <WorkCard
@@ -202,7 +203,7 @@ export const BentoGrid = () => {
             brand="Loco"
             videoSrc="./assets/loco-bites-loop.mp4"
             color="#22C55E"
-            yOffset="-40vh"
+            yOffset="-50vh"
           />
         </div>
       </div>

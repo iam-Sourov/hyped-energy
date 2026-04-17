@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useRef, useState, useEffect } from "react"
 import { GlobalBtn } from "@/components/ui/global-btn"
-import { ArrowRight, BarChart } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 
 // --- Refined Color Hierarchy Configuration ---
 const EXPERTISE_DATA = [
@@ -69,7 +69,7 @@ export const Expertise = () => {
   const containerRef = useRef<HTMLDivElement>(null)
 
   return (
-    <section ref={containerRef} className="relative bg-[#FBF7EF] py-12 md:py-0">
+    <section ref={containerRef} className="relative bg-[#FBF7EF] py-9 md:py-0">
       <div className="h-auto md:h-[400vh] relative flex flex-col md:block gap-12">
         {EXPERTISE_DATA.map((item, index) => (
           <Card key={item.id} item={item} index={index} />
@@ -193,6 +193,7 @@ const Card = ({ item, index }: CardProps) => {
             muted
             loop
             playsInline
+            preload="metadata"
             className="w-full h-full object-cover scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />

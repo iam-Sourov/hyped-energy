@@ -35,11 +35,15 @@ export const Hero = () => {
         gsap.set(card, { rotation: rotations[i], y: 0 })
       })
 
+      let lastActiveIndex = -1;
       const handleMouseMove = (e: MouseEvent) => {
         const { left, width } = container.getBoundingClientRect()
         const mouseX = e.clientX - left
         const progress = mouseX / width
         const activeIndex = Math.floor(progress * cards.length)
+        
+        if (activeIndex === lastActiveIndex) return;
+        lastActiveIndex = activeIndex;
 
         cards.forEach((card, i) => {
           if (i === activeIndex) {
@@ -50,6 +54,7 @@ export const Hero = () => {
               zIndex: 100,
               duration: 0.6,
               ease: "power3.out",
+              overwrite: "auto"
             })
           } else {
             const direction = i < activeIndex ? -15 : 15
@@ -60,12 +65,14 @@ export const Hero = () => {
               zIndex: 10 + i,
               duration: 0.6,
               ease: "power3.out",
+              overwrite: "auto"
             })
           }
         })
       }
 
       const handleMouseLeave = () => {
+        lastActiveIndex = -1;
         cards.forEach((card, i) => {
           gsap.to(card, {
             rotation: rotations[i],
@@ -74,6 +81,7 @@ export const Hero = () => {
             zIndex: 10 + i,
             duration: 0.8,
             ease: "elastic.out(1, 0.75)",
+            overwrite: "auto"
           })
         })
       }
@@ -98,7 +106,7 @@ export const Hero = () => {
     },
   }
 
-  const getItemVariants = (index: number): Variants => ({
+  const getItemVariants = (): Variants => ({
     hidden: { y: "100%", opacity: 0 },
     visible: {
       y: 0,
@@ -139,17 +147,17 @@ export const Hero = () => {
         </motion.p>
       </div>
 
-      <div className="relative w-full md:flex-grow flex items-end justify-center mt-5 md:pb-12 overflow-visible">
+      <div className="relative w-full md:flex-grow flex items-end justify-center mt-5 md:pb-10 overflow-visible">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
           ref={containerRef}
           // Changed to grid-cols-2 for mobile, flex remains for tablet/desktop
-          className="grid grid-cols-2 md:flex items-end justify-center w-full max-w-screen px-6 md:px-10 cursor-pointer gap-4 md:gap-0"
+          className="grid grid-cols-2 md:flex items-end justify-center w-full max-w-screen px-6 md:px-5 cursor-pointer gap-2 md:gap-0"
         >
           {/* Card 1 */}
-          <motion.div variants={getItemVariants(0)} className={`results-card ${cardBase} w-full ${desktopWidth} ${overlap} rotate-3 bg-[#0d8dff] z-10 border-none`}>
+          <motion.div variants={getItemVariants()} className={`results-card ${cardBase} w-full ${desktopWidth} ${overlap} rotate-3 bg-[#0d8dff] z-10 border-none`}>
             <div className="p-6 md:p-8 flex flex-col justify-between h-full text-white">
               <h2 className="font-black text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.8] tracking-tighter">10M+</h2>
               <div className="border-t border-white/20 pt-6">
@@ -160,12 +168,12 @@ export const Hero = () => {
           </motion.div>
 
           {/* Video 1 */}
-          <motion.div variants={getItemVariants(1)} className={`results-card ${cardBase} w-full ${desktopWidth} ${overlap} z-20`}>
+          <motion.div variants={getItemVariants()} className={`results-card ${cardBase} w-full ${desktopWidth} ${overlap} z-20`}>
             <AutoPlayVideo src="/assets/hero/hero-1.mp4" className="w-full h-full object-cover" />
           </motion.div>
 
           {/* Card 2 - Hidden on mobile */}
-          <motion.div variants={getItemVariants(2)} className={`results-card hidden md:flex flex-col ${cardBase} w-full ${desktopWidth} ${overlap} bg-[#33c791] z-30 border-none`}>
+          <motion.div variants={getItemVariants()} className={`results-card hidden md:flex flex-col ${cardBase} w-full ${desktopWidth} ${overlap} bg-[#33c791] z-30 border-none`}>
             <div className="p-8 flex flex-col justify-between h-full text-white">
               <h2 className="font-black text-[4.5rem] leading-[0.8] tracking-tighter">30+</h2>
               <div className="border-t border-white/20 pt-6">
@@ -176,7 +184,7 @@ export const Hero = () => {
           </motion.div>
 
           {/* Video 2 - Hidden on mobile */}
-          <motion.div variants={getItemVariants(3)} className={`results-card hidden md:block ${cardBase} w-full ${desktopWidth} z-40`}>
+          <motion.div variants={getItemVariants()} className={`results-card hidden md:block ${cardBase} w-full ${desktopWidth} z-40`}>
             <AutoPlayVideo src="/assets/hero/hero2.mp4" className="w-full h-full object-cover" />
           </motion.div>
         </motion.div>
@@ -184,7 +192,7 @@ export const Hero = () => {
 
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-50">
         <div className="w-14 h-14 bg-black rounded-full flex items-center justify-center shadow-xl">
-          <ArrowDown className="text-white w-6 h-6 animate-bounce" />
+          <ArrowDown size={18} className="text-white animate-bounce" />
         </div>
       </div>
     </section>

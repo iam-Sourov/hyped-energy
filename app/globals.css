@@ -6,7 +6,19 @@
   --breakpoint-sm: 480px;
   --breakpoint-md: 768px;
   --breakpoint-lg: 1024px;
-  --breakpoint-xl: 1440px;
+  --breakpoint-xl: 1920px;
+
+  /* Fluid typography */
+  --text-xs: clamp(0.75rem, 0.8vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 1vw, 1rem);
+  --text-base: clamp(1rem, 1.25vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1.5vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 2vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 3vw, 2rem);
+  --text-3xl: clamp(1.875rem, 4vw, 2.5rem);
+  --text-4xl: clamp(2.25rem, 5vw, 3rem);
+  --text-5xl: clamp(3rem, 6vw, 4rem);
+  --text-6xl: clamp(3.75rem, 7vw, 5rem);
 
   --font-sans: var(--font-plus-jakarta);
 
@@ -15,7 +27,7 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   /* This creates the 'border-border' utility class */
-  --color-border: var(--border); 
+  --color-border: var(--border);
 
   --radius-3xl: 1.5rem;
   --radius-4xl: 2rem;
@@ -27,6 +39,7 @@
     font-weight: 700;
     line-height: 1;
   }
+
   .text-fluid-p {
     font-size: var(--fluid-p, clamp(1rem, 1.25vw, 1.7rem));
   }
@@ -51,172 +64,58 @@
 }
 
 @layer components {
-  /* --- Advanced Center Nav Swoosh Animation --- */
-  .button-color-swoosh {
-    --elastic-ease-out: linear(0, 0.5737 7.6%, 0.8382 11.87%, 0.9463 14.19%, 1.0292 16.54%, 1.0886 18.97%, 1.1258 21.53%, 1.137 22.97%, 1.1424 24.48%, 1.1423 26.1%, 1.1366 27.86%, 1.1165 31.01%, 1.0507 38.62%, 1.0219 42.57%, 0.9995 46.99%, 0.9872 51.63%, 0.9842 58.77%, 1.0011 81.26%, 1);
+
+  /* --- High-Fidelity Swoosh Animation Logic from Video --- */
+  .nav-swoosh-btn {
+    --elastic-ease: linear(0, 0.5737 7.6%, 0.8382 11.87%, 0.9463 14.19%, 1.0292 16.54%, 1.0886 18.97%, 1.1258 21.53%, 1.137 22.97%, 1.1424 24.48%, 1.1423 26.1%, 1.1366 27.86%, 1.1165 31.01%, 1.0507 38.62%, 1.0219 42.57%, 0.9995 46.99%, 0.9872 51.63%, 0.9842 58.77%, 1.0011 81.26%, 1);
     --smooth-ease: cubic-bezier(.32, .72, 0, 1);
-    --color-ease: cubic-bezier(.215, .61, .355, 1);
-    
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 20px;
-    font-weight: 700;
-    font-size: 15px;
-    color: #000000;
-    background: transparent;
-    border-radius: 9999px;
     overflow: hidden;
-    transition: transform .45s var(--elastic-ease-out);
-    -webkit-tap-highlight-color: transparent;
-    cursor: pointer;
+    transition: transform 0.4s var(--elastic-ease);
   }
 
-  .button-color-swoosh:active {
-    transform: scaleX(0.955) scaleY(0.954);
+  .nav-swoosh-btn:active {
+    transform: scale(0.96);
   }
 
-  .button-color-swoosh_bg {
+  .nav-swoosh-btn_bg {
     position: absolute;
     inset: 0;
-    z-index: 0;
-    transition: scale .45s var(--smooth-ease);
+    background: #1a1a1a;
+    border-radius: 100px;
+    transform: translateY(100%) rotate(5deg);
+    transition: transform 0.5s var(--smooth-ease);
+    pointer-events: none;
   }
 
-  .button-color-swoosh_bg-inner {
-    position: absolute;
-    inset: 0;
-    background: #000000;
-    translate: -10% 100% 0;
-    rotate: 0 0 1 -12deg;
-    transition: translate .6s var(--smooth-ease), rotate .5s var(--smooth-ease);
-    transition-delay: calc((var(--index) * -1) * .042s);
-  }
-
-  .button-color-swoosh_inner {
-    position: relative;
-    z-index: 10;
+  .nav-swoosh-btn_inner {
     display: grid;
     place-items: center;
   }
 
-  .button-color-swoosh_text {
-    grid-area: 1 / 1;
-    transition: translate .75s var(--elastic-ease-out), rotate .5s var(--smooth-ease), opacity .2s ease-out;
-  }
-
-  .button-color-swoosh_inner::after {
-    content: attr(data-text);
-    grid-area: 1 / 1;
-    color: #ffffff;
-    display: block;
-    translate: 0 2em 0;
-    rotate: 1 1 .5 -30deg;
-    transform-origin: top right;
-    opacity: 0;
-    transition: translate .75s var(--elastic-ease-out), rotate .5s var(--smooth-ease), opacity .2s ease-out;
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .button-color-swoosh:is(:hover, :focus-visible) .button-color-swoosh_bg {
-      scale: 1.065 1.095;
-    }
-
-    .button-color-swoosh:is(:hover, :focus-visible) .button-color-swoosh_bg-inner {
-      translate: -10% 0 0;
-      rotate: 0 0 1 0deg;
-      transition-delay: calc(var(--index) * .064s);
-    }
-
-    .button-color-swoosh:is(:hover, :focus-visible) .button-color-swoosh_text {
-      rotate: 1 1 0.45 -60deg;
-      translate: 0 -2em 0;
-      opacity: 0;
-    }
-
-    .button-color-swoosh:is(:hover, :focus-visible) .button-color-swoosh_inner::after {
-      rotate: 1 1 .45 0deg;
-      translate: 0 0 0;
-      opacity: 1;
-      transition-delay: .1s;
-    }
-  }
-
-  /* --- Clean Jellybelly Button Styling --- */
-  .button-default {
-      --bounce-ease: cubic-bezier(0.34, 2.27, 0.64, 1);
-      --border-radius-ease: cubic-bezier(0.34, 1.37, 0.64, 1);
-      --speed: 0.45s;
-  }
-
-  .button-default .button-default__inner {
-      transition: transform var(--bounce-ease) var(--speed);
-  }
-
-  .button-default .button-default__background {
-      border-radius: 0.75em;
-      transition: border-radius var(--speed) var(--border-radius-ease), width var(--speed) var(--bounce-ease);
-  }
-
-  .button-default:hover .button-default__background {
-      border-radius: 0.5em;
-      width: calc(100% - 0.5em);
-  }
-
-  .button-default:hover .button-default__inner {
-      transform: skewY(-4deg) rotate(-1deg) scale(1.02);
-  }
-
-  /* --- High-Fidelity Swoosh Animation Logic from Video --- */
-  .nav-swoosh-btn {
-      --elastic-ease: linear(0, 0.5737 7.6%, 0.8382 11.87%, 0.9463 14.19%, 1.0292 16.54%, 1.0886 18.97%, 1.1258 21.53%, 1.137 22.97%, 1.1424 24.48%, 1.1423 26.1%, 1.1366 27.86%, 1.1165 31.01%, 1.0507 38.62%, 1.0219 42.57%, 0.9995 46.99%, 0.9872 51.63%, 0.9842 58.77%, 1.0011 81.26%, 1);
-      --smooth-ease: cubic-bezier(.32, .72, 0, 1);
-      overflow: hidden;
-      transition: transform 0.4s var(--elastic-ease);
-  }
-
-  .nav-swoosh-btn:active {
-      transform: scale(0.96);
-  }
-
-  .nav-swoosh-btn_bg {
-      position: absolute;
-      inset: 0;
-      background: #1a1a1a;
-      border-radius: 100px;
-      transform: translateY(100%) rotate(5deg);
-      transition: transform 0.5s var(--smooth-ease);
-      pointer-events: none;
-  }
-
-  .nav-swoosh-btn_inner {
-      display: grid;
-      place-items: center;
-  }
-
   .nav-swoosh-btn_text {
-      grid-area: 1 / 1;
-      transition: transform 0.6s var(--elastic-ease), opacity 0.2s ease;
+    grid-area: 1 / 1;
+    transition: transform 0.6s var(--elastic-ease), opacity 0.2s ease;
   }
 
   .nav-swoosh-btn_text--hover {
-      color: #ffffff;
-      opacity: 0;
-      transform: translateY(100%) rotate(10deg);
+    color: #ffffff;
+    opacity: 0;
+    transform: translateY(100%) rotate(10deg);
   }
 
   @media (hover: hover) {
-      .nav-swoosh-btn:hover .nav-swoosh-btn_bg {
-          transform: translateY(0) rotate(0deg);
-      }
-      .nav-swoosh-btn:hover .nav-swoosh-btn_text--initial {
-          transform: translateY(-100%) rotate(-10deg);
-          opacity: 0;
-      }
-      .nav-swoosh-btn:hover .nav-swoosh-btn_text--hover {
-          transform: translateY(0) rotate(0deg);
-          opacity: 1;
-      }
+    .nav-swoosh-btn:hover .nav-swoosh-btn_bg {
+      transform: translateY(0) rotate(0deg);
+    }
+
+    .nav-swoosh-btn:hover .nav-swoosh-btn_text--initial {
+      transform: translateY(-100%) rotate(-10deg);
+      opacity: 0;
+    }
+
+    .nav-swoosh-btn:hover .nav-swoosh-btn_text--hover {
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+    }
   }
 }

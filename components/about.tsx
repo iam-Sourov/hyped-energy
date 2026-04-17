@@ -16,14 +16,14 @@ export const About = () => {
       id="about"
       className="bg-[#FBF7EF] px-[5vw] py-[8vh]"
     >
-      <div className="max-w-[1440px] mx-auto">
+      <div className="max-w-[1920px] mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: "4vh" }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
           className="md:ml-20 mb-[7vh] w-full lg:w-[85%] text-[#161616] tracking-tight text-fluid-h2"
         >
-          Wij maken content die opvalt. Die blijft hangen. Die jouw doelgroep raakt en jouw merk in beweging brengt. Snel, krachtig en energiek.
+          We create content that stands out. That sticks. That touches your target audience and gets your brand moving. Fast, powerful, and energetic.
         </motion.h2>
 
         {/* Desktop (lg): items-center ensures the portrait and text block are aligned horizontally.
@@ -56,10 +56,10 @@ export const About = () => {
             <p
               className="w-full font-bold leading-[1.4] lg:font-bold text-[#1A1A1A] text-fluid-p"
             >
-              We stoppen niet bij mooie plaatjes en vette beelden. We maken het meetbaar. Zo weet je precies wat werkt en wat niet. Nooit meer content zonder strategie. Nooit meer content zonder resultaat.
+              We don&apos;t stop at pretty pictures and cool visuals. We make it measurable. This way you know exactly what works and what doesn&apos;t. No more content without a strategy. No more content without results.
             </p>
-            <GlobalBtn href="#contact" variant="outline" icon={<ArrowRight className="w-6 h-6 " />}   className="mt-8 lg:mt-[3vh]">
-              Leer ons kennen
+            <GlobalBtn href="#contact" variant="outline" icon={<ArrowRight size={18} className="" />}   className="mt-8 lg:mt-[3vh]">
+              Get to know us
             </GlobalBtn>
           </motion.div>
 
@@ -70,7 +70,7 @@ export const About = () => {
             transition={{ delay: 1, duration: 1 }}
             className="hidden md:flex absolute md:relative md:ml-auto lg:absolute border border-black rounded-xl w-10 h-10 items-center justify-center bottom-0 right-0 lg:top-69 lg:right-10 z-50"
           >
-            <ArrowDown className="text-orange-500 w-6 h-6 " />
+            <ArrowDown size={18} className="text-orange-500 " />
           </motion.div>
         </div>
       </div>

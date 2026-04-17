@@ -25,16 +25,16 @@ export const GlobalBtn = React.forwardRef<HTMLElement, GlobalBtnProps>(
       return (
         <Wrapper
           {...(href ? { href } : { type: "button" })}
-          className={cn("button-color-swoosh", className)}
+          className={cn("nav-swoosh-btn", className)}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           ref={ref as any}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           {...(props as any)}
         >
-          <span className="button-color-swoosh_bg">
-            <span style={{ "--index": 0 } as React.CSSProperties} className="button-color-swoosh_bg-inner is-first"></span>
-            <span style={{ "--index": 1 } as React.CSSProperties} className="button-color-swoosh_bg-inner is-second"></span>
-          </span>
-          <span className="button-color-swoosh_inner" data-text={typeof children === "string" ? children : "Click"}>
-            <span className="button-color-swoosh_text">{children}</span>
+          <span className="nav-swoosh-btn_bg"></span>
+          <span className="nav-swoosh-btn_inner">
+            <span className="nav-swoosh-btn_text nav-swoosh-btn_text--initial">{typeof children === "string" ? children : "Click"}</span>
+            <span className="nav-swoosh-btn_text nav-swoosh-btn_text--hover">{typeof children === "string" ? children : "Click"}</span>
           </span>
         </Wrapper>
       );
@@ -59,6 +59,7 @@ export const GlobalBtn = React.forwardRef<HTMLElement, GlobalBtnProps>(
     return (
       <Component
         {...(href ? { href } : { type: "button" })}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ref={ref as any}
         initial="rest"
         whileHover="hover"
