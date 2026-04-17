@@ -34,7 +34,7 @@
 
 @layer base {
   :root {
-    --background: #f0ebe1;
+    --background: #F0EBE1;
     --foreground: #1a1a1a;
     --primary: #ea580c;
     --border: rgba(26, 26, 26, 0.14);

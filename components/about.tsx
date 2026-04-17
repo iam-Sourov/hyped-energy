@@ -14,7 +14,7 @@ export const About = () => {
     <section
       ref={sectionRef}
       id="about"
-      className="bg-[#F0EBE1] px-[5vw] py-[8vh]"
+      className="bg-[#FBF7EF] px-[5vw] py-[8vh]"
     >
       <div className="max-w-[1440px] mx-auto">
         <motion.h2

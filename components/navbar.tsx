@@ -53,7 +53,7 @@ export const Navbar = () => {
       <nav
         ref={navRef}
         className={cn(
-          "fixed top-0 left-0 right-0 z-[110] flex justify-between items-center transition-all duration-300 px-4 md:px-12",
+          "fixed top-0 left-0 right-0 z-[110] flex justify-between items-center transition-all duration-300 px-4 md:px-8",
           isMenuOpen ? "bg-transparent" : "bg-transparent"
         )}
         style={{ height: "100px" }}
@@ -61,7 +61,7 @@ export const Navbar = () => {
         {/* LOGO - Left aligned box ensures center pill stays centered */}
         <div className="flex-1 flex items-center">
           <Link href="/" className="flex items-center group">
-            <Logo className="h-10 md:h-12 w-auto" />
+            <Logo className="h-13 w-auto" />
           </Link>
         </div>
 

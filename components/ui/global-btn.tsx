@@ -83,7 +83,7 @@ export const GlobalBtn = React.forwardRef<HTMLElement, GlobalBtnProps>(
 
           {icon && (
             <span className={cn(
-              "flex items-center justify-center transition-transform duration-300 group-hover:translate-x-0.5 shrink-0",
+              "flex items-center justify-center",
               "h-9 w-10 md:h-10 md:w-11 rounded-[12px]",
               iconBoxStyles[variant as keyof typeof iconBoxStyles] || iconBoxStyles.default
             )}>

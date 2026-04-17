@@ -26,7 +26,10 @@ const WorkCard = ({ title, brand, videoSrc, color, index, yOffset = "0px" }: Wor
     return () => window.removeEventListener("resize", checkMobile)
   }, [])
 
-  // --- Video Play/Pause Logic ---
+  // Determine a slight rotation for mobile based on index to create a "scattered" look
+  // Index 0: -2deg, Index 1: 2deg, Index 2: -1deg, etc.
+  const mobileRotate = index % 2 === 0 ? -2 : 2;
+
   const handlePlay = () => {
     if (videoRef.current) {
       videoRef.current.play().catch((e) => console.log("Autoplay prevented:", e))
@@ -48,7 +51,6 @@ const WorkCard = ({ title, brand, videoSrc, color, index, yOffset = "0px" }: Wor
     }
   }, [isMobile]);
 
-  // --- 3D Tilt Logic ---
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const mouseX = useSpring(x, { stiffness: 500, damping: 28 })
@@ -73,8 +75,6 @@ const WorkCard = ({ title, brand, videoSrc, color, index, yOffset = "0px" }: Wor
     handlePause()
   }
 
-
-
   return (
     <motion.div
       ref={cardRef}
@@ -87,31 +87,40 @@ const WorkCard = ({ title, brand, videoSrc, color, index, yOffset = "0px" }: Wor
         rotateY: isMobile ? 0 : rotateY,
         transformStyle: "preserve-3d",
       }}
-      initial={{ opacity: 0, y: 60, rotate: -4 }}
-      whileInView={{ opacity: 1, y: 0, rotate: 0 }}
-      transition={{ duration: 0.8, delay: isMobile ? 0 : index * 0.15, ease: [0.22, 1, 0.36, 1] }}
-      viewport={{ once: true }}
-      // Trigger arrow animation on card hover
+      // On mobile, cards start rotated and settle into a slight 'messy' rotation
+      // On desktop, they settle to 0 for the 3D tilt logic to take over
+      initial={{ 
+        opacity: 0, 
+        y: 60, 
+        rotate: isMobile ? mobileRotate * 2 : -4 
+      }}
+      whileInView={{ 
+        opacity: 1, 
+        y: 0, 
+        rotate: isMobile ? mobileRotate : 0 
+      }}
+      transition={{ 
+        duration: 0.8, 
+        delay: isMobile ? 0.1 * index : index * 0.15, 
+        ease: [0.22, 1, 0.36, 1] 
+      }}
+      viewport={{ once: true, margin: "-50px" }}
       whileHover={isMobile ? undefined : "hover"}
       className="relative w-full h-[400px] md:h-auto aspect-square md:w-[30vw] lg:w-[28vw] md:aspect-[3/4] group perspective-child cursor-pointer"
     >
-      {/* Main Card Container */}
       <div
         className="absolute inset-0 rounded-[30px] border-[8px] overflow-hidden shadow-xl bg-white will-change-transform"
         style={{ borderColor: color }}
       >
-        {/* Background Video */}
         <video
           ref={videoRef}
           src={videoSrc}
           muted
           loop
           playsInline
-          preload="metadata"
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
 
-        {/* Overlay Content Box */}
         <motion.div
           className="absolute bottom-4 left-4 right-4 p-4 md:bottom-[20px] md:left-[20px] md:right-[20px] md:p-[20px] rounded-[20px] flex flex-col justify-between shadow-lg z-10"
           style={{ backgroundColor: color }}
@@ -130,7 +139,6 @@ const WorkCard = ({ title, brand, videoSrc, color, index, yOffset = "0px" }: Wor
             </span>
           </div>
 
-          {/* Arrow Icon Circle */}
           <motion.div
             className="absolute bottom-[18px] right-[18px] h-[32px] w-[32px] bg-white rounded-full flex items-center justify-center text-black cursor-pointer shadow-sm"
             whileHover={{ scale: 1.1, rotate: 45 }}
@@ -148,17 +156,16 @@ export const BentoGrid = () => {
   return (
     <section
       id="work"
-      className="bg-[#F0EBE1] md:py-[10vh] overflow-hidden"
+      className="bg-[#FBF7EF] py-12 md:py-[10vh] overflow-hidden"
     >
       <div className="w-full max-w-[1440px] mx-auto px-4 md:px-[clamp(16px,5vw,40px)]">
 
-        {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-8 md:mb-[8vh] gap-8">
           <div className="max-w-2xl">
-            <h2 className=" text-5xl tracking-tighter font-black leading-tight md:leading-[0.9] mb-4 md:mb-6 text-[#1A1A1A] md:text-[clamp(3rem,6vw,5rem)]">
+            <h2 className="text-5xl font-bold tracking-tighter leading-tight md:leading-[0.9] mb-4 md:mb-6 text-[#1A1A1A] md:text-[clamp(3rem,6vw,5rem)]">
               Content<br />that scores.
             </h2>
-            <p className="font-bold text-[#1A1A1A] text-lg md:text-xl leading-relaxed max-w-md">
+            <p className="font-semibold text-[#1A1A1A] text-lg md:text-xl leading-relaxed max-w-md">
               We tell your story. In a way that truly fits your target audience. With creative content that works and makes the difference.
             </p>
             <div className="self-start md:self-end mt-6 md:mt-8">
@@ -169,10 +176,8 @@ export const BentoGrid = () => {
           </div>
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:flex md:flex-row items-center justify-center gap-6 md:gap-[4vw] pb-[10vh] max-md:perspective-none perspective-[2000px]">
-
-          {/* Card 1: Bullit (Orange) - Lowest */}
+        {/* Added extra padding-top on mobile so rotated cards don't overlap the text above */}
+        <div className="grid grid-cols-1 md:flex md:flex-row items-center justify-center gap-12 md:gap-[4vw] pb-[10vh] mt-8 md:mt-0 max-md:perspective-none perspective-[2000px]">
           <WorkCard
             index={0}
             title="From zero to full, within 3 weeks"
@@ -182,24 +187,22 @@ export const BentoGrid = () => {
             yOffset="0px"
           />
 
-          {/* Card 2: Roasta (Blue) - Middle Height */}
           <WorkCard
             index={1}
             title="Soft in taste, strong in image"
             brand="Roasta"
-            videoSrc="./assets/Roasta-Loop.mp4"
+            videoSrc="./assets/new-reach-loop.mp4"
             color="#3B82F6"
-            yOffset="-10vh"
+            yOffset="-20vh"
           />
 
-          {/* Card 3: Loco (Green) - Highest */}
           <WorkCard
             index={2}
             title="Content that truly tastes (and touches)"
             brand="Loco"
             videoSrc="./assets/loco-bites-loop.mp4"
             color="#22C55E"
-            yOffset="-20vh"
+            yOffset="-40vh"
           />
         </div>
       </div>

@@ -29,7 +29,7 @@ export const Hero = () => {
 
     const timeoutId = setTimeout(() => {
       const cards = container.querySelectorAll('.results-card') as NodeListOf<HTMLElement>
-      
+
       const rotations = [-8, 4, -6, 8]
       cards.forEach((card, i) => {
         gsap.set(card, { rotation: rotations[i], y: 0 })
@@ -107,42 +107,49 @@ export const Hero = () => {
     },
   })
 
-  const cardBase = "relative flex-shrink-0 aspect-[9/16] rounded-[2rem] overflow-hidden border-[6px] border-white shadow-2xl transition-shadow duration-300"
+  const cardBase = " relative flex-shrink-0 aspect-[9/16] rounded-2xl overflow-hidden"
   // Desktop logic preserved, mobile width set to full for the grid cells
   const desktopWidth = "md:w-[22%]"
   const overlap = "mr-[-6%] md:mr-[-4%] lg:mr-[-3%]"
 
   return (
-    <section className="relative min-h-screen w-full flex flex-col items-center bg-[#FAF4EC] overflow-hidden pt-10">
-      <div className="relative z-50 w-full max-w-[1440px] px-6 lg:px-12 mt-[8vh]">
-        <motion.h1 
+    <section className="relative min-h-screen w-full flex flex-col items-center overflow-hidden pt-10">
+      <div className="relative z-50 w-full max-w-screen px-6 lg:px-12 mt-[10vh]">
+        <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="font-black leading-[0.9] tracking-[-0.05em] text-[#1a1a1a] text-[clamp(3.5rem,9vw,8rem)]"
+          className=" hidden md:block w-full font-bold leading-[1] tracking-[-0.05em] text-[#1a1a1a] text-[clamp(3rem,6vw,8rem)]"
         >
-          Get Hyped. Get<br />Noticed. Get Results.
+          Get Hyped.Get <br /> Noticed. Get Results.
         </motion.h1>
-        <motion.p 
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="md:hidden lg:hidden w-full font-bold leading-[1] tracking-[-0.05em] text-[#1a1a1a] text-[clamp(3rem,6vw,8rem)]"
+        >
+          Get Hyped.<br />Get Noticed. <br />Get Results.
+        </motion.h1>
+        <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="font-bold mt-8 text-lg mb-8 md:text-xl uppercase tracking-tighter text-gray-500"
+          className="font-bold mt-8 text-lg mb-8 md:text-xl tracking-tighter"
         >
           Done gambling on content<br />that yields nothing?
         </motion.p>
       </div>
 
-      <div className="relative w-full flex-grow flex items-end justify-center pb-12 overflow-visible">
-        <motion.div 
+      <div className="relative w-full md:flex-grow flex items-end justify-center mt-5 md:pb-12 overflow-visible">
+        <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
           ref={containerRef}
           // Changed to grid-cols-2 for mobile, flex remains for tablet/desktop
-          className="grid grid-cols-2 md:flex items-end justify-center w-full max-w-[1400px] px-6 md:px-10 cursor-pointer gap-4 md:gap-0"
+          className="grid grid-cols-2 md:flex items-end justify-center w-full max-w-screen px-6 md:px-10 cursor-pointer gap-4 md:gap-0"
         >
           {/* Card 1 */}
-          <motion.div variants={getItemVariants(0)} className={`results-card ${cardBase} w-full ${desktopWidth} ${overlap} bg-[#0d8dff] z-10 border-none`}>
+          <motion.div variants={getItemVariants(0)} className={`results-card ${cardBase} w-full ${desktopWidth} ${overlap} rotate-3 bg-[#0d8dff] z-10 border-none`}>
             <div className="p-6 md:p-8 flex flex-col justify-between h-full text-white">
               <h2 className="font-black text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.8] tracking-tighter">10M+</h2>
               <div className="border-t border-white/20 pt-6">
