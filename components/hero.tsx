@@ -43,7 +43,7 @@ export const Hero = () => {
   }
 
   // Common card styling to ensure consistency
-  const cardBase = "relative flex-shrink-0 aspect-[9/16] rounded-[2rem] shadow-2xl overflow-hidden border-[6px] border-white"
+  const cardBase = "relative flex-shrink-0 aspect-[9/16] rounded-lg overflow-hidden md:border-[5px] border-white"
   // Responsive widths: Mobile (45% for 2-up), Tablet (28% for 3-up), Desktop (22% for 4-up)
   const responsiveWidth = "w-[46%] md:w-[28%] lg:w-[22%]"
   // Negative margins to create the "fan" overlap
@@ -52,79 +52,80 @@ export const Hero = () => {
   return (
     <section className="relative min-h-screen w-full flex flex-col items-center bg-[#FAF4EC] overflow-hidden pt-10">
       
-      {/* --- Header --- */}
-      <div className="relative z-50 w-full max-w-[1440px] px-6 lg:px-12 mt-[10vh]">
-        <motion.h1 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="font-black leading-[0.9] tracking-[-0.05em] text-[#1a1a1a] text-[clamp(3rem,10vw,8.5rem)]"
-        >
-          Get Hyped. Get<br />Noticed. Get Results.
-        </motion.h1>
-        <motion.p 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="font-bold mt-8 text-lg mb-8 md:text-xl  uppercase tracking-tight"
-        >
-          Done gambling on content<br />that yields nothing?
-        </motion.p>
-      </div>
+  {/* --- Header --- */}
+  <div className="relative z-50 w-full max-w-[1440px] px-6 lg:px-12 mt-[10vh]">
+    <motion.h1 
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="font-black leading-[0.9] tracking-[-0.05em] text-[#1a1a1a] text-[clamp(3rem,10vw,8.5rem)]"
+    >
+      Get Hyped. Get<br />Noticed. Get Results.
+    </motion.h1>
+    <motion.p 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.5 }}
+      className="font-bold mt-8 text-lg mb-8 md:text-xl uppercase tracking-tight"
+    >
+      Done gambling on content<br />that yields nothing?
+    </motion.p>
+  </div>
 
-      {/* --- Cards Deck --- */}
-      <div className="relative w-full flex-grow flex items-center justify-center pb-[-2vh]">
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="flex items-end justify-center w-full max-w-[1600px]"
-        >
-          {/* CARD 1 */}
-          <motion.div 
-            variants={getItemVariants(0)} 
-            className={`${cardBase} ${responsiveWidth} ${overlap} bg-[#0d8dff] z-10 border-none`}
-          >
-            <div className="p-6 flex flex-col justify-between h-full text-white">
-              <h2 className="font-black text-[clamp(2rem,5vw,4.5rem)] leading-[0.8] tracking-tighter">10M+</h2>
-              <div className="border-t border-white/20 pt-4">
-                <p className="font-bold text-lg leading-tight">Organic views</p>
-                <p className="text-white/70 text-sm">Growth through smart content</p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* VIDEO 1 */}
-          <motion.div variants={getItemVariants(1)} className={`${cardBase} ${responsiveWidth} ${overlap} z-20 bg-gray-200`}>
-            <AutoPlayVideo src="/assets/hero/hero-1.mp4" className="w-full h-full object-cover scale-105 max-md:scale-100" />
-          </motion.div>
-
-          {/* CARD 2 (Green) - Hidden on Mobile */}
-          <motion.div 
-            variants={getItemVariants(2)} 
-            className={`hidden md:flex ${cardBase} ${responsiveWidth} ${overlap} bg-[#33c791] z-30 border-none`}
-          >
-            <div className="p-6 flex flex-col justify-between h-full text-white">
-              <h2 className="font-black text-[clamp(2rem,5vw,4.5rem)] leading-[0.8] tracking-tighter">30+</h2>
-              <div className="border-t border-white/20 pt-4">
-                <p className="font-bold text-lg leading-tight">Brands helped</p>
-                <p className="text-white/70 text-sm">From start-up to multinational</p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* VIDEO 2 - Hidden on Tablet/Mobile */}
-          <motion.div variants={getItemVariants(3)} className={`hidden lg:block ${cardBase} ${responsiveWidth} z-40 bg-gray-200`}>
-            <AutoPlayVideo src="/assets/hero/hero2.mp4" className="w-full h-full object-cover scale-105" />
-          </motion.div>
-        </motion.div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50">
-        <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center">
-          <ArrowDown className="text-white w-5 h-5 animate-bounce" />
+  {/* --- Cards Deck Container --- */}
+  <div className="relative w-full flex-grow flex items-end justify-center pb-[-2vh]">
+    <motion.div 
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      /* CHANGED: Swapped 'flex' for 'grid' with responsive columns */
+      className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-end justify-center w-full max-w-[1600px] px-4"
+    >
+      {/* CARD 1 (Always Visible) */}
+      <motion.div 
+        variants={getItemVariants(0)} 
+        className={`${cardBase} w-full ${overlap} bg-[#0d8dff] z-10 border-none`}
+      >
+        <div className="p-6 flex flex-col justify-between h-full text-white">
+          <h2 className="font-black text-[clamp(2rem,5vw,4.5rem)] leading-[0.8] tracking-tighter">10M+</h2>
+          <div className="border-t border-white/20 pt-4">
+            <p className="font-bold text-lg leading-tight">Organic views</p>
+            <p className="text-white/70 text-sm">Growth through smart content</p>
+          </div>
         </div>
-      </div>
-    </section>
+      </motion.div>
+
+      {/* VIDEO 1 (Always Visible) */}
+      <motion.div variants={getItemVariants(1)} className={`${cardBase} w-full ${overlap} z-20 `}>
+        <AutoPlayVideo src="/assets/hero/hero-1.mp4" className="w-full h-full object-cover" />
+      </motion.div>
+
+      {/* CARD 2 (Green) - Hidden on Mobile */}
+      <motion.div 
+        variants={getItemVariants(2)} 
+        className={`hidden md:flex flex-col ${cardBase} w-full ${overlap} bg-[#33c791] z-30 border-none`}
+      >
+        <div className="p-6 flex flex-col justify-between h-full text-white">
+          <h2 className="font-black text-[clamp(2rem,5vw,4.5rem)] leading-[0.8] tracking-tighter">30+</h2>
+          <div className="border-t border-white/20 pt-4">
+            <p className="font-bold text-lg leading-tight">Brands helped</p>
+            <p className="text-white/70 text-sm">From start-up to multinational</p>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* VIDEO 2 - Hidden on Tablet/Mobile */}
+      <motion.div variants={getItemVariants(3)} className={`hidden lg:block ${cardBase} w-full z-40 bg-gray-200`}>
+        <AutoPlayVideo src="/assets/hero/hero2.mp4" className="w-full h-full object-cover scale-105" />
+      </motion.div>
+    </motion.div>
+  </div>
+
+  {/* Scroll Indicator */}
+  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50">
+    <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center">
+      <ArrowDown className="text-white w-5 h-5 animate-bounce" />
+    </div>
+  </div>
+</section>
   )
 }

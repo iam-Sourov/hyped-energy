@@ -87,16 +87,14 @@ export const Navbar = () => {
         {/* CTA BUTTON - Right aligned box */}
         <div className="hidden lg:flex flex-1 justify-end items-center">
           <GlobalBtn
+            variant="secondary"
+            className="bg-[#fbbaff] text-black shadow-md border-none"
             href="#contact"
-            className="!bg-[#fbbaff] !text-black border-none rounded-full py-1.5 pl- pr-1.5 shadow-none "
-            icon={true}
-            customIcon={
-              <div className="bg-white rounded-xl p-2.5 ml-2 flex items-center justify-center shadow-sm">
-                <Flame size={18} className="text-[#ff5a1f] fill-[#ff5a1f]" />
-              </div>
+            icon={
+              <Flame size={18} className="bg-white text-[#ff5a1f] fill-white" />
             }
           >
-            <span className="text-[15px] font-bold">Get Results</span>
+            <span className="text-[14px] pl-1 font-bold">Get Results</span>
           </GlobalBtn>
         </div>
 
@@ -153,7 +151,7 @@ export const Navbar = () => {
                 <GlobalBtn
                   href="#contact"
                   className="w-full text-center flex justify-center !bg-black !text-white rounded-2xl h-14 font-bold text-lg"
-                  customIcon={<Flame size={20} className="text-[#ff5a1f] fill-[#ff5a1f]" />}
+                  icon={<Flame size={20} className="text-[#ff5a1f] fill-[#ff5a1f]" />}
                 >
                   Get Results
                 </GlobalBtn>

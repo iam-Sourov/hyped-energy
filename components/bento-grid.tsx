@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
-import { ArrowUpRight } from "lucide-react"
+import { ArrowUpRight, ArrowRight } from "lucide-react"
 import { useRef, useState, useEffect } from "react"
 import { GlobalBtn } from "./ui/global-btn"
 
@@ -148,22 +148,22 @@ export const BentoGrid = () => {
   return (
     <section
       id="work"
-      className="bg-[#F0EBE1] py-12 md:py-[10vh] overflow-hidden"
+      className="bg-[#F0EBE1] md:py-[10vh] overflow-hidden"
     >
       <div className="w-full max-w-[1440px] mx-auto px-4 md:px-[clamp(16px,5vw,40px)]">
 
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-8 md:mb-[8vh] gap-8">
           <div className="max-w-2xl">
-            <h2 className="text-[#1A1A1A] tracking-tighter font-black leading-tight md:leading-[0.9] mb-4 md:mb-6 text-xl md:text-[clamp(3rem,6vw,5.5rem)]">
+            <h2 className=" text-5xl tracking-tighter font-black leading-tight md:leading-[0.9] mb-4 md:mb-6 text-[#1A1A1A] md:text-[clamp(3rem,6vw,5rem)]">
               Content<br />that scores.
             </h2>
-            <p className="text-[#1A1A1A]/80 text-lg md:text-xl font-medium leading-relaxed max-w-md">
+            <p className="font-bold text-[#1A1A1A] text-lg md:text-xl leading-relaxed max-w-md">
               We tell your story. In a way that truly fits your target audience. With creative content that works and makes the difference.
             </p>
             <div className="self-start md:self-end mt-6 md:mt-8">
-              <GlobalBtn href="#work" variant="outline">
-                View all our work
+              <GlobalBtn href="#work" variant="outline" icon={<ArrowRight size={20} />}>
+                Bekijk al ons werk
               </GlobalBtn>
             </div>
           </div>

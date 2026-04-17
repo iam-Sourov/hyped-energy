@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import { GlobalBtn } from "./ui/global-btn"
 import { Logo } from "./logo"
+import { Flame, Mail } from "lucide-react"
 
 interface PopLogo {
   id: number
@@ -101,15 +102,15 @@ export const Footer = () => {
         <div className="flex items-center justify-center gap-[1.2vw] flex-wrap">
           <GlobalBtn 
             href="#contact" 
-            className="border-[2.5px] border-black rounded-[14px] !bg-white !text-black shadow-lg"
-            // customIcon={<div className="bg-black text-white p-2 rounded-[10px]"><Mail size={18} strokeWidth={3} /></div>}
+            variant="outline" 
+            icon={<Mail size={18} strokeWidth={2.5} />}
           >
-            Email us directly
+            Mail ons direct
           </GlobalBtn>
           <GlobalBtn 
             href="#contact" 
-            className="border-[2.5px] border-black rounded-[14px] !bg-[#ff5a1f] !text-white shadow-lg"
-            // customIcon={<div className="bg-white text-[#ff5a1f] p-2 rounded-[10px]"><Flame size={18} fill="currentColor" strokeWidth={3} /></div>}
+            variant="secondary" 
+            icon={<Flame size={20} fill="currentColor" />}
           >
             Get Results
           </GlobalBtn>
@@ -145,8 +146,9 @@ export const Footer = () => {
               <div className="md:hidden w-full px-2">
                 <GlobalBtn 
                   href="#contact" 
-                  className="w-full !bg-[#ff5a1f] !text-white border-none rounded-2xl h-14 font-black text-lg shadow-md"
-                  // customIcon={<div className="bg-white text-[#ff5a1f] p-1.5 rounded-full"><Flame size={20} fill="currentColor" /></div>}
+                  variant="secondary"
+                  className="w-full h-14 font-black shadow-md border-none"
+                  icon={<Flame size={20} fill="currentColor" />}
                 >
                   Get Hyped! Neem contact op
                 </GlobalBtn>
@@ -167,7 +169,7 @@ export const Footer = () => {
                 </nav>
 
                 {/* Socials: Visible only on mobile per screenshot */}
-                {/* <div className="flex md:hidden gap-3">
+                 {/* <div className="flex md:hidden gap-3">
                    {[Linkedin, Instagram, Youtube].map((Icon, i) => (
                       <div key={i} className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
                          <Icon size={20} strokeWidth={2.5} className="text-black" />
