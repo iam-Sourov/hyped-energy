@@ -14,15 +14,14 @@ export const About = () => {
     <section
       ref={sectionRef}
       id="about"
-      className="bg-[#F0EBE1] px-[5vw] py-[8.88vh]"
+      className="bg-[#F0EBE1] px-[5vw] py-[8vh]"
     >
       <div className="max-w-[1440px] mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: "4vh" }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="ml-20 mb-[7vh] w-full lg:w-[85%] text-[#161616] tracking-tight"
-          style={{ fontSize: "var(--fluid-h2, clamp(2.5rem, 4vw, 5.55vw))", fontWeight: 700, lineHeight: 1 }}
+          className="md:ml-20 mb-[7vh] w-full lg:w-[85%] text-[#161616] tracking-tight text-fluid-h2"
         >
           Wij maken content die opvalt. Die blijft hangen. Die jouw doelgroep raakt en jouw merk in beweging brengt. Snel, krachtig en energiek.
         </motion.h2>
@@ -55,8 +54,7 @@ export const About = () => {
             className="w-full md:w-1/2 lg:ml-[8%] lg:w-[45%]"
           >
             <p
-              className="w-full font-bold leading-[1.4] lg:font-bold text-[#1A1A1A]"
-              style={{ fontSize: "var(--fluid-p, clamp(1rem, 1.25vw, 1.7rem))" }}
+              className="w-full font-bold leading-[1.4] lg:font-bold text-[#1A1A1A] text-fluid-p"
             >
               We stoppen niet bij mooie plaatjes en vette beelden. We maken het meetbaar. Zo weet je precies wat werkt en wat niet. Nooit meer content zonder strategie. Nooit meer content zonder resultaat.
             </p>

@@ -66,7 +66,7 @@ export const Navbar = () => {
         </div>
 
         {/* CENTER NAVIGATION PILL - Desktop Only */}
-        <div className="hidden lg:flex items-center bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-full px-4 py-2 gap-1 border border-gray-50">
+        <div className="hidden lg:flex items-center bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-xl px-2 py-1 gap-1 border border-gray-50">
           {menuItems.map((item, idx) => (
             <Link
               key={item.name}

@@ -1,12 +1,12 @@
 "use client"
 
 import React, { useState, useEffect, useRef } from "react"
-// import { Mail, Flame, Linkedin, Instagram, Youtube } from "lucide-react" // Added socials
+import { Mail, Flame } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import { GlobalBtn } from "./ui/global-btn"
 import { Logo } from "./logo"
-import { Flame, Mail } from "lucide-react"
+
 
 interface PopLogo {
   id: number
@@ -169,7 +169,7 @@ export const Footer = () => {
                 </nav>
 
                 {/* Socials: Visible only on mobile per screenshot */}
-                 {/* <div className="flex md:hidden gap-3">
+                 <div className="flex gap-3">
                    {[Linkedin, Instagram, Youtube].map((Icon, i) => (
                       <div key={i} className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
                          <Icon size={20} strokeWidth={2.5} className="text-black" />
@@ -178,7 +178,7 @@ export const Footer = () => {
                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
                       <span className="font-bold text-lg">d</span>
                    </div>
-                </div> */}
+                </div>
                 {/* Contact Info */}
                 <div className="flex flex-col gap-6 md:flex-row md:gap-12 text-sm">
                   <div className="space-y-1">
@@ -214,4 +214,27 @@ const CircularBadge = () => (
       <span className="font-black text-2xl tracking-tighter text-black ">GH</span>
     </div>
   </div>
+)
+
+const Instagram = ({ size = 24, className, ...props }: any) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+  </svg>
+)
+
+const Linkedin = ({ size = 24, className, ...props }: any) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+    <rect width="4" height="12" x="2" y="9"/>
+    <circle cx="4" cy="4" r="2"/>
+  </svg>
+)
+
+const Youtube = ({ size = 24, className, ...props }: any) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+    <path d="M2.5 7.1C2.1 8.4 2 10.2 2 12s.1 3.6.5 4.9A3.3 3.3 0 0 0 4.8 19.2c1.5.4 6.7.4 7.2.4s5.7 0 7.2-.4a3.3 3.3 0 0 0 2.3-2.3c.4-1.3.5-3.1.5-4.9s-.1-3.6-.5-4.9a3.3 3.3 0 0 0-2.3-2.3C17.7 4.4 12.5 4.4 12 4.4s-5.7 0-7.2.4A3.3 3.3 0 0 0 2.5 7.1z"/>
+    <path d="M10 15l5-3-5-3v6z"/>
+  </svg>
 )
