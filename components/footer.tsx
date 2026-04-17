@@ -102,7 +102,7 @@ export const Footer = () => {
   return (
     <footer
       ref={containerRef}
-      className="relative w-full bg-[#fbf7ef] overflow-hidden pt-12 md:pt-[18vh] cursor-default font-sans"
+      className="relative w-full bg-[#fbf7ef] overflow-hidden pt-10 md:pt-[18vh] cursor-default font-sans"
     >
       {/* 1. Desktop Pop Layer */}
       <div className="absolute inset-0 pointer-events-none z-0 hidden md:block">
@@ -208,7 +208,7 @@ export const Footer = () => {
               <div className="flex flex-col md:flex-row gap-8 md:gap-16 text-center md:text-left">
                 {/* Socials */}
                 <div className="flex flex-col gap-4">
-                  <p className="text-[clamp(12px,1.2vw,14px)] font-bold text-black/60">Follow us</p>
+                  <p className="hidden md:block text-[clamp(12px,1.2vw,14px)] font-bold text-black/60">Follow us</p>
                   <div className="flex justify-center md:justify-start gap-2">
                     {[Linkedin, TikTok, Instagram, Youtube].map((Icon, i) => (
                       <div key={i} className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm hover:scale-110 transition-transform cursor-pointer">
@@ -220,7 +220,7 @@ export const Footer = () => {
 
                 {/* Contact */}
                 <div className="flex flex-col gap-4">
-                  <p className="text-[clamp(12px,1.2vw,14px)] font-bold text-black/60">Contact</p>
+                  <p className="hidden md:block text-[clamp(12px,1.2vw,14px)] font-bold text-black/60">Contact</p>
                   <div className="text-[clamp(13px,1.3vw,16px)] font-semibold">
                     <p>iam.rakibbishwas@gmail.com</p>
                     <p>01679714839</p>
@@ -229,7 +229,7 @@ export const Footer = () => {
 
                 {/* Address */}
                 <div className="flex flex-col gap-4">
-                  <p className="text-[clamp(12px,1.2vw,14px)] font-bold text-black/60">Address</p>
+                  <p className="hidden mf:blocktext-[clamp(12px,1.2vw,14px)] font-bold text-black/60">Address</p>
                   <div className="text-[clamp(13px,1.3vw,16px)] font-semibold">
                     <p>Dhaka, Bangladesh</p>
                   </div>
