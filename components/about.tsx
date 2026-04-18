@@ -1,15 +1,28 @@
 "use client"
 
-import { motion, useInView } from "framer-motion"
+import { motion, useInView, Variants } from "framer-motion"
 import { useRef } from "react"
 import Image from "next/image"
 import { ArrowDown, ArrowRight } from "lucide-react"
 import { GlobalBtn } from "./ui/global-btn"
 
+const MotionArrow = motion(ArrowDown);
+
 export const About = () => {
   const sectionRef = useRef<HTMLElement>(null)
   const isInView = useInView(sectionRef, { once: true, margin: "-10% 0px -10% 0px" })
-
+  const arrowVariants: Variants = {
+    initial: { y: 0, opacity: 1 },
+    hover: {
+      y: [0, 25, -25, 0],
+      opacity: [1, 0, 0, 1],
+      transition: {
+        duration: 0.6, 
+        times: [0, 0.4, 0.6, 1], 
+        ease: "easeInOut",
+      },
+    },
+  };
   return (
     <section
       ref={sectionRef}
@@ -26,9 +39,6 @@ export const About = () => {
           We create content that stands out. That sticks. That touches your target audience and gets your brand moving. Fast, powerful, and energetic.
         </motion.h2>
 
-        {/* Desktop (lg): items-center ensures the portrait and text block are aligned horizontally.
-            The relative container allows the arrow to be positioned absolutely.
-        */}
         <div className="relative flex flex-col md:flex-row items-center gap-10 lg:gap-[4vh]">
 
           {/* Image Container: Removed rotate-3 for desktop to match image alignment */}
@@ -58,19 +68,23 @@ export const About = () => {
             >
               We don&apos;t stop at pretty pictures and cool visuals. We make it measurable. This way you know exactly what works and what doesn&apos;t. No more content without a strategy. No more content without results.
             </p>
-            <GlobalBtn href="#contact" variant="outline" icon={<ArrowRight size={18} className="" />}   className="mt-8 lg:mt-[3vh]">
+            <GlobalBtn href="#contact" variant="outline" icon={<ArrowRight size={18} className="" />} className="mt-8 lg:mt-[3vh]">
               Get to know us
             </GlobalBtn>
           </motion.div>
 
-          {/* Arrow Indicator: Positioned at the bottom-right corner as shown in the desktop image */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 1, duration: 1 }}
-            className="hidden md:flex absolute md:relative md:ml-auto lg:absolute border border-black rounded-xl w-10 h-10 items-center justify-center bottom-0 right-0 lg:top-69 lg:right-10 z-50"
+            whileHover="hover"
+            className="hidden md:flex absolute md:relative md:ml-auto lg:absolute border border-black rounded-xl w-10 h-10 items-center justify-center bottom-0 right-0 lg:top-69 lg:right-10 z-50 cursor-pointer overflow-hidden"
           >
-            <ArrowDown size={18} className="text-orange-500 " />
+            <MotionArrow
+              size={18}
+              className="text-orange-500"
+              variants={arrowVariants}
+            />
           </motion.div>
         </div>
       </div>

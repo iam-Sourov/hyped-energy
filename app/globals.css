@@ -20,7 +20,7 @@
   --text-5xl: clamp(3rem, 6vw, 4rem);
   --text-6xl: clamp(3.75rem, 7vw, 5rem);
 
-  --font-sans: var(--font-plus-jakarta);
+  --font-sans: var(--font-inter);
 
   /* Mapping CSS variables to Tailwind utilities */
   --color-background: var(--background);
@@ -36,7 +36,7 @@
 @layer utilities {
   .text-fluid-h2 {
     font-size: var(--fluid-h2, clamp(2.5rem, 4vw, 5.55vw));
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1;
   }
 
@@ -47,7 +47,7 @@
 
 @layer base {
   :root {
-    --background: #F0EBE1;
+    --background: #f0ebe1;
     --foreground: #1a1a1a;
     --primary: #ea580c;
     --border: rgba(26, 26, 26, 0.14);
@@ -59,16 +59,35 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans overflow-x-hidden;
+    @apply overflow-x-hidden bg-background font-sans text-foreground;
   }
 }
 
 @layer components {
-
   /* --- High-Fidelity Swoosh Animation Logic from Video --- */
   .nav-swoosh-btn {
-    --elastic-ease: linear(0, 0.5737 7.6%, 0.8382 11.87%, 0.9463 14.19%, 1.0292 16.54%, 1.0886 18.97%, 1.1258 21.53%, 1.137 22.97%, 1.1424 24.48%, 1.1423 26.1%, 1.1366 27.86%, 1.1165 31.01%, 1.0507 38.62%, 1.0219 42.57%, 0.9995 46.99%, 0.9872 51.63%, 0.9842 58.77%, 1.0011 81.26%, 1);
-    --smooth-ease: cubic-bezier(.32, .72, 0, 1);
+    --elastic-ease: linear(
+      0,
+      0.5737 7.6%,
+      0.8382 11.87%,
+      0.9463 14.19%,
+      1.0292 16.54%,
+      1.0886 18.97%,
+      1.1258 21.53%,
+      1.137 22.97%,
+      1.1424 24.48%,
+      1.1423 26.1%,
+      1.1366 27.86%,
+      1.1165 31.01%,
+      1.0507 38.62%,
+      1.0219 42.57%,
+      0.9995 46.99%,
+      0.9872 51.63%,
+      0.9842 58.77%,
+      1.0011 81.26%,
+      1
+    );
+    --smooth-ease: cubic-bezier(0.32, 0.72, 0, 1);
     overflow: hidden;
     transition: transform 0.4s var(--elastic-ease);
   }
@@ -81,31 +100,71 @@
     position: absolute;
     inset: 0;
     background: #1a1a1a;
-    border-radius: 100px;
-    transform: translateY(100%) rotate(5deg);
+    border-radius: 10px;
+    transform: translateY(160%) rotate(-5deg);
     transition: transform 0.5s var(--smooth-ease);
     pointer-events: none;
+    z-index: 1;
+  }
+
+  .nav-swoosh-btn_bg-red {
+    position: absolute;
+    inset: 0;
+    top: -6px;
+    bottom: 6px;
+    background: #ff5a1f;
+    border-radius: 10px;
+    transform: translateY(160%) rotate(-4deg);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
   }
 
   .nav-swoosh-btn_inner {
     display: grid;
     place-items: center;
+    position: relative;
+    z-index: 2;
   }
 
   .nav-swoosh-btn_text {
     grid-area: 1 / 1;
-    transition: transform 0.6s var(--elastic-ease), opacity 0.2s ease;
+    transition:
+      transform 0.5s var(--smooth-ease),
+      opacity 0.2s ease;
   }
 
   .nav-swoosh-btn_text--hover {
     color: #ffffff;
     opacity: 0;
-    transform: translateY(100%) rotate(10deg);
+    transform: translateY(160%) rotate(10deg);
+  }
+
+  @keyframes swoosh-red {
+    0% {
+      transform: translateY(160%) rotate(-6deg);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    80% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 0;
+    }
   }
 
   @media (hover: hover) {
     .nav-swoosh-btn:hover .nav-swoosh-btn_bg {
       transform: translateY(0) rotate(0deg);
+    }
+
+    .nav-swoosh-btn:hover .nav-swoosh-btn_bg-red {
+      animation: swoosh-red 0.6s var(--smooth-ease) forwards;
     }
 
     .nav-swoosh-btn:hover .nav-swoosh-btn_text--initial {
@@ -116,6 +175,107 @@
     .nav-swoosh-btn:hover .nav-swoosh-btn_text--hover {
       transform: translateY(0) rotate(0deg);
       opacity: 1;
+    }
+  }
+
+  /* ── Hero Section ─────────────────────────────────────────────────────── */
+  .hero-section {
+    /* Full viewport height, cream background */
+    min-height: 100svh;
+    background: #fbf7ef;
+  }
+
+  /* Fluid headline: scales from 3rem on small mobile up to ~9vw on large screens */
+  .hero-headline {
+    font-size: clamp(2.75rem, 8.5vw, 8.5rem);
+    line-height: 0.9;
+  }
+
+  .hero-subline {
+    font-size: clamp(1rem, 1.6vw, 1.35rem);
+  }
+
+  /* ── Card Fan wrapper ─────────────────────────────────────────────────── */
+  .hero-cards-wrapper {
+    /* Takes remaining height below the headline block */
+    flex: 1 1 0;
+    position: relative;
+    min-height: 0;
+  }
+
+  .hero-cards-inner {
+    /* Overlap the cards: negative margin pulls them together */
+    gap: 0;
+  }
+
+  /* Individual card: portrait 9/16 ratio, width scales with viewport */
+  .hero-card {
+    /* Fluid width: min 120px, grows to 22vw, caps at 280px */
+    width: clamp(120px, 22vw, 280px);
+    aspect-ratio: 9 / 16;
+    /* Negative margin creates the overlapping fan */
+    margin-left: clamp(-28px, -3.5vw, -16px);
+    flex-shrink: 0;
+    will-change: transform;
+  }
+
+  /* First card has no left pulling margin */
+  .hero-card:first-child {
+    margin-left: 0;
+  }
+
+  /* Fluid text inside stat cards */
+  .hero-card-stat {
+    font-size: clamp(2.25rem, 5vw, 5rem);
+    line-height: 0.8;
+  }
+
+  .hero-card-label {
+    font-size: clamp(0.85rem, 1.4vw, 1.15rem);
+  }
+
+  .hero-card-sub {
+    font-size: clamp(0.7rem, 1vw, 0.9rem);
+  }
+
+  /* ── Mobile layout: 2-col grid, no rotation interaction ──────────────── */
+  @media (max-width: 640px) {
+    .hero-cards-wrapper {
+      /* On mobile the fan becomes a static 2-column grid below the text */
+      position: static;
+      flex: none;
+    }
+
+    .hero-cards-inner {
+      position: static !important;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.625rem;
+      padding: 1rem 1.25rem 2rem;
+      align-items: end;
+    }
+
+    .hero-card {
+      width: 100%;
+      margin-left: 0 !important;
+    }
+
+    /* Hide 3rd & 4th card on mobile to keep it clean (2 visible) */
+    .hero-card:nth-child(3),
+    .hero-card:nth-child(4) {
+      display: none;
+    }
+  }
+
+  /* ── Tablet: show all 4, slightly tighter ─────────────────────────────── */
+  @media (min-width: 641px) and (max-width: 1023px) {
+    .hero-card {
+      width: clamp(130px, 20vw, 220px);
+      margin-left: clamp(-32px, -4vw, -20px);
+    }
+
+    .hero-card:first-child {
+      margin-left: 0;
     }
   }
 }

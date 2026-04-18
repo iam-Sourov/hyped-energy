@@ -1,13 +1,13 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { cn } from "@/lib/utils"
+import { AnimatePresence, motion } from "framer-motion"
+import gsap from "gsap"
 import { Flame } from "lucide-react"
 import Link from "next/link"
-import { cn } from "@/lib/utils"
-import gsap from "gsap"
-import { GlobalBtn } from "./ui/global-btn"
+import { useEffect, useRef, useState } from "react"
 import { Logo } from "./logo"
+import { GlobalBtn } from "./ui/global-btn"
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -29,9 +29,17 @@ export const Navbar = () => {
       const velocity = currentScrollY - lastScrollY.current
 
       if (currentScrollY > 100 && velocity > 0 && !isMenuOpen) {
-        gsap.to(navRef.current, { yPercent: -100, duration: 0.4, ease: "power2.out" })
+        gsap.to(navRef.current, {
+          yPercent: -100,
+          duration: 0.4,
+          ease: "power2.out",
+        })
       } else {
-        gsap.to(navRef.current, { yPercent: 0, duration: 0.4, ease: "power2.out" })
+        gsap.to(navRef.current, {
+          yPercent: 0,
+          duration: 0.4,
+          ease: "power2.out",
+        })
       }
       lastScrollY.current = currentScrollY
     }
@@ -51,47 +59,52 @@ export const Navbar = () => {
       <nav
         ref={navRef}
         className={cn(
-          "fixed top-0 left-0 right-0 z-[110] flex justify-between items-center transition-all duration-300 px-4 md:px-8",
+          "fixed top-0 right-0 left-0 z-110 flex items-center justify-between px-4 transition-all duration-300 md:px-8",
           isMenuOpen ? "bg-transparent" : "bg-transparent"
         )}
         style={{ height: "100px" }}
       >
         {/* LOGO - Left aligned box ensures center pill stays centered */}
-        <div className="flex-1 flex items-center">
-          <Link href="/" className="flex items-center group">
+        <div className="flex flex-1 items-center">
+          <Link href="/" className="group flex items-center">
             <Logo className="h-13 w-auto" />
           </Link>
         </div>
 
         {/* CENTER NAVIGATION PILL - Desktop Only */}
-        <div className="hidden lg:flex items-center bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-xl px-2 py-1 gap-1 border border-gray-50">
+        <div className="hidden items-center gap-1 rounded-xl border border-gray-50 bg-white px-2 py-1 shadow-[0_8px_30px_rgb(0,0,0,0.04)] lg:flex">
           {menuItems.map((item, idx) => (
-              <Link
+            <Link
               key={item.name}
               href={item.href}
-              className="nav-swoosh-btn relative inline-flex items-center justify-center px-[20px] py-[8px] font-bold text-[15px] text-[#000000] bg-transparent rounded-full"
+              className="nav-swoosh-btn relative inline-flex items-center justify-center rounded-lg bg-transparent px-[20px] py-[8px] text-[15px] font-bold text-[#000000]"
               style={{ "--index": idx } as React.CSSProperties}
             >
+              <span className="nav-swoosh-btn_bg-red"></span>
               <span className="nav-swoosh-btn_bg"></span>
               <span className="nav-swoosh-btn_inner">
-                <span className="nav-swoosh-btn_text nav-swoosh-btn_text--initial">{item.name}</span>
-                <span className="nav-swoosh-btn_text nav-swoosh-btn_text--hover">{item.name}</span>
+                <span className="nav-swoosh-btn_text nav-swoosh-btn_text--initial">
+                  {item.name}
+                </span>
+                <span className="nav-swoosh-btn_text nav-swoosh-btn_text--hover">
+                  {item.name}
+                </span>
               </span>
             </Link>
           ))}
         </div>
 
         {/* CTA BUTTON - Right aligned box */}
-        <div className="hidden lg:flex flex-1 justify-end items-center">
+        <div className="hidden flex-1 items-center justify-end lg:flex">
           <GlobalBtn
             variant="secondary"
-            className="bg-[#fbbaff] text-black shadow-md border-none"
+            className="border-none bg-[#fbbaff] text-black shadow-md"
             href="#contact"
             icon={
-              <Flame size={18} className="bg-white text-[#ff5a1f] fill-white" />
+              <Flame size={24} className="rounded-md  p-1 text-[#FF5A1F]" fill="white" />
             }
           >
-            <span className="text-[14px] pl-1 font-bold">Get Results</span>
+            <span className="pl-1 text-[14px] font-bold">Get Results</span>
           </GlobalBtn>
         </div>
 
@@ -99,10 +112,18 @@ export const Navbar = () => {
         <div className="flex items-center lg:hidden">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="relative bg-[#fbbaff] rounded-xl h-10 w-10 flex flex-col items-center justify-center gap-1.5 z-[120] shadow-sm"
+            className="relative z-[120] flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-xl bg-[#fbbaff] shadow-sm"
           >
-            <motion.span animate={isMenuOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }} className="h-0.5 w-5 bg-black block" />
-            <motion.span animate={isMenuOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }} className="h-0.5 w-5 bg-black block" />
+            <motion.span
+              animate={isMenuOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}
+              className="block h-0.5 w-5 bg-black"
+            />
+            <motion.span
+              animate={
+                isMenuOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }
+              }
+              className="block h-0.5 w-5 bg-black"
+            />
           </button>
         </div>
       </nav>
@@ -114,13 +135,13 @@ export const Navbar = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[105] bg-[#fbbaff] flex flex-col items-center justify-center p-6"
+            className="fixed inset-0 z-[105] flex flex-col items-center justify-center bg-[#fbbaff] p-6"
           >
             <motion.div
               initial="rest"
               animate="open"
               exit="closed"
-              className="flex flex-col items-center gap-4 w-full max-w-[320px]"
+              className="flex w-full max-w-[320px] flex-col items-center gap-4"
             >
               {menuItems.map((item, idx) => (
                 <motion.div
@@ -143,12 +164,17 @@ export const Navbar = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="w-full mt-2"
+                className="mt-2 w-full"
               >
                 <GlobalBtn
                   href="#contact"
-                  className="w-full text-center flex justify-center !bg-black !text-white rounded-2xl h-14 font-bold text-lg"
-                  icon={<Flame size={20} className="text-[#ff5a1f] fill-[#ff5a1f]" />}
+                  className="flex h-14 w-full justify-center rounded-2xl !bg-black text-center text-lg font-bold !text-white"
+                  icon={
+                    <Flame
+                      size={20}
+                      className="fill-[#ff5a1f] text-[#ff5a1f]"
+                    />
+                  }
                 >
                   Get Results
                 </GlobalBtn>

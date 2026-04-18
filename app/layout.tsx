@@ -1,14 +1,14 @@
-import { Geist_Mono, Plus_Jakarta_Sans } from "next/font/google"
 import type { Metadata } from "next"
+import { Geist_Mono, Inter } from "next/font/google"
 
-import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
 import { SmoothScroll } from "@/components/smooth-scroll"
+import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
+import "./globals.css"
 
-const plusJakarta = Plus_Jakarta_Sans({
+const fontSans = Inter({
   subsets: ["latin"],
-  variable: "--font-plus-jakarta",
+  variable: "--font-inter",
 })
 
 const fontMono = Geist_Mono({
@@ -33,8 +33,8 @@ export default function RootLayout({
       className={cn(
         "antialiased",
         fontMono.variable,
-        plusJakarta.variable,
-        "font-sans",
+        fontSans.variable,
+        "font-sans"
       )}
     >
       <body>

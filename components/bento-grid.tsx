@@ -1,8 +1,8 @@
 "use client"
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
-import { ArrowUpRight, ArrowRight } from "lucide-react"
-import { useRef, useState, useEffect } from "react"
+import { ArrowRight, ArrowUpRight } from "lucide-react"
+import { useEffect, useRef, useState } from "react"
 import { GlobalBtn } from "./ui/global-btn"
 
 interface WorkCardProps {
@@ -14,7 +14,14 @@ interface WorkCardProps {
   yOffset?: string
 }
 
-const WorkCard = ({ title, brand, videoSrc, color, index, yOffset = "0px" }: WorkCardProps) => {
+const WorkCard = ({
+  title,
+  brand,
+  videoSrc,
+  color,
+  index,
+  yOffset = "0px",
+}: WorkCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isMobile, setIsMobile] = useState(false)
@@ -28,11 +35,13 @@ const WorkCard = ({ title, brand, videoSrc, color, index, yOffset = "0px" }: Wor
 
   // Determine a slight rotation for mobile based on index to create a "scattered" look
   // Index 0: -2deg, Index 1: 2deg, Index 2: -1deg, etc.
-  const mobileRotate = index % 2 === 0 ? -2 : 2;
+  const mobileRotate = index % 2 === 0 ? -2 : 2
 
   const handlePlay = () => {
     if (videoRef.current) {
-      videoRef.current.play().catch((e) => console.log("Autoplay prevented:", e))
+      videoRef.current
+        .play()
+        .catch((e) => console.log("Autoplay prevented:", e))
     }
   }
 
@@ -47,9 +56,9 @@ const WorkCard = ({ title, brand, videoSrc, color, index, yOffset = "0px" }: Wor
 
   useEffect(() => {
     if (isMobile && videoRef.current) {
-      videoRef.current.play().catch(() => { });
+      videoRef.current.play().catch(() => {})
     }
-  }, [isMobile]);
+  }, [isMobile])
 
   const x = useMotionValue(0)
   const y = useMotionValue(0)
@@ -92,24 +101,24 @@ const WorkCard = ({ title, brand, videoSrc, color, index, yOffset = "0px" }: Wor
       initial={{
         opacity: 0,
         y: 60,
-        rotate: isMobile ? mobileRotate * 2 : -4
+        rotate: isMobile ? mobileRotate * 2 : -4,
       }}
       whileInView={{
         opacity: 1,
         y: 0,
-        rotate: isMobile ? mobileRotate : 0
+        rotate: isMobile ? mobileRotate : 0,
       }}
       transition={{
         duration: 0.8,
         delay: isMobile ? 0.1 * index : index * 0.15,
-        ease: [0.22, 1, 0.36, 1]
+        ease: [0.22, 1, 0.36, 1],
       }}
       viewport={{ once: true, margin: "-50px" }}
       whileHover={isMobile ? undefined : "hover"}
-      className="relative w-full h-[400px] md:h-auto aspect-square md:w-[30vw] lg:w-[28vw] md:aspect-[3/4] group perspective-child cursor-pointer"
+      className="group perspective-child relative aspect-square h-[400px] w-full cursor-pointer md:aspect-[3/4] md:h-auto md:w-[30vw] lg:w-[28vw]"
     >
       <div
-        className="absolute inset-0 rounded-[30px] border-[8px] overflow-hidden shadow-xl bg-white will-change-transform"
+        className="absolute inset-0 overflow-hidden rounded-[30px] border-[8px] bg-white shadow-xl will-change-transform"
         style={{ borderColor: color }}
       >
         <video
@@ -123,25 +132,29 @@ const WorkCard = ({ title, brand, videoSrc, color, index, yOffset = "0px" }: Wor
         />
 
         <motion.div
-          className="absolute bottom-4 left-4 right-4 p-4 md:bottom-[20px] md:left-[20px] md:right-[20px] md:p-[20px] rounded-[20px] flex flex-col justify-between shadow-lg z-10"
+          className="absolute right-4 bottom-4 left-4 z-10 flex flex-col justify-between rounded-[20px] p-4 shadow-lg md:right-[20px] md:bottom-[20px] md:left-[20px] md:p-[20px]"
           style={{ backgroundColor: color }}
-          variants={isMobile ? undefined : {
-            rest: { y: 0 },
-            hover: { y: -5, scale: 1.02 }
-          }}
+          variants={
+            isMobile
+              ? undefined
+              : {
+                  rest: { y: 0 },
+                  hover: { y: -5, scale: 1.02 },
+                }
+          }
           transition={{ type: "spring", stiffness: 400, damping: 20 }}
         >
           <div>
-            <h3 className="text-white font-bold text-base md:text-[1.5rem] leading-tight mb-2 drop-shadow-sm">
+            <h3 className="mb-2 text-base leading-tight font-bold text-white drop-shadow-sm md:text-[1.5rem]">
               {title}
             </h3>
-            <span className="inline-block px-2 py-1 rounded-md bg-white/20 text-white text-[0.8rem] font-semibold backdrop-blur-sm border border-white/10">
+            <span className="inline-block rounded-md border border-white/10 bg-white/20 px-2 py-1 text-[0.8rem] font-semibold text-white backdrop-blur-sm">
               {brand}
             </span>
           </div>
 
           <motion.div
-            className="absolute bottom-[18px] right-[18px] h-[32px] w-[32px] bg-white rounded-full flex items-center justify-center text-black cursor-pointer shadow-sm"
+            className="absolute right-[18px] bottom-[18px] flex h-[32px] w-[32px] cursor-pointer items-center justify-center rounded-full bg-white text-black shadow-sm"
             whileHover={{ scale: 1.1, rotate: 45 }}
             transition={{ type: "spring", stiffness: 400 }}
           >
@@ -155,22 +168,25 @@ const WorkCard = ({ title, brand, videoSrc, color, index, yOffset = "0px" }: Wor
 
 export const BentoGrid = () => {
   return (
-    <section
-      id="work"
-      className="bg-[#FBF7EF] md:pb-[10vh] overflow-hidden"
-    >
-      <div className="w-full max-w-[1920px] mx-auto px-4 md:px-[clamp(16px,5vw,40px)]">
-
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-8 md:mb-[8vh] gap-8">
+    <section id="work" className="overflow-hidden bg-[#FBF7EF] md:pb-[10vh]">
+      <div className="mx-auto w-full max-w-[1920px] px-4 md:px-[clamp(16px,5vw,40px)]">
+        <div className="mb-8 flex flex-col gap-8 md:mb-[8vh] md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <h2 className="text-5xl font-bold tracking-tighter leading-tight md:leading-[0.9] mb-4 md:mb-6 text-[#1A1A1A] md:text-[clamp(3rem,6vw,5rem)]">
-              Content<br />that scores.
+            <h2 className="mb-4 text-5xl leading-tight font-bold tracking-tighter text-[#1A1A1A] md:mb-6 md:text-[clamp(3rem,6vw,5rem)] md:leading-[0.9]">
+              Content
+              <br />
+              that scores.
             </h2>
-            <p className="font-semibold text-[#1A1A1A] text-lg md:text-xl leading-relaxed max-w-md">
-              We tell your story. In a way that truly fits your target audience. With creative content that works and makes the difference.
+            <p className="max-w-md text-lg leading-relaxed font-semibold text-[#1A1A1A] md:text-xl">
+              We tell your story. In a way that truly fits your target audience.
+              With creative content that works and makes the difference.
             </p>
-            <div className="self-start md:self-end mt-6 md:mt-8">
-              <GlobalBtn href="#work" variant="outline" icon={<ArrowRight size={18} />}>
+            <div className="mt-6 self-start md:mt-8 md:self-end">
+              <GlobalBtn
+                href="#work"
+                variant="outline"
+                icon={<ArrowRight size={18} />}
+              >
                 View all our work
               </GlobalBtn>
             </div>
@@ -178,7 +194,7 @@ export const BentoGrid = () => {
         </div>
 
         {/* Added extra padding-top on mobile so rotated cards don't overlap the text above */}
-        <div className="grid grid-cols-1 md:flex md:flex-row items-center justify-center gap-12 md:gap-[4vw] pb-[10vh] mt-8 md:mt-0 max-md:perspective-none perspective-[2000px]">
+        <div className="mt-8 grid grid-cols-1 items-center justify-center gap-12 pb-[10vh] perspective-[2000px] max-md:perspective-none md:mt-0 md:flex md:flex-row md:gap-[4vw]">
           <WorkCard
             index={0}
             title="From zero to full, within 3 weeks"
