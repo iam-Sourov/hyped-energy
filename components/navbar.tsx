@@ -1,13 +1,37 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion, Variants } from "framer-motion"
 import gsap from "gsap"
 import { Flame } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { Logo } from "./logo"
 import { GlobalBtn } from "./ui/global-btn"
+
+// GSAP-style Stagger Coordinates for Menu Drawer
+const menuVars: Variants = {
+  initial: {
+    transition: { staggerChildren: 0.05, staggerDirection: -1 },
+  },
+  open: {
+    transition: { delayChildren: 0.3, staggerChildren: 0.08, staggerDirection: 1 },
+  },
+}
+
+// Inner Link Entrance Animations
+const linkVars: Variants = {
+  initial: {
+    y: "120%",
+    opacity: 0,
+    transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+  },
+  open: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  },
+}
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -67,7 +91,12 @@ export const Navbar = () => {
         {/* LOGO - Left aligned box ensures center pill stays centered */}
         <div className="flex flex-1 items-center">
           <Link href="/" className="group flex items-center">
-            <Logo className="h-14 w-auto" />
+            <Logo
+              className={cn(
+                "h-14 w-auto transition-colors duration-500",
+                isMenuOpen ? "text-[#FCB8FA]" : ""
+              )}
+            />
           </Link>
         </div>
 
@@ -112,17 +141,20 @@ export const Navbar = () => {
         <div className="flex items-center lg:hidden">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="relative z-[120] flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-xl bg-[#fbbaff] shadow-sm"
+            className={cn(
+              "relative z-[120] flex h-12 w-12 flex-col items-center justify-center gap-1.5 rounded-xl shadow-sm transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+              isMenuOpen ? "bg-[#ffffff]" : "bg-[#fbbaff]"
+            )}
           >
             <motion.span
-              animate={isMenuOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}
-              className="block h-0.5 w-5 bg-black"
+              animate={isMenuOpen ? { rotate: 45, y: 4, backgroundColor: "#000" } : { rotate: 0, y: 0, backgroundColor: "#000" }}
+              className="block h-[2px] w-5 bg-black transition-colors duration-300"
             />
             <motion.span
               animate={
-                isMenuOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }
+                isMenuOpen ? { rotate: -45, y: -4, backgroundColor: "#000" } : { rotate: 0, y: 0, backgroundColor: "#000" }
               }
-              className="block h-0.5 w-5 bg-black"
+              className="block h-[2px] w-5 bg-black transition-colors duration-300"
             />
           </button>
         </div>
@@ -132,53 +164,51 @@ export const Navbar = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[105] flex flex-col items-center justify-center bg-[#fbbaff] p-6"
+            initial={{ y: "-100%" }}
+            animate={{ y: "0%" }}
+            exit={{
+              y: "-100%",
+              transition: { delay: 0.3, duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+            }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-[105] flex m-3 border rounded-xl flex-col items-center justify-center bg-[#FCB8FA] px-6 text-black"
+            style={{ willChange: "transform" }}
           >
             <motion.div
-              initial="rest"
+              variants={menuVars}
+              initial="initial"
               animate="open"
-              exit="closed"
-              className="flex w-full max-w-[320px] flex-col items-center gap-4"
+              exit="initial"
+              className="flex w-full flex-col items-center justify-center pt-10"
             >
-              {menuItems.map((item, idx) => (
-                <motion.div
-                  key={item.name}
-                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ delay: idx * 0.05 }}
-                  className="w-full"
-                >
-                  <Link
-                    href={item.href}
-                    onClick={() => setIsMenuOpen(false)}
-                    className="flex h-14 w-full items-center justify-center rounded-2xl bg-white text-lg font-bold text-black shadow-sm"
-                  >
-                    {item.name}
-                  </Link>
-                </motion.div>
+              {menuItems.map((item) => (
+                <div key={item.name} className="overflow-hidden pb-3">
+                  <motion.div variants={linkVars}>
+                    <Link
+                      href={item.href}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="group fon relative inline-block text-[clamp(1rem,10vw,3rem)] p-2.5 rounded-xl  leading-[0.9] tracking-tighter border bg-white"
+                    >
+                      {item.name}
+                      <span className="absolute bottom-[0.1em] left-0 h-[clamp(4px,1vw,8px)] w-full origin-left scale-x-0 bg-[#FCB8FA] transition-transform duration-300 ease-out group-hover:scale-x-100" />
+                    </Link>
+                  </motion.div>
+                </div>
               ))}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="mt-2 w-full"
-              >
-                <GlobalBtn
-                  href="#contact"
-                  className="flex h-14 w-full justify-center rounded-2xl !bg-black text-center text-lg font-bold !text-white"
-                  icon={
-                    <Flame
-                      size={20}
-                      className="fill-[#ff5a1f] text-[#ff5a1f]"
-                    />
-                  }
-                >
-                  Get Results
-                </GlobalBtn>
-              </motion.div>
+
+              <div className="overflow-hidden pb-4 pt-10">
+                <motion.div variants={linkVars} className="flex w-full justify-center">
+                  <GlobalBtn
+                    href="#contact"
+                    className="flex h-14 w-auto justify-center rounded-2xl !bg-black px-10 text-center text-lg font-bold !text-white shadow-none transition-transform hover:scale-105"
+                    icon={
+                      <Flame size={20} className="fill-white text-[#ff5a1f]" />
+                    }
+                  >
+                    Get Results
+                  </GlobalBtn>
+                </motion.div>
+              </div>
             </motion.div>
           </motion.div>
         )}

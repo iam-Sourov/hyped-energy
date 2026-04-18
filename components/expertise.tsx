@@ -1,7 +1,7 @@
 "use client"
 
 import { GlobalBtn } from "@/components/ui/global-btn"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion, useScroll, useTransform, MotionValue } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 import { useRef } from "react"
 
@@ -106,7 +106,7 @@ type CardProps = {
   item: (typeof EXPERTISE_DATA)[number]
   index: number
   total: number
-  progress: any
+  progress: MotionValue<number>
 }
 
 const Card = ({ item, index, total, progress }: CardProps) => {
@@ -115,7 +115,7 @@ const Card = ({ item, index, total, progress }: CardProps) => {
   const start = index * segment
   const end = (index + 1) * segment
 
-
+ 
   const isLast = index === total - 1
   const safeStart = isLast ? 0 : start
   const safeEnd = isLast ? 1 : end

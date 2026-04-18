@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion"
 import gsap from "gsap"
-import { ArrowDown } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 
 /* ─── Auto-playing muted video ─────────────────────────────────────────── */

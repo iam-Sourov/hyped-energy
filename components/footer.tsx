@@ -154,7 +154,7 @@ export const Footer = () => {
   return (
     <footer
       ref={containerRef}
-      className="relative flex min-h-[100dvh] w-full flex-col justify-between overflow-x-hidden overflow-y-visible bg-[#fbf7ef] font-sans md:block md:h-screen md:min-h-0 md:overflow-hidden md:overflow-x-hidden md:overflow-y-hidden"
+      className="relative flex h-auto w-full flex-col justify-between overflow-x-hidden overflow-y-visible bg-[#fbf7ef] font-sans md:block md:h-screen md:min-h-0 md:overflow-hidden md:overflow-x-hidden md:overflow-y-hidden"
     >
       {/* 1. Desktop Pop Layer */}
       <div className="pointer-events-none absolute inset-0 z-0 hidden md:block">
@@ -183,8 +183,8 @@ export const Footer = () => {
       </div>
 
       {/* 2. Top CTA Section */}
-      <div className="relative z-10 flex flex-col items-center justify-center bg-transparent px-4 py-20 text-center md:mb-[2vh] md:py-0 md:pt-[15vh]">
-        <h2 className="mb-[6vh] text-[clamp(32px,8vw,80px)] leading-[1] font-[700] tracking-[-0.04em] text-black">
+      <div className="relative z-10 flex flex-col items-center justify-center bg-transparent px-4 py-16 text-center md:mb-[2vh] md:py-0 md:pt-[15vh]">
+        <h2 className="mb-6 text-[clamp(40px,10vw,80px)] leading-[1] font-[700] tracking-[-0.04em] text-black md:mb-[6vh]">
           Let&apos;s Get Hyped!
         </h2>
         <div className="flex w-full flex-col flex-wrap items-center justify-center gap-4 sm:w-auto sm:flex-row md:flex-row md:flex-nowrap md:gap-[1.2vw]">
@@ -217,7 +217,7 @@ export const Footer = () => {
 
       {/* 3. Bottom Slanted Layout */}
       <div className="relative mt-auto w-full md:absolute md:bottom-0 md:mt-20">
-        <div className="absolute inset-x-0 bottom-0 z-0 mx-4 h-full min-h-[350px] overflow-hidden md:mx-6 md:h-[510px] md:min-h-0">
+        <div className="absolute inset-x-0 bottom-0 z-0 mx-4 h-full min-h-[250px] overflow-hidden md:mx-6 md:h-[510px] md:min-h-0">
           <div
             className="absolute inset-x-0 bottom-0 origin-right bg-[#EBE4D5] md:inset-0"
             style={{
@@ -233,17 +233,17 @@ export const Footer = () => {
           <CircularBadge />
         </div>
 
-        <div className="relative z-10 mx-auto max-w-[1920px] px-6 pt-16 pb-12 md:px-[clamp(16px,5vw,40px)] md:pt-24 md:pb-0">
-          <div className="flex flex-col items-center justify-between gap-12 md:flex-row md:items-end md:gap-12">
+        <div className="relative z-10 mx-auto max-w-[1920px] px-6 pt-12 pb-6 md:px-[clamp(16px,5vw,40px)] md:pt-24 md:pb-0">
+          <div className="flex flex-col items-center justify-between gap-8 md:flex-row md:items-end md:gap-12">
             {/* Logo on Left */}
-            <div className="flex w-full justify-center pb-6 md:w-[35%] md:justify-start md:pb-0">
-              <Logo className="h-auto w-[65vw] max-w-[280px] origin-bottom transform text-black md:w-full md:max-w-none md:scale-y-110 " />
+            <div className="flex w-full justify-center md:w-[35%] md:justify-start md:pb-0">
+              <Logo className="h-auto w-[55vw] max-w-[200px] origin-bottom transform text-black md:w-full md:max-w-none md:scale-y-110 " />
             </div>
 
             {/* Content Groups on Right */}
-            <div className="flex w-full flex-col items-center gap-10 md:w-auto md:items-end md:gap-6">
+            <div className="flex w-full flex-col items-center gap-6 md:w-auto md:items-end md:gap-6">
               {/* Navigation Pills */}
-              <nav className="flex w-full flex-wrap items-center justify-center gap-2 border-b border-black/10 pb-8 md:w-auto md:justify-end md:border-none md:pb-0">
+              <nav className="flex w-full flex-wrap items-center justify-center gap-2 border-b border-black/10 pb-6 md:w-auto md:justify-end md:border-none md:pb-0">
                 {["Expertise", "Work", "About", "Contact"].map((item, idx) => (
                   <Link
                     key={item}
@@ -266,9 +266,9 @@ export const Footer = () => {
               </nav>
 
               {/* Info Grid (Socials, Contact, Address) */}
-              <div className="flex w-full flex-col gap-8 text-center md:w-auto md:flex-row md:gap-16 md:text-left">
+              <div className="flex w-full flex-col gap-6 text-center md:w-auto md:flex-row md:gap-16 md:text-left">
                 {/* Socials */}
-                <div className="flex flex-col items-center gap-4 md:items-start">
+                <div className="flex flex-col items-center gap-3 md:items-start md:gap-4">
                   <p className="hidden text-[clamp(12px,1.2vw,14px)] font-bold text-black/60 md:block">
                     Follow us
                   </p>
@@ -285,7 +285,7 @@ export const Footer = () => {
                 </div>
 
                 {/* Contact */}
-                <div className="flex flex-col items-center gap-2 md:items-start md:gap-4">
+                <div className="flex flex-col items-center gap-1 md:items-start md:gap-4">
                   <p className="hidden text-[clamp(12px,1.2vw,14px)] font-bold text-black/60 md:block">
                     Contact
                   </p>
@@ -296,7 +296,7 @@ export const Footer = () => {
                 </div>
 
                 {/* Address */}
-                <div className="flex flex-col items-center gap-2 md:items-start md:gap-4">
+                <div className="flex flex-col items-center gap-1 md:items-start md:gap-4">
                   <p className="hidden text-[clamp(12px,1.2vw,14px)] font-bold text-black/60 md:block">
                     Address
                   </p>
@@ -307,7 +307,7 @@ export const Footer = () => {
               </div>
 
               {/* Metadata Bar */}
-              <div className="mt-4 flex w-full flex-col items-center justify-between gap-4 border-t border-black/10 pt-6 text-[clamp(10px,1vw,12px)] font-bold text-black/40 sm:flex-row md:mt-0 md:w-full md:flex-row md:pt-8">
+              <div className="mt-2 flex w-full flex-col items-center justify-between gap-3 border-t border-black/10 pt-4 text-[clamp(10px,1vw,12px)] font-bold text-black/40 sm:flex-row md:mt-0 md:w-full md:flex-row md:pt-8">
                 <p>© 2026 Get Hyped</p>
                 <p>Design by Rakib</p>
                 <p className="tracking-widest uppercase">Privacy Policy</p>
