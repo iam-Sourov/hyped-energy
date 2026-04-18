@@ -67,7 +67,7 @@ export const Navbar = () => {
         {/* LOGO - Left aligned box ensures center pill stays centered */}
         <div className="flex flex-1 items-center">
           <Link href="/" className="group flex items-center">
-            <Logo className="h-13 w-auto" />
+            <Logo className="h-14 w-auto" />
           </Link>
         </div>
 

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import gsap from "gsap"
 import { ArrowDown } from "lucide-react"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 /* ─── Auto-playing muted video ─────────────────────────────────────────── */
 const AutoPlayVideo = ({
@@ -70,15 +70,30 @@ const CARDS: CardDef[] = [
 export const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null)
   const hoverWrappersRef = useRef<(HTMLDivElement | null)[]>([])
+  const [numCards, setNumCards] = useState(4)
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) setNumCards(2)
+      else if (window.innerWidth < 1024) setNumCards(3)
+      else setNumCards(4)
+    }
+    // Set initial size
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
 
   /* ── GSAP hover interaction ─────────────────────────────────────────── */
   useEffect(() => {
     const container = containerRef.current
     if (!container) return
 
-    const wrappers = hoverWrappersRef.current.filter(
-      Boolean
-    ) as HTMLDivElement[]
+    const wrappers = hoverWrappersRef.current
+      .slice(0, numCards)
+      .filter(Boolean) as HTMLDivElement[]
+
+    if (wrappers.length === 0) return
 
     // Initialize rotations on the inner wrappers
     wrappers.forEach((el, i) => {
@@ -149,45 +164,48 @@ export const Hero = () => {
     return () => {
       container.removeEventListener("mousemove", onMove)
       container.removeEventListener("mouseleave", onLeave)
+      wrappers.forEach((el) => gsap.killTweensOf(el))
     }
-  }, [])
+  }, [numCards])
 
   return (
     <section
       className="relative flex w-full flex-col overflow-hidden"
       style={{ background: "#FBF7EF" }}
     >
-      {/* ── Headline ──────────────────────────────────────────────────────── */}
       <div
-        className="relative z-10 w-full shrink-0 px-6 md:px-10 lg:px-14"
-        style={{ paddingTop: "clamp(100px, 15vh, 160px)" }}
+        className="relative z-10 w-full shrink-0 px-6 md:px-10 md:mt-10 lg:px-"
+        style={{ paddingTop: "clamp(100px, 12vh, 160px)" }}
       >
         <h1
-          className="leading-[0.95]! font-semibold tracking-tight text-[#1a1a1a]"
+          className="hidden md:block leading-[0.95]! font-semibold tracking-tight text-[#1a1a1a]"
           style={{ fontSize: "clamp(2.6rem, 7vw, 8rem)", lineHeight: 0.85 }}
         >
           Get Hyped. Get <br /> Noticed. Get Results.
         </h1>
+        <h1
+          className="block md:hidden font-bold tracking-tight text-[#1a1a1a]"
+          style={{ fontSize: "clamp(3rem, 8vw, 8rem)", lineHeight: 1}}
+        >
+          Get Hyped.<br />Get Noticed.<br />Get Results.
+        </h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35, duration: 0.6 }}
+        <p
           className="mt-6 font-semibold tracking-tight text-[#1a1a1a]"
-          style={{ fontSize: "clamp(1rem, 2vw, 2rem)" }}
+          style={{ fontSize: "clamp(1.5rem, 2vw, 2rem)", lineHeight: 1.2 }}
         >
           Klaar met gokken op content
           <br />
           die niets oplevert?
-        </motion.p>
+        </p>
       </div>
 
       {/* ── Cards Row ────────────────────────────────────────────────────── */}
       <div
         className="relative z-0 flex flex-1 items-end justify-center overflow-visible"
         style={{
-          paddingBottom: "clamp(2rem, 7vh, 7rem)",
-          paddingTop: "clamp(2rem, 7vh, 7rem)",
+          paddingBottom: "clamp(2rem, 5vh, 7rem)",
+          paddingTop: "clamp(2rem, 10vh, 7rem)",
         }}
       >
         <motion.div
@@ -202,7 +220,7 @@ export const Hero = () => {
           }}
           className="flex cursor-pointer items-end overflow-visible"
         >
-          {CARDS.map((card, i) => (
+          {CARDS.slice(0, numCards).map((card, i) => (
             <motion.div
               key={i}
               variants={{
@@ -213,9 +231,9 @@ export const Hero = () => {
                   transition: { type: "spring", stiffness: 45, damping: 12 },
                 },
               }}
+              className="w-[44vw] md:w-[30vw] lg:w-[23vw] max-w-[650px] min-w-[120px]"
               style={{
                 /* Set base layout on the entrance container */
-                width: "clamp(120px, 23vw, 650px)",
                 flexShrink: 0,
                 marginLeft: i === 0 ? 0 : "clamp(-45px, -5vw, -25px)",
                 zIndex: 10 + i,
@@ -226,7 +244,7 @@ export const Hero = () => {
                 ref={(el) => {
                   hoverWrappersRef.current[i] = el
                 }}
-                className="overflow-hidden shadow-2xl"
+                className="overflow-hidden "
                 style={{
                   aspectRatio: "3/4",
                   borderRadius: "clamp(1rem, 2.5vw, 2.5rem)",

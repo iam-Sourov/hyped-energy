@@ -1,7 +1,7 @@
 "use client"
 
 import { GlobalBtn } from "@/components/ui/global-btn"
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 import { useRef } from "react"
 
@@ -106,31 +106,83 @@ type CardProps = {
   item: (typeof EXPERTISE_DATA)[number]
   index: number
   total: number
-  progress: MotionValue<number>
+  progress: any
 }
 
 const Card = ({ item, index, total, progress }: CardProps) => {
   // Calculate the segment of the scroll where THIS card is active
-  // Segment size is 1 / total (0.25 for 4 cards)
-  // Segment calculation for ["start start", "end end"] tracking
-  // In a 400vh container, the usable scroll distance to reveal 4 cards is 300vh
   const segment = total > 1 ? 1 / (total - 1) : 1
   const start = index * segment
   const end = (index + 1) * segment
 
-  // Advanced 3D Transformations driven by synced global scroll
-  // We exaggerate these slightly to ensure they are visible
-  // Aggressive scaling to ensure previous cards are hidden behind the current one
-  // Card 0 will scale down to ~0.4, Card 1 to ~0.6, etc.
-  const finalScale = 1 - (total - index - 1) * 0.2
-  const scale = useTransform(progress, [start, 1], [1, finalScale])
-  const rotateX = useTransform(progress, [start, end], [0, -3])
-  const rotateZ = useTransform(
-    progress,
-    [start, end],
-    [0, index % 2 === 0 ? 4 : -4]
-  )
-  const translateZ = useTransform(progress, [start, end], [0, -600])
+
+  const isLast = index === total - 1
+  const safeStart = isLast ? 0 : start
+  const safeEnd = isLast ? 1 : end
+
+  // Helper to build strictly monotonically increasing complete [0, 1] arrays
+  const buildRange = (targetVal: number) => {
+    if (isLast) return { input: [0, 1], output: [0, 0] }
+    const input = [0]
+    const output = [0]
+    if (safeStart > 0) {
+      input.push(safeStart)
+      output.push(0)
+    }
+    input.push(safeEnd)
+    output.push(targetVal)
+    if (safeEnd < 1) {
+      input.push(1)
+      output.push(targetVal)
+    }
+    return { input, output }
+  }
+
+  const rX = buildRange(-3)
+  const rotateX = useTransform(progress, rX.input, rX.output)
+
+  const rZ = buildRange(index % 2 === 0 ? 4 : -4)
+  const rotateZ = useTransform(progress, rZ.input, rZ.output)
+
+  const tZ = buildRange(-600)
+  const translateZ = useTransform(progress, tZ.input, tZ.output)
+
+  const getScale = () => {
+    if (isLast) return { input: [0, 1], output: [1, 1] }
+    const finalScale = 1 - (total - index - 1) * 0.2
+    const input = [0]
+    const output = [1]
+    if (safeStart > 0) {
+      input.push(safeStart)
+      output.push(1) // Stay 1 until the card hits the top
+    }
+    input.push(1) // Map scale shrinking across the remaining entirety of the scroll
+    output.push(finalScale)
+    return { input, output }
+  }
+  const sc = getScale()
+  const scale = useTransform(progress, sc.input, sc.output)
+
+  const getOpacity = () => {
+    if (isLast) return { input: [0, 1], output: [1, 1] }
+    const input = [0]
+    const output = [1]
+    // Start fading out right before the end of the segment when it's fully covered
+    const fStart = start + segment * 0.85
+    if (fStart > 0) {
+      input.push(fStart)
+      output.push(1)
+    }
+    input.push(safeEnd) // At its end segment, it becomes 0 opacity
+    output.push(0)
+    if (safeEnd < 1) {
+      input.push(1) // Remain 0 opacity for the rest of the scroll fully stacked
+      output.push(0)
+    }
+    return { input, output }
+  }
+  const op = getOpacity()
+  const opacity = useTransform(progress, op.input, op.output)
 
   const isDarkCard = item.cardBg !== "#FFFFFF"
 
@@ -149,6 +201,7 @@ const Card = ({ item, index, total, progress }: CardProps) => {
         rotateX,
         rotateZ,
         z: translateZ,
+        opacity,
         transformOrigin: "bottom center",
         transformStyle: "preserve-3d",
       }}

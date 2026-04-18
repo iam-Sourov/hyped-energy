@@ -34,7 +34,7 @@ export const About = () => {
           initial={{ opacity: 0, y: "4vh" }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="md:ml-20 mb-[7vh] w-full lg:w-[85%] text-[#161616] tracking-tight text-fluid-h2"
+          className=" md:m-[10vh] mb-[6vh] w-full lg:w-[85%] text-[#161616] tracking-tight text-fluid-h2"
         >
           We create content that stands out. That sticks. That touches your target audience and gets your brand moving. Fast, powerful, and energetic.
         </motion.h2>
@@ -64,7 +64,7 @@ export const About = () => {
             className="w-full md:w-1/2 lg:ml-[8%] lg:w-[45%]"
           >
             <p
-              className="w-full font-bold leading-[1.4] lg:font-bold text-[#1A1A1A] text-fluid-p"
+              className="w-full font-bold leading-[1.4] text-[#1A1A1A] text-fluid-p"
             >
               We don&apos;t stop at pretty pictures and cool visuals. We make it measurable. This way you know exactly what works and what doesn&apos;t. No more content without a strategy. No more content without results.
             </p>

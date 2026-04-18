@@ -154,7 +154,7 @@ export const Footer = () => {
   return (
     <footer
       ref={containerRef}
-      className="relative h-screen w-full cursor-default overflow-hidden bg-[#fbf7ef] font-sans"
+      className="relative flex min-h-[100dvh] w-full flex-col justify-between overflow-x-hidden overflow-y-visible bg-[#fbf7ef] font-sans md:block md:h-screen md:min-h-0 md:overflow-hidden md:overflow-x-hidden md:overflow-y-hidden"
     >
       {/* 1. Desktop Pop Layer */}
       <div className="pointer-events-none absolute inset-0 z-0 hidden md:block">
@@ -183,15 +183,15 @@ export const Footer = () => {
       </div>
 
       {/* 2. Top CTA Section */}
-      <div className="relative z-10 mb-[20vh] flex flex-col items-center justify-center bg-transparent px-4 text-center md:mb-[2vh]">
+      <div className="relative z-10 flex flex-col items-center justify-center bg-transparent px-4 py-20 text-center md:mb-[2vh] md:py-0 md:pt-[15vh]">
         <h2 className="mb-[6vh] text-[clamp(32px,8vw,80px)] leading-[1] font-[700] tracking-[-0.04em] text-black">
           Let&apos;s Get Hyped!
         </h2>
-        <div className="flex flex-row flex-wrap items-center justify-center gap-[1.2vw] md:flex-nowrap">
+        <div className="flex w-full flex-col flex-wrap items-center justify-center gap-4 sm:w-auto sm:flex-row md:flex-row md:flex-nowrap md:gap-[1.2vw]">
           <GlobalBtn
             href="#contact"
             variant="outline"
-            className="border-black bg-white text-black"
+            className="w-full justify-center border-black bg-white text-black sm:w-auto md:w-auto"
             icon={
               <div className="rounded-md bg-black p-1 text-white">
                 <Mail size={18} />
@@ -203,7 +203,7 @@ export const Footer = () => {
           <GlobalBtn
             href="#contact"
             variant="secondary"
-            className="border-none bg-[#FF5A1F] text-white"
+            className="w-full justify-center border-none bg-[#FF5A1F] text-white sm:w-auto md:w-auto"
             icon={
               <div className="rounded-md bg-white p-1 text-[#FF5A1F]">
                 <Flame size={18} fill="currentColor" />
@@ -216,10 +216,10 @@ export const Footer = () => {
       </div>
 
       {/* 3. Bottom Slanted Layout */}
-      <div className="absolute bottom-0 mt-20 w-full md:mt-0">
-        <div className="absolute inset-x-0 bottom-0 z-0 mx-6 h-[510px] overflow-hidden">
+      <div className="relative mt-auto w-full md:absolute md:bottom-0 md:mt-20">
+        <div className="absolute inset-x-0 bottom-0 z-0 mx-4 h-full min-h-[350px] overflow-hidden md:mx-6 md:h-[510px] md:min-h-0">
           <div
-            className="absolute inset-0 origin-right bg-[#EBE4D5]"
+            className="absolute inset-x-0 bottom-0 origin-right bg-[#EBE4D5] md:inset-0"
             style={{
               transform: "skewY(-11deg) translateY(10%)",
               height: "150%",
@@ -233,22 +233,22 @@ export const Footer = () => {
           <CircularBadge />
         </div>
 
-        <div className="relative z-10 mx-auto max-w-[1920px] px-4 pt-24 md:px-[clamp(16px,5vw,40px)]">
-          <div className="flex flex-col items-center justify-between gap-10 md:flex-row md:items-end md:gap-12">
+        <div className="relative z-10 mx-auto max-w-[1920px] px-6 pt-16 pb-12 md:px-[clamp(16px,5vw,40px)] md:pt-24 md:pb-0">
+          <div className="flex flex-col items-center justify-between gap-12 md:flex-row md:items-end md:gap-12">
             {/* Logo on Left */}
-            <div className="flex w-[60vw] justify-center md:w-[40%] md:justify-start">
-              <Logo className="h-auto w-full origin-bottom -rotate-11 transform text-black md:scale-y-110 md:-rotate-0" />
+            <div className="flex w-full justify-center pb-6 md:w-[35%] md:justify-start md:pb-0">
+              <Logo className="h-auto w-[65vw] max-w-[280px] origin-bottom transform text-black md:w-full md:max-w-none md:scale-y-110 " />
             </div>
 
             {/* Content Groups on Right */}
-            <div className="flex w-full flex-col items-center gap-6 md:w-auto md:items-end">
+            <div className="flex w-full flex-col items-center gap-10 md:w-auto md:items-end md:gap-6">
               {/* Navigation Pills */}
-              <nav className="flex flex-wrap items-center justify-center gap-2">
+              <nav className="flex w-full flex-wrap items-center justify-center gap-2 border-b border-black/10 pb-8 md:w-auto md:justify-end md:border-none md:pb-0">
                 {["Expertise", "Work", "About", "Contact"].map((item, idx) => (
                   <Link
                     key={item}
                     href={`#${item.toLowerCase()}`}
-                    className="nav-swoosh-btn relative inline-flex items-center justify-center rounded-xl border border-black/5 bg-white px-[20px] py-[8px] font-bold text-[#000000] shadow-sm md:shadow-none overflow-hidden"
+                    className="nav-swoosh-btn relative inline-flex items-center justify-center overflow-hidden rounded-xl border border-black/5 bg-white px-[20px] py-[8px] font-bold text-[#000000] shadow-sm md:shadow-none"
                     style={{ "--index": idx } as React.CSSProperties}
                   >
                     <span className="nav-swoosh-btn_bg-red"></span>
@@ -266,48 +266,48 @@ export const Footer = () => {
               </nav>
 
               {/* Info Grid (Socials, Contact, Address) */}
-              <div className="flex flex-col gap-8 text-center md:flex-row md:gap-16 md:text-left">
+              <div className="flex w-full flex-col gap-8 text-center md:w-auto md:flex-row md:gap-16 md:text-left">
                 {/* Socials */}
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col items-center gap-4 md:items-start">
                   <p className="hidden text-[clamp(12px,1.2vw,14px)] font-bold text-black/60 md:block">
                     Follow us
                   </p>
-                  <div className="flex justify-center gap-2 md:justify-start">
+                  <div className="flex justify-center gap-3 md:justify-start md:gap-2">
                     {[Linkedin, TikTok, Instagram, Youtube].map((Icon, i) => (
                       <div
                         key={i}
-                        className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white shadow-sm transition-transform hover:scale-110"
+                        className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-white shadow-sm transition-transform hover:scale-110 md:h-10 md:w-10"
                       >
-                        <Icon className="text-black" />
+                        <Icon className="h-5 w-5 text-black md:h-auto md:w-auto" />
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Contact */}
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col items-center gap-2 md:items-start md:gap-4">
                   <p className="hidden text-[clamp(12px,1.2vw,14px)] font-bold text-black/60 md:block">
                     Contact
                   </p>
-                  <div className="text-[clamp(13px,1.3vw,16px)] font-semibold">
+                  <div className="text-[clamp(14px,1.3vw,16px)] font-semibold md:text-[clamp(13px,1.3vw,16px)]">
                     <p>iam.rakibbishwas@gmail.com</p>
                     <p>01679714839</p>
                   </div>
                 </div>
 
                 {/* Address */}
-                <div className="flex flex-col gap-4">
-                  <p className="mf:blocktext-[clamp(12px,1.2vw,14px)] hidden font-bold text-black/60">
+                <div className="flex flex-col items-center gap-2 md:items-start md:gap-4">
+                  <p className="hidden text-[clamp(12px,1.2vw,14px)] font-bold text-black/60 md:block">
                     Address
                   </p>
-                  <div className="text-[clamp(13px,1.3vw,16px)] font-semibold">
+                  <div className="text-[clamp(14px,1.3vw,16px)] font-semibold md:text-[clamp(13px,1.3vw,16px)]">
                     <p>Dhaka, Bangladesh</p>
                   </div>
                 </div>
               </div>
 
               {/* Metadata Bar */}
-              <div className="flex w-full flex-col items-center justify-between gap-4 border-t border-black/10 pt-8 text-[clamp(10px,1vw,12px)] font-bold text-black/40 md:flex-row">
+              <div className="mt-4 flex w-full flex-col items-center justify-between gap-4 border-t border-black/10 pt-6 text-[clamp(10px,1vw,12px)] font-bold text-black/40 sm:flex-row md:mt-0 md:w-full md:flex-row md:pt-8">
                 <p>© 2026 Get Hyped</p>
                 <p>Design by Rakib</p>
                 <p className="tracking-widest uppercase">Privacy Policy</p>
