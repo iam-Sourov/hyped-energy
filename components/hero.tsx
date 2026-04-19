@@ -170,7 +170,7 @@ export const Hero = () => {
         className="relative z-10 w-full shrink-0 px-4 md:mx-auto md:mt-2 md:max-w-[1400px] md:px-10 lg:px-2"
         style={{ paddingTop: "clamp(90px, 10vh, 120px)" }}
       >
-        <h1 className="text-fluid-h2 mt-8 font-bold tracking-tight text-[#1a1a1a] md:font-semibold md:tracking-tighter">
+        <h1 className="text-fluid-h1 mt-8 font-bold tracking-tight text-[#1a1a1a] md:font-semibold md:tracking-tighter">
           Get Hyped. <br className="block md:hidden" />
           Get <br className="hidden md:block" /> Noticed. <br  className="block md:hidden"/>
           Get Results.
