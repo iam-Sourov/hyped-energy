@@ -80,12 +80,12 @@ export const Footer = () => {
   }, [])
 
   return (
-    <footer ref={containerRef} className="relative flex w-full flex-col justify-between bg-[#fbf7ef] font-sans md:h-screen md:min-h-[700px] md:overflow-hidden">
+    <footer ref={containerRef} className="relative flex w-full flex-col justify-between bg-[#fbf7ef] font-sans md:h-screen md:min-h-[75vh] md:overflow-hidden">
       <div className="pointer-events-none absolute inset-0 z-0 hidden md:block">
         <AnimatePresence>
           {logos.map((logo) => (
             <motion.div key={logo.id} initial={{ scale: 0, opacity: 0, rotate: logo.rotate - 15 }} animate={{ scale: 1, opacity: 1, rotate: logo.rotate }} exit={{ scale: 0, opacity: 0, rotate: logo.rotate + 15 }} className="absolute" style={{ left: logo.x, top: logo.y, x: "-50%", y: "-50%" }}>
-              <div className="p-2"><Logo className="h-auto w-[150px]" /></div>
+              <div className="p-2"><Logo className="h-auto w-[8vw]" /></div>
             </motion.div>
           ))}
         </AnimatePresence>
@@ -100,23 +100,25 @@ export const Footer = () => {
       </div>
 
       <div className="relative mt-auto w-full md:absolute md:bottom-0">
-        <div className="absolute inset-x-0 bottom-0 z-0 mx-4 h-full min-h-[550px] overflow-hidden md:mx-6 md:h-[510px] md:min-h-0">
+        <div className="absolute inset-x-0 bottom-0 z-0 mx-4 h-full min-h-[68vh] overflow-hidden md:mx-6 md:h-[55vh] md:min-h-0">
           <div className="absolute inset-x-0 bottom-0 origin-right bg-[#EBE4D5] md:inset-0" style={{ transform: "skewY(-11deg) translateY(10%)", height: "150%", borderRadius: "20px 60px 0 0" }} />
         </div>
 
         <div className="relative z-10  rounded-t-2xl mx-auto max-w-[1920px] px-6 pt-12 pb-10 md:px-[clamp(16px,5vw,40px)] md:pt-24 md:pb-0">
           <div className="flex flex-col items-center justify-between gap-10 md:flex-row md:items-end md:gap-12">
-            
-            <div className="flex w-full justify-center md:w-[35%] md:justify-start">
-              <Logo className="h-auto w-[75vw] max-w-[320px] origin-bottom transform text-black md:w-full md:max-w-none md:scale-y-110" />
+
+            <div className="flex w-full justify-center md:w-[40%] md:justify-start">
+              <Logo className="h-auto w-[80vw] max-w-[320px] origin-bottom transform text-black md:w-full md:max-w-[500px] md:scale-y-110" />
             </div>
 
             <div className="flex w-full justify-center md:hidden">
-              <GlobalBtn href="#contact" variant="secondary" className="w-full max-w-[300px] justify-center border-none bg-[#FF5A1F] text-white" icon={<div className="rounded-md bg-white p-1 text-[#FF5A1F]"><Flame size={20} className="fill-white text-[#ff5a1f]" /></div>}>
+              <GlobalBtn href="#contact" variant="secondary" className="w-full max-w-[80vw] justify-center border-none bg-[#FF5A1F] text-white" icon={<div className="rounded-md bg-white p-1 text-[#FF5A1F]"><Flame size={20} className="fill-white text-[#ff5a1f]" /></div>}>
                 Get Results! Contact us
               </GlobalBtn>
             </div>
-
+            <div className="hidden md:block absolute rotate-18 top-[-6vw] right-[9vw] z-20">
+              <CircularBadge />
+            </div>
             <div className="flex w-full flex-col items-center gap-10 md:w-auto md:items-end md:gap-6">
               <nav className="flex w-full flex-wrap items-center justify-center gap-2 md:w-auto md:justify-end md:gap-4">
                 {["Expertise", "Work", "About", "Contact"].map((item) => (
@@ -141,7 +143,7 @@ export const Footer = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col items-center gap-3 text-xs font-medium text-black/40">
+              <div className="flex flex-col md:flex-row  items-center gap-3 text-xs font-medium text-black/40">
                 <p className="tracking-widest uppercase">Privacy Policy</p>
                 <p>© 2026 Get Hyped</p>
                 <p>Design by Rakib</p>
@@ -153,3 +155,29 @@ export const Footer = () => {
     </footer>
   )
 }
+const CircularBadge = () => (
+  <div className="relative flex h-[120px] w-[120px] -rotate-12 items-center justify-center md:h-[160px] md:w-[160px]">
+    <motion.div
+      animate={{ rotate: 360 }}
+      transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+      className="absolute inset-0"
+    >
+      <svg className="h-full w-full fill-black bg-[#FCB8FA] rounded-full" viewBox="0 0 100 100">
+        <defs>
+          <path
+            id="badgePath"
+            d="M 50, 50 m -38, 0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"
+          />
+        </defs>
+        <text className="text-[7.5px] font-[900] tracking-[0.3em] uppercase">
+          <textPath xlinkHref="#badgePath">
+            GET HYPED • GET RESULTS • GET NOTICED •
+          </textPath>
+        </text>
+      </svg>
+    </motion.div>
+    <div className="z-10 flex h-[60px] w-[60px] items-center justify-center rounded-full ">
+      <span className="text-2xl font-[900] tracking-tighter text-black md:text-4xl">GH</span>
+    </div>
+  </div>
+)
