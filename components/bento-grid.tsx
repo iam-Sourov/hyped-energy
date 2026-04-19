@@ -126,18 +126,9 @@ const WorkCard = ({
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
 
-        <motion.div
+        <div
           className="absolute right-4 bottom-4 left-4 z-10 flex flex-col justify-between rounded-[20px] p-4 shadow-lg md:right-[20px] md:bottom-[20px] md:left-[20px] md:p-[20px]"
           style={{ backgroundColor: color }}
-          variants={
-            isMobile
-              ? undefined
-              : {
-                  rest: { y: 0 },
-                  hover: { y: -5, scale: 1.02 },
-                }
-          }
-          transition={{ type: "spring", stiffness: 400, damping: 20 }}
         >
           <div>
             <h3 className="mb-2 text-base leading-tight font-bold text-white drop-shadow-sm md:text-[1.5rem]">
@@ -155,7 +146,7 @@ const WorkCard = ({
           >
             <ArrowUpRight size={18} strokeWidth={3} />
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </motion.div>
   )

@@ -68,7 +68,7 @@ export const About = () => {
             className="w-full pb-12 md:w-1/2 lg:ml-[8%] lg:w-[45%]"
           >
             <p
-              className="w-full font-bold leading-[1.2] text-[#1A1A1A] text-fluid-p"
+              className="w-full font-semibold leading-[1.4] text-[#1A1A1A] text-fluid-p"
             >
               We don&apos;t stop at pretty pictures and cool visuals. We make it measurable. This way you know exactly what works and what doesn&apos;t. No more content without a strategy. No more content without results.
             </p>

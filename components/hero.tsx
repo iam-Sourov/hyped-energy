@@ -177,7 +177,7 @@ export const Hero = () => {
         </h1>
         <p className="text-fluid-p mt-6 font-bold tracking-tight text-[#1a1a1a] ">
           Done gambling on content
-          <br className="hidden md:block" />
+          <br />
           that doesn&apos;t deliver?
         </p>
       </div>
