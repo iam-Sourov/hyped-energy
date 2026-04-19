@@ -1,11 +1,10 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { AnimatePresence, motion, Variants } from "framer-motion"
-import gsap from "gsap"
+import { AnimatePresence, motion, useMotionValueEvent, useScroll, Variants } from "framer-motion"
 import { Flame } from "lucide-react"
 import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { Logo } from "./logo"
 import { GlobalBtn } from "./ui/global-btn"
 
@@ -33,9 +32,8 @@ const linkVars: Variants = {
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-
-  const navRef = useRef<HTMLDivElement>(null)
-  const lastScrollY = useRef(0)
+  const [isHidden, setIsHidden] = useState(false)
+  const { scrollY } = useScroll()
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -45,29 +43,14 @@ export const Navbar = () => {
     }
   }, [isMenuOpen])
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY
-      const velocity = currentScrollY - lastScrollY.current
-
-      if (currentScrollY > 100 && velocity > 0 && !isMenuOpen) {
-        gsap.to(navRef.current, {
-          yPercent: -100,
-          duration: 0.4,
-          ease: "power2.out",
-        })
-      } else {
-        gsap.to(navRef.current, {
-          yPercent: 0,
-          duration: 0.4,
-          ease: "power2.out",
-        })
-      }
-      lastScrollY.current = currentScrollY
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0
+    if (latest > previous && latest > 150 && !isMenuOpen) {
+      setIsHidden(true)
+    } else {
+      setIsHidden(false)
     }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [isMenuOpen])
+  })
 
   const menuItems = [
     { name: "Expertise", href: "#expertise" },
@@ -78,10 +61,15 @@ export const Navbar = () => {
 
   return (
     <>
-      <nav
-        ref={navRef}
+      <motion.nav
+        variants={{
+          visible: { y: 0 },
+          hidden: { y: "-100%" },
+        }}
+        animate={isHidden ? "hidden" : "visible"}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
         className={cn(
-          "fixed top-0 right-0 left-0 z-110 flex items-center justify-between px-4 transition-all duration-300 md:px-8",
+          "fixed top-0 right-0 left-0 z-[110] flex items-center justify-between px-4 md:px-8",
           isMenuOpen ? "bg-transparent" : "bg-transparent"
         )}
         style={{ height: "100px" }}
@@ -152,7 +140,7 @@ export const Navbar = () => {
             />
           </button>
         </div>
-      </nav>
+      </motion.nav>
 
       <AnimatePresence>
         {isMenuOpen && (
