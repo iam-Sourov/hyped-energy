@@ -52,11 +52,9 @@ const WorkCard = ({
 
   useEffect(() => {
     if (isMobile && videoRef.current) {
-      videoRef.current.play().catch(() => {})
+      videoRef.current.play().catch(() => { })
     }
   }, [isMobile])
-
-    // Removed heavy mouse 3D parallax to avoid scroll/render lag
 
   return (
     <motion.div
@@ -64,27 +62,23 @@ const WorkCard = ({
       onMouseEnter={isMobile ? undefined : handlePlay}
       onMouseLeave={isMobile ? undefined : handlePause}
       style={{
-        marginTop: isMobile ? (index === 0 ? "0px" : "-140px") : yOffset,
-        zIndex: index + 1, 
+        // STACKING LOGIC: Using vh for proportional mobile overlap
+        marginTop: isMobile ? (index === 0 ? "0vh" : "-18vh") : yOffset,
+        zIndex: index + 1,
+        transformStyle: "preserve-3d",
       }}
-      initial={{
-        opacity: 0,
-        y: 60,
-        rotate: isMobile ? mobileRotate * 2 : -4,
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-        rotate: isMobile ? mobileRotate : 0,
-      }}
+      // ANIMATION CONTROL: Static rotation for mobile to prevent jitter
+      initial={isMobile ? { opacity: 1, rotate: mobileRotate } : { opacity: 0, y: 60, rotate: -4 }}
+      whileInView={isMobile ? { opacity: 1, rotate: mobileRotate } : { opacity: 1, y: 0, rotate: 0 }}
       transition={{
         duration: 0.8,
-        delay: isMobile ? 0.1 * index : index * 0.15,
+        delay: isMobile ? 0 : index * 0.15,
         ease: [0.22, 1, 0.36, 1],
       }}
       viewport={{ once: true, margin: "-50px" }}
       whileHover={isMobile ? undefined : { scale: 1.02 }}
-      className="group relative aspect-square h-[450px] w-full cursor-pointer md:aspect-[3/4] md:h-auto md:w-[30vw] lg:w-[28vw]"
+      // DIMENSIONS: Using vh for mobile height and vw for width scaling
+      className="group relative aspect-square h-[55vh] min-h-[400px] w-full cursor-pointer md:aspect-[3/4] md:h-auto md:w-[30vw] lg:w-[28vw]"
     >
       <div
         className="absolute inset-0 overflow-hidden rounded-[30px] border-[8px] bg-white shadow-2xl will-change-transform"
@@ -101,11 +95,11 @@ const WorkCard = ({
         />
 
         <div
-          className="absolute right-4 bottom-4 left-4 z-10 flex flex-col justify-between rounded-[20px] p-4 shadow-lg md:right-[20px] md:bottom-[20px] md:left-[20px] md:p-[20px]"
+          className="absolute right-4 bottom-4 left-4 z-10 flex flex-col justify-between rounded-[20px] p-[4vw] shadow-lg md:right-[20px] md:bottom-[20px] md:left-[20px] md:p-[20px]"
           style={{ backgroundColor: color }}
         >
           <div>
-            <h3 className="mb-2 text-base leading-tight font-bold text-white drop-shadow-sm md:text-[1.5rem]">
+            <h3 className="mb-2 text-[clamp(1.1rem,4vw,1.5rem)] leading-tight font-bold text-white drop-shadow-sm md:text-[1.5rem]">
               {title}
             </h3>
             <span className="inline-block rounded-md border border-white/10 bg-white/20 px-2 py-1 text-[0.8rem] font-semibold text-white backdrop-blur-sm">
@@ -114,7 +108,7 @@ const WorkCard = ({
           </div>
 
           <motion.div
-            className="absolute right-[18px] bottom-[18px] flex h-[32px] w-[32px] items-center justify-center rounded-full bg-white text-black shadow-sm"
+            className="absolute right-[4vw] bottom-[4vw] flex h-[32px] w-[32px] items-center justify-center rounded-full bg-white text-black shadow-sm md:right-[18px] md:bottom-[18px]"
             whileHover={{ scale: 1.1, rotate: 45 }}
             transition={{ type: "spring", stiffness: 400 }}
           >
