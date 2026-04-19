@@ -9,7 +9,6 @@ import { useEffect, useRef, useState } from "react"
 import { Logo } from "./logo"
 import { GlobalBtn } from "./ui/global-btn"
 
-// GSAP-style Stagger Coordinates for Menu Drawer
 const menuVars: Variants = {
   initial: {
     transition: { staggerChildren: 0.05, staggerDirection: -1 },
@@ -19,7 +18,6 @@ const menuVars: Variants = {
   },
 }
 
-// Inner Link Entrance Animations
 const linkVars: Variants = {
   initial: {
     y: "120%",
@@ -88,7 +86,6 @@ export const Navbar = () => {
         )}
         style={{ height: "100px" }}
       >
-        {/* LOGO - Left aligned box ensures center pill stays centered */}
         <div className="flex flex-1 items-center">
           <Link href="/" className="group flex items-center">
             <Logo
@@ -100,7 +97,6 @@ export const Navbar = () => {
           </Link>
         </div>
 
-        {/* CENTER NAVIGATION PILL - Desktop Only */}
         <div className="hidden items-center gap-1 rounded-xl border border-gray-50 bg-white px-2 py-1 shadow-[0_8px_30px_rgb(0,0,0,0.04)] lg:flex">
           {menuItems.map((item, idx) => (
             <Link
@@ -123,7 +119,6 @@ export const Navbar = () => {
           ))}
         </div>
 
-        {/* CTA BUTTON - Right aligned box */}
         <div className="hidden flex-1 items-center justify-end lg:flex">
           <GlobalBtn
             variant="secondary"
@@ -137,7 +132,6 @@ export const Navbar = () => {
           </GlobalBtn>
         </div>
 
-        {/* MOBILE TOGGLE */}
         <div className="flex items-center lg:hidden">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -160,7 +154,6 @@ export const Navbar = () => {
         </div>
       </nav>
 
-      {/* MOBILE FULLSCREEN MENU */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div

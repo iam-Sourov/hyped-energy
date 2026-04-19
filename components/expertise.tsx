@@ -5,7 +5,6 @@ import { motion, useScroll, useTransform, MotionValue } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 import { useRef } from "react"
 
-// --- Refined Color Hierarchy Configuration ---
 const EXPERTISE_DATA = [
   {
     id: "01",
@@ -44,7 +43,7 @@ const EXPERTISE_DATA = [
     description:
       "The right content deserves to be seen. We distribute content where your target audience is, ensuring your brand connects with the right people.",
     buttonText: "More about activation",
-    cardBg: "#1A1A1A",
+    cardBg: "#33C791",
     textColor: "#FFFFFF",
     subTextColor: "rgba(255, 255, 255, 0.7)",
     borderColor: "#333333",
@@ -74,15 +73,12 @@ export const Expertise = () => {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    // "start start" = first card hits top
-    // "end end" = last card reaches its sticky position (after 300vh scroll)
     offset: ["start start", "end end"],
   })
 
   return (
     <section
       className="relative overflow-visible bg-[#FBF7EF]"
-      style={{ perspective: "1500px" }}
     >
       <div
         ref={containerRef}
@@ -110,17 +106,15 @@ type CardProps = {
 }
 
 const Card = ({ item, index, total, progress }: CardProps) => {
-  // Calculate the segment of the scroll where THIS card is active
   const segment = total > 1 ? 1 / (total - 1) : 1
   const start = index * segment
   const end = (index + 1) * segment
 
- 
+
   const isLast = index === total - 1
   const safeStart = isLast ? 0 : start
   const safeEnd = isLast ? 1 : end
 
-  // Helper to build strictly monotonically increasing complete [0, 1] arrays
   const buildRange = (targetVal: number) => {
     if (isLast) return { input: [0, 1], output: [0, 0] }
     const input = [0]
@@ -154,35 +148,14 @@ const Card = ({ item, index, total, progress }: CardProps) => {
     const output = [1]
     if (safeStart > 0) {
       input.push(safeStart)
-      output.push(1) // Stay 1 until the card hits the top
+      output.push(1)
     }
-    input.push(1) // Map scale shrinking across the remaining entirety of the scroll
+    input.push(1)
     output.push(finalScale)
     return { input, output }
   }
   const sc = getScale()
   const scale = useTransform(progress, sc.input, sc.output)
-
-  const getOpacity = () => {
-    if (isLast) return { input: [0, 1], output: [1, 1] }
-    const input = [0]
-    const output = [1]
-    // Start fading out right before the end of the segment when it's fully covered
-    const fStart = start + segment * 0.85
-    if (fStart > 0) {
-      input.push(fStart)
-      output.push(1)
-    }
-    input.push(safeEnd) // At its end segment, it becomes 0 opacity
-    output.push(0)
-    if (safeEnd < 1) {
-      input.push(1) // Remain 0 opacity for the rest of the scroll fully stacked
-      output.push(0)
-    }
-    return { input, output }
-  }
-  const op = getOpacity()
-  const opacity = useTransform(progress, op.input, op.output)
 
   const isDarkCard = item.cardBg !== "#FFFFFF"
 
@@ -192,26 +165,19 @@ const Card = ({ item, index, total, progress }: CardProps) => {
         backgroundColor: item.cardBg,
         zIndex: 10 + index,
         position: "sticky",
-        // Precise sticky stack positioning
         top: `calc(5vh)`,
         height: "90dvh",
         marginBottom: "10dvh",
-        // 3D Motion transforms
+        transformPerspective: 1500,
         scale,
         rotateX,
         rotateZ,
         z: translateZ,
-        opacity,
-        transformOrigin: "bottom center",
+        transformOrigin: "top center",
         transformStyle: "preserve-3d",
       }}
-      className="group md:px-[clamp(40px, 8vw, 100px)] relative mx-auto flex w-[90vw] flex-col items-center justify-center gap-4 overflow-hidden rounded-[2.5rem] px-5 py-6 md:w-[90vw] md:gap-12 md:rounded-[3rem] md:py-0 lg:flex-row lg:gap-24"
+      className="group relative mx-auto flex w-[90vw] flex-col items-center justify-center gap-6 overflow-hidden px-6 py-10 md:gap-12 md:px-[clamp(40px,6vw,100px)] md:py-0 lg:flex-row lg:gap-24 rounded-[clamp(1.5rem,3vw,3rem)]"
     >
-      {/* GHOST NUMBERING 
-          - Increased font weight to 900
-          - Negative tracking to make it look modern
-          - Absolute positioning to the top-right corner with padding
-      */}
       <div
         className="pointer-events-none absolute top-4 right-6 z-0 text-[6rem] leading-none font-[900] tracking-[-0.08em] transition-transform duration-700 select-none group-hover:scale-110 md:top-0 md:right-8 md:text-[clamp(12rem,5vw,20rem)]"
         style={{ color: item.ghostColor }}
@@ -219,7 +185,6 @@ const Card = ({ item, index, total, progress }: CardProps) => {
         {item.id}
       </div>
 
-      {/* Left Content */}
       <div className="z-10 order-2 flex w-full flex-col justify-center lg:order-1 lg:h-full">
         <span
           className="mb-3 inline-block w-fit rounded-md border border-white/10 bg-[#F3F0E8]/20 px-3 py-1.5 text-[10px] md:text-[12px] font-bold tracking-wide uppercase backdrop-blur-md md:mb-8"
@@ -267,7 +232,6 @@ const Card = ({ item, index, total, progress }: CardProps) => {
         </div>
       </div>
 
-      {/* Right Visual */}
       <div className="relative z-10 order-1 flex w-full flex-1 items-center justify-center min-h-0 lg:order-2 lg:h-full lg:justify-end">
         <motion.div
           whileHover={{ rotate: "0deg", scale: 1.02 }}
@@ -284,7 +248,7 @@ const Card = ({ item, index, total, progress }: CardProps) => {
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="auto"
             className="h-full w-full scale-105 object-cover"
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />

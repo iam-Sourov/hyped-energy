@@ -5,7 +5,6 @@ import { useEffect } from "react"
 
 export const SmoothScroll = () => {
   useEffect(() => {
-    // 1. Initialize Lenis with optimized settings
     const lenis = new Lenis({
       duration: 1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -13,15 +12,13 @@ export const SmoothScroll = () => {
       touchMultiplier: 2,
     })
 
-    // 2. Sync Lenis directly with GSAP Ticker for lag-less animation syncing
     const update = (time: number) => {
       lenis.raf(time * 1000)
     }
 
     gsap.ticker.add(update)
-    gsap.ticker.lagSmoothing(0) // Prevent GSAP from fighting Lenis
+    gsap.ticker.lagSmoothing(0)
 
-    // 3. Cleanup
     return () => {
       gsap.ticker.remove(update)
       lenis.destroy()

@@ -4,7 +4,6 @@ import { motion } from "framer-motion"
 import gsap from "gsap"
 import { useEffect, useRef, useState } from "react"
 
-/* ─── Auto-playing muted video ─────────────────────────────────────────── */
 const AutoPlayVideo = ({
   src,
   className,
@@ -24,7 +23,6 @@ const AutoPlayVideo = ({
   </video>
 )
 
-/* ─── Card Definitions ─────────────────────────────────────────────────── */
 type BaseCard = {
   rotation: number
 }
@@ -65,7 +63,6 @@ const CARDS: CardDef[] = [
   { type: "video", src: "/assets/hero/hero2.mp4", rotation: 8 },
 ]
 
-/* ─── Hero ──────────────────────────────────────────────────────────────── */
 export const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null)
   const hoverWrappersRef = useRef<(HTMLDivElement | null)[]>([])
@@ -77,13 +74,11 @@ export const Hero = () => {
       else if (window.innerWidth < 1024) setNumCards(3)
       else setNumCards(4)
     }
-    // Set initial size
     handleResize()
     window.addEventListener("resize", handleResize)
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
-  /* ── GSAP hover interaction ─────────────────────────────────────────── */
   useEffect(() => {
     const container = containerRef.current
     if (!container) return
@@ -94,7 +89,6 @@ export const Hero = () => {
 
     if (wrappers.length === 0) return
 
-    // Initialize rotations on the inner wrappers
     wrappers.forEach((el, i) => {
       gsap.set(el, {
         rotation: CARDS[i].rotation,
@@ -173,38 +167,25 @@ export const Hero = () => {
       style={{ background: "#FBF7EF" }}
     >
       <div
-        className="relative z-10 w-full shrink-0 px-6 md:px-10 md:mt-10 lg:px-"
-        style={{ paddingTop: "clamp(100px, 12vh, 160px)" }}
+        className="relative z-10 w-full shrink-0 px-4 md:mx-auto md:mt-2 md:max-w-[1400px] md:px-10 lg:px-2"
+        style={{ paddingTop: "clamp(90px, 10vh, 120px)" }}
       >
-        <h1
-          className="hidden md:block leading-[0.95]! font-semibold tracking-tight text-[#1a1a1a]"
-          style={{ fontSize: "clamp(2.6rem, 7vw, 8rem)", lineHeight: 0.85 }}
-        >
-          Get Hyped. Get <br /> Noticed. Get Results.
+        <h1 className="text-fluid-h2 mt-8 font-bold tracking-tight text-[#1a1a1a] md:font-semibold md:tracking-tighter">
+          Get Hyped. <br className="block md:hidden" />
+          Get <br className="hidden md:block" /> Noticed. <br  className="block md:hidden"/>
+          Get Results.
         </h1>
-        <h1
-          className="block md:hidden font-bold tracking-tight text-[#1a1a1a]"
-          style={{ fontSize: "clamp(3rem, 8vw, 8rem)", lineHeight: 1}}
-        >
-          Get Hyped.<br />Get Noticed.<br />Get Results.
-        </h1>
-
-        <p
-          className="mt-6 font-semibold tracking-tight text-[#1a1a1a]"
-          style={{ fontSize: "clamp(1.5rem, 2vw, 2rem)", lineHeight: 1.2 }}
-        >
-          Klaar met gokken op content
-          <br />
-          die niets oplevert?
+        <p className="text-fluid-p mt-6 font-bold tracking-tight text-[#1a1a1a] ">
+          Done gambling on content
+          <br className="hidden md:block" />
+          that doesn&apos;t deliver?
         </p>
       </div>
-
-      {/* ── Cards Row ────────────────────────────────────────────────────── */}
       <div
-        className="relative z-0 flex flex-1 items-end justify-center overflow-visible"
+        className="relative z-0 flex flex-1 items-end justify-center overflow-visible mb-8 md:mb-0"
         style={{
           paddingBottom: "clamp(2rem, 5vh, 7rem)",
-          paddingTop: "clamp(2rem, 10vh, 7rem)",
+          paddingTop: "clamp(2rem, 8vh, 7rem)",
         }}
       >
         <motion.div
@@ -232,13 +213,12 @@ export const Hero = () => {
               }}
               className="w-[44vw] md:w-[30vw] lg:w-[23vw] max-w-[650px] min-w-[120px]"
               style={{
-                /* Set base layout on the entrance container */
+
                 flexShrink: 0,
                 marginLeft: i === 0 ? 0 : "clamp(-45px, -5vw, -25px)",
                 zIndex: 10 + i,
               }}
             >
-              {/* Inner wrapper handled exclusively by GSAP for the hover interaction */}
               <div
                 ref={(el) => {
                   hoverWrappersRef.current[i] = el
