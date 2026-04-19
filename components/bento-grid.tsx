@@ -1,6 +1,6 @@
 "use client"
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
+import { motion } from "framer-motion"
 import { ArrowRight, ArrowUpRight } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { GlobalBtn } from "./ui/global-btn"
@@ -56,41 +56,15 @@ const WorkCard = ({
     }
   }, [isMobile])
 
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  const mouseX = useSpring(x, { stiffness: 500, damping: 28 })
-  const mouseY = useSpring(y, { stiffness: 500, damping: 28 })
-  const rotateX = useTransform(mouseY, [-0.5, 0.5], ["10deg", "-10deg"])
-  const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-10deg", "10deg"])
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return
-    const rect = cardRef.current.getBoundingClientRect()
-    const width = rect.width
-    const height = rect.height
-    const mouseXFromCenter = e.clientX - rect.left - width / 2
-    const mouseYFromCenter = e.clientY - rect.top - height / 2
-    x.set(mouseXFromCenter / width)
-    y.set(mouseYFromCenter / height)
-  }
-
-  const handleMouseLeave = () => {
-    x.set(0)
-    y.set(0)
-    handlePause()
-  }
+    // Removed heavy mouse 3D parallax to avoid scroll/render lag
 
   return (
     <motion.div
       ref={cardRef}
-      onMouseMove={isMobile ? undefined : handleMouseMove}
       onMouseEnter={isMobile ? undefined : handlePlay}
-      onMouseLeave={isMobile ? undefined : handleMouseLeave}
+      onMouseLeave={isMobile ? undefined : handlePause}
       style={{
         marginTop: isMobile ? (index === 0 ? "0px" : "-140px") : yOffset,
-        rotateX: isMobile ? 0 : rotateX,
-        rotateY: isMobile ? 0 : rotateY,
-        transformStyle: "preserve-3d",
         zIndex: index + 1, 
       }}
       initial={{
@@ -109,8 +83,8 @@ const WorkCard = ({
         ease: [0.22, 1, 0.36, 1],
       }}
       viewport={{ once: true, margin: "-50px" }}
-      whileHover={isMobile ? undefined : "hover"}
-      className="group perspective-child relative aspect-square h-[450px] w-full cursor-pointer md:aspect-[3/4] md:h-auto md:w-[30vw] lg:w-[28vw]"
+      whileHover={isMobile ? undefined : { scale: 1.02 }}
+      className="group relative aspect-square h-[450px] w-full cursor-pointer md:aspect-[3/4] md:h-auto md:w-[30vw] lg:w-[28vw]"
     >
       <div
         className="absolute inset-0 overflow-hidden rounded-[30px] border-[8px] bg-white shadow-2xl will-change-transform"
@@ -179,7 +153,7 @@ export const BentoGrid = () => {
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col items-center justify-start pb-[10vh] md:mt-0 md:flex-row md:justify-center md:gap-[4vw] [perspective:2000px] max-md:[perspective:none]">
+        <div className="mt-8 flex flex-col items-center justify-start pb-[10vh] md:mt-0 md:flex-row md:justify-center md:gap-[4vw]">
           <WorkCard
             index={0}
             title="From zero to full, within 3 weeks"

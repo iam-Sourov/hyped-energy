@@ -66,6 +66,17 @@
     @apply border-border;
   }
 
+  html, body {
+    -ms-overflow-style: none !important;  
+    scrollbar-width: none !important;  
+  }
+
+  html::-webkit-scrollbar, body::-webkit-scrollbar, *::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
   body {
     @apply overflow-x-hidden bg-background font-sans text-foreground;
   }
