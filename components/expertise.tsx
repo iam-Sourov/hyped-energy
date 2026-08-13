@@ -1,6 +1,7 @@
 "use client"
 
 import { GlobalBtn } from "@/components/ui/global-btn"
+import { useModal } from "@/context/modal-context"
 import { motion, useScroll, useTransform, MotionValue, useInView } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 import { useRef } from "react"
@@ -106,6 +107,7 @@ type CardProps = {
 }
 
 const Card = ({ item, index, total, progress }: CardProps) => {
+  const { openModal } = useModal()
   const cardRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(cardRef, { once: true, margin: "200px" })
 
@@ -170,6 +172,7 @@ const Card = ({ item, index, total, progress }: CardProps) => {
         position: "sticky",
         top: `calc(5vh)`,
         height: "90dvh",
+        minHeight: "550px",
         marginBottom: "10dvh",
         transformPerspective: 1500,
         scale,
@@ -221,7 +224,7 @@ const Card = ({ item, index, total, progress }: CardProps) => {
 
         <div className="w-full md:w-auto">
           <GlobalBtn
-            href="#contact"
+            onClick={openModal}
             variant={isDarkCard ? "outline" : "default"}
             className={
               isDarkCard

@@ -1,8 +1,10 @@
 import type { Metadata } from "next"
 import { Geist_Mono, Inter } from "next/font/google"
 
+import { ContactModal } from "@/components/contact-modal"
 import { SmoothScroll } from "@/components/smooth-scroll"
 import { ThemeProvider } from "@/components/theme-provider"
+import { ModalProvider } from "@/context/modal-context"
 import { cn } from "@/lib/utils"
 import "./globals.css"
 
@@ -54,7 +56,12 @@ export default function RootLayout({
     >
       <body>
         <SmoothScroll />
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <ModalProvider>
+            {children}
+            <ContactModal />
+          </ModalProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

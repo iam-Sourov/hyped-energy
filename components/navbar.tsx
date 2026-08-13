@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll, Variants } fro
 import { Flame } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { useModal } from "@/context/modal-context"
 import { Logo } from "./logo"
 import { GlobalBtn } from "./ui/global-btn"
 
@@ -31,6 +32,7 @@ const linkVars: Variants = {
 }
 
 export const Navbar = () => {
+  const { openModal } = useModal()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isHidden, setIsHidden] = useState(false)
   const { scrollY } = useScroll()
@@ -113,7 +115,7 @@ export const Navbar = () => {
             id="nav-btn-desktop"
             variant="secondary"
             className="border-none bg-[#fbbaff] text-black shadow-md"
-            href="#contact"
+            onClick={openModal}
             icon={
               <Flame size={24} className="rounded-md  p-1 text-[#FF5A1F]" fill="white" />
             }
@@ -187,7 +189,10 @@ export const Navbar = () => {
                 <motion.div variants={linkVars} className="flex w-full justify-center">
                   <GlobalBtn
                     id="nav-btn-mobile"
-                    href="#contact"
+                    onClick={() => {
+                      setIsMenuOpen(false)
+                      openModal()
+                    }}
                     className="flex h-14 w-auto justify-center rounded-2xl !bg-black px-10 text-center text-lg font-bold !text-white shadow-none transition-transform hover:scale-105"
                     icon={
                       <Flame size={20} className="fill-white text-[#ff5a1f]" />

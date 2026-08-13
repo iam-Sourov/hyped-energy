@@ -58,7 +58,7 @@ export const About = () => {
             initial={{ x: "-2.77vw", opacity: 0 }}
             animate={isInView ? { x: 0, opacity: 1 } : {}}
             transition={{ duration: 0.7 }}
-            className="rotate-3 mb-8 md:rotate-0 relative order-first h-[500px] w-[330px] md:w-[40%] lg:h-[350px] lg:w-[250px] overflow-hidden rounded-2xl md:rounded-[2rem]"
+            className="rotate-3 mb-8 md:rotate-0 relative order-first h-[420px] sm:h-[500px] w-full max-w-[330px] md:w-[40%] lg:h-[350px] lg:w-[250px] overflow-hidden rounded-2xl md:rounded-[2rem]"
           >
             {!mounted ? (
               <Image
