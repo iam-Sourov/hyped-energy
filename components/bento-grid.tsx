@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useInView } from "framer-motion"
 import { ArrowRight, ArrowUpRight } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { GlobalBtn } from "./ui/global-btn"
@@ -25,6 +25,7 @@ const WorkCard = ({
   const cardRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isMobile, setIsMobile] = useState(false)
+  const isInView = useInView(cardRef, { once: true, margin: "200px" })
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768)
@@ -51,10 +52,10 @@ const WorkCard = ({
   }
 
   useEffect(() => {
-    if (isMobile && videoRef.current) {
+    if (isMobile && videoRef.current && isInView) {
       videoRef.current.play().catch(() => { })
     }
-  }, [isMobile])
+  }, [isMobile, isInView])
 
   return (
     <motion.div
@@ -84,15 +85,19 @@ const WorkCard = ({
         className="absolute inset-0 overflow-hidden rounded-[30px] border-[8px] bg-white shadow-2xl will-change-transform"
         style={{ borderColor: color }}
       >
-        <video
-          ref={videoRef}
-          src={videoSrc}
-          muted
-          loop
-          playsInline
-          preload="auto"
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
+        {isInView ? (
+          <video
+            ref={videoRef}
+            src={videoSrc}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+          />
+        ) : (
+          <div className="h-full w-full bg-neutral-100" />
+        )}
 
         <div
           className="absolute right-4 bottom-4 left-4 z-10 flex flex-col justify-between rounded-[20px] p-[4vw] shadow-lg md:right-[20px] md:bottom-[20px] md:left-[20px] md:p-[20px]"
@@ -152,7 +157,7 @@ export const BentoGrid = () => {
             index={0}
             title="From zero to full, within 3 weeks"
             brand="Bullit"
-            videoSrc="./assets/Bullit-Loop.mp4"
+            videoSrc="/assets/Bullit-Loop.mp4"
             color="#EA580C"
             yOffset="0vh"
           />
@@ -161,7 +166,7 @@ export const BentoGrid = () => {
             index={1}
             title="Soft in taste, strong in image"
             brand="Roasta"
-            videoSrc="./assets/new-reach-loop.mp4"
+            videoSrc="/assets/roasta-loop.mp4"
             color="#3B82F6"
             yOffset="-25vh"
           />
@@ -170,7 +175,7 @@ export const BentoGrid = () => {
             index={2}
             title="Content that truly tastes (and touches)"
             brand="Loco"
-            videoSrc="./assets/loco-bites-loop.mp4"
+            videoSrc="/assets/loco-bites-loop.mp4"
             color="#22C55E"
             yOffset="-50vh"
           />

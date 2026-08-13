@@ -90,6 +90,7 @@ export const Navbar = () => {
             <Link
               key={item.name}
               href={item.href}
+              id={`nav-link-${item.name.toLowerCase()}`}
               className="nav-swoosh-btn relative inline-flex items-center justify-center rounded-lg bg-transparent px-[20px] py-[8px] text-[15px] font-bold text-[#000000]"
               style={{ "--index": idx } as React.CSSProperties}
             >
@@ -109,6 +110,7 @@ export const Navbar = () => {
 
         <div className="hidden flex-1 items-center justify-end lg:flex">
           <GlobalBtn
+            id="nav-btn-desktop"
             variant="secondary"
             className="border-none bg-[#fbbaff] text-black shadow-md"
             href="#contact"
@@ -123,6 +125,9 @@ export const Navbar = () => {
         <div className="flex items-center lg:hidden">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle Menu"
+            aria-expanded={isMenuOpen}
+            id="nav-menu-toggle"
             className={cn(
               "relative z-[120] flex h-12 w-12 flex-col items-center justify-center gap-1.5 rounded-xl shadow-sm transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
               isMenuOpen ? "bg-[#ffffff]" : "bg-[#fbbaff]"
@@ -167,6 +172,7 @@ export const Navbar = () => {
                   <motion.div variants={linkVars}>
                     <Link
                       href={item.href}
+                      id={`nav-link-mobile-${item.name.toLowerCase()}`}
                       onClick={() => setIsMenuOpen(false)}
                       className="group fon relative inline-block text-[clamp(1rem,10vw,3rem)] p-2.5 rounded-xl  leading-[0.9] tracking-tighter border bg-white"
                     >
@@ -180,6 +186,7 @@ export const Navbar = () => {
               <div className="overflow-hidden pb-4 pt-10">
                 <motion.div variants={linkVars} className="flex w-full justify-center">
                   <GlobalBtn
+                    id="nav-btn-mobile"
                     href="#contact"
                     className="flex h-14 w-auto justify-center rounded-2xl !bg-black px-10 text-center text-lg font-bold !text-white shadow-none transition-transform hover:scale-105"
                     icon={

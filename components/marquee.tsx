@@ -87,7 +87,7 @@ export const LogoMarquee = () => {
   }, [])
 
   return (
-    <section className="border-b w-full py-10 overflow-hidden mb-10 md:mb-0 bg-[#fbf7ef]">
+    <section className="border-t w-full py-10 overflow-hidden mb-10 md:mb-0 bg-[#fbf7ef]">
       <div className="mx-auto mb-12 max-w-[1920px] px-6 md:px-12">
         <h2 className="text-3xl font-bold leading-tight text-[#1A1A1A] md:text-5xl md:leading-[1.1]">
           These brands <br className="block md:hidden" /> got hyped.
@@ -120,6 +120,7 @@ export const LogoMarquee = () => {
             <img
               src={src}
               alt={`Brand Logo ${i + 1}`}
+              loading="lazy"
               className="w-full h-full object-contain pointer-events-none select-none"
             />
           </div>

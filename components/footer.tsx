@@ -154,6 +154,7 @@ export const Footer = () => {
   return (
     <footer
       ref={containerRef}
+      id="contact"
       className="relative flex w-full flex-col justify-between bg-[#fbf7ef] font-sans md:h-screen md:min-h-[70vh] md:overflow-hidden"
     >
       {/* 1. Desktop Pop Layer */}
@@ -189,7 +190,7 @@ export const Footer = () => {
         </h2>
         <div className="flex w-full flex-col flex-wrap items-center justify-center gap-4 sm:w-auto sm:flex-row md:flex-row md:flex-nowrap md:gap-[1.2vw]">
           <GlobalBtn
-            href="#contact"
+            href="mailto:iam.rakibbishwas@gmail.com"
             variant="outline"
             className="w-full justify-center border-black bg-white text-black sm:w-auto md:w-auto"
             icon={
@@ -271,10 +272,22 @@ export const Footer = () => {
                 <div className="flex flex-col items-center gap-[1.5vh] md:items-start md:gap-[1vh]">
                   <p className="hidden text-[clamp(12px,1.2vw,14px)] font-bold text-black/60 md:block">Follow us</p>
                   <div className="flex justify-center gap-[3vw] md:justify-start md:gap-[1vw]">
-                    {[Linkedin, TikTok, Instagram, Youtube].map((Icon, i) => (
-                      <div key={i} className="flex h-[12vw] w-[12vw] cursor-pointer items-center justify-center rounded-full bg-white shadow-sm transition-transform hover:scale-110 md:h-[3.5vw] md:w-[3.5vw]">
+                    {[
+                      { Icon: Linkedin, name: "LinkedIn", href: "https://linkedin.com/company/get-hyped" },
+                      { Icon: TikTok, name: "TikTok", href: "https://tiktok.com/@get-hyped" },
+                      { Icon: Instagram, name: "Instagram", href: "https://instagram.com/get-hyped" },
+                      { Icon: Youtube, name: "YouTube", href: "https://youtube.com/@get-hyped" }
+                    ].map(({ Icon, name, href }, i) => (
+                      <a
+                        key={i}
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Follow us on ${name}`}
+                        className="flex h-[12vw] w-[12vw] cursor-pointer items-center justify-center rounded-full bg-white shadow-sm transition-transform hover:scale-110 md:h-[3.5vw] md:w-[3.5vw]"
+                      >
                         <Icon className="h-[5vw] w-[5vw] text-black md:h-[1.5vw] md:w-[1.5vw]" />
-                      </div>
+                      </a>
                     ))}
                   </div>
                 </div>
@@ -283,8 +296,16 @@ export const Footer = () => {
                 <div className="flex flex-col items-center gap-[0.5vh] md:items-start md:gap-[1vh]">
                   <p className="hidden text-[clamp(12px,1.2vw,14px)] font-bold text-black/60 md:block">Contact</p>
                   <div className="text-[clamp(14px,1.3vw,16px)] font-semibold leading-relaxed">
-                    <p>iam.rakibbishwas@gmail.com</p>
-                    <p>01679714839</p>
+                    <p>
+                      <a href="mailto:iam.rakibbishwas@gmail.com" className="hover:text-[#FF5A1F] transition-colors">
+                        iam.rakibbishwas@gmail.com
+                      </a>
+                    </p>
+                    <p>
+                      <a href="tel:+8801679714839" className="hover:text-[#FF5A1F] transition-colors">
+                        01679714839
+                      </a>
+                    </p>
                   </div>
                 </div>
 
@@ -312,7 +333,7 @@ export const Footer = () => {
 }
 
 const CircularBadge = () => (
-  <div className="relative flex -top-[9vw] h-[10vw] w-[10vw] -rotate-12 items-center justify-center">
+  <div className="relative flex h-[10vw] w-[10vw] -rotate-12 items-center justify-center">
     <motion.div
       animate={{ rotate: 360 }}
       transition={{ duration: 15, repeat: Infinity, ease: "linear" }}

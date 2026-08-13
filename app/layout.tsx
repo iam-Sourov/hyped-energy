@@ -17,8 +17,23 @@ const fontMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "GET HYPED",
-  description: "Content agency website",
+  title: "GET HYPED | Creative Content & Social Strategy Agency",
+  description: "We create high-energy, high-impact social strategy and content formats that get your brand noticed and drive measurable organic growth. Stop gambling on content.",
+  keywords: ["content agency", "social strategy", "creative agency", "Get Hyped", "content marketing", "social media growth", "organic reach"],
+  authors: [{ name: "Get Hyped Agency" }],
+  openGraph: {
+    title: "GET HYPED | Creative Content & Social Strategy Agency",
+    description: "We create high-energy, high-impact content formats that get your brand noticed and drive measurable organic growth.",
+    url: "https://gethyped.agency",
+    siteName: "Get Hyped",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "GET HYPED | Creative Content & Social Strategy Agency",
+    description: "We create high-energy, high-impact content formats that get your brand noticed and drive measurable organic growth.",
+  },
 }
 
 export default function RootLayout({

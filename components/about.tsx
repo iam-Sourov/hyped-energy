@@ -1,16 +1,29 @@
 "use client"
 
 import { motion, useInView, Variants } from "framer-motion"
-import { useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { ArrowDown, ArrowRight } from "lucide-react"
 import { GlobalBtn } from "./ui/global-btn"
 
-const MotionArrow = motion(ArrowDown);
+const MotionArrow = motion.create(ArrowDown);
 
 export const About = () => {
   const sectionRef = useRef<HTMLElement>(null)
   const isInView = useInView(sectionRef, { once: true, margin: "-10% 0px -10% 0px" })
+  
+  const [mounted, setMounted] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true)
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
   const arrowVariants: Variants = {
     initial: { y: 0, opacity: 1 },
     hover: {
@@ -47,21 +60,34 @@ export const About = () => {
             transition={{ duration: 0.7 }}
             className="rotate-3 mb-8 md:rotate-0 relative order-first h-[500px] w-[330px] md:w-[40%] lg:h-[350px] lg:w-[250px] overflow-hidden rounded-2xl md:rounded-[2rem]"
           >
-            <Image
-              src="/assets/img/Anniek Bril.webp"
-              alt="Portrait"
-              fill
-              className=" hidden md:block lg:block object-cover"
-            />
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              src="/assets/new-reach-loop.mp4"
-              className=" md:hidden lg:hidden object-cover"
-            />
+            {!mounted ? (
+              <Image
+                src="/assets/img/Anniek Bril.webp"
+                alt="Portrait"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 330px, (max-width: 1024px) 40vw, 250px"
+                priority
+              />
+            ) : isMobile ? (
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                src="/assets/new-reach-loop.mp4"
+                className="w-full h-full object-cover absolute inset-0"
+              />
+            ) : (
+              <Image
+                src="/assets/img/Anniek Bril.webp"
+                alt="Portrait"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 330px, (max-width: 1024px) 40vw, 250px"
+              />
+            )}
           </motion.div>
 
           <div

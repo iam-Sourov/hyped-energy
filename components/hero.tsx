@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import gsap from "gsap"
 import { useEffect, useRef, useState } from "react"
+import { cn } from "@/lib/utils"
 
 const AutoPlayVideo = ({
   src,
@@ -66,13 +67,13 @@ const CARDS: CardDef[] = [
 export const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null)
   const hoverWrappersRef = useRef<(HTMLDivElement | null)[]>([])
-  const [numCards, setNumCards] = useState(4)
+  const [visibleCount, setVisibleCount] = useState(4)
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 768) setNumCards(2)
-      else if (window.innerWidth < 1024) setNumCards(3)
-      else setNumCards(4)
+      if (window.innerWidth < 768) setVisibleCount(2)
+      else if (window.innerWidth < 1024) setVisibleCount(3)
+      else setVisibleCount(4)
     }
     handleResize()
     window.addEventListener("resize", handleResize)
@@ -84,7 +85,7 @@ export const Hero = () => {
     if (!container) return
 
     const wrappers = hoverWrappersRef.current
-      .slice(0, numCards)
+      .slice(0, visibleCount)
       .filter(Boolean) as HTMLDivElement[]
 
     if (wrappers.length === 0) return
@@ -159,7 +160,7 @@ export const Hero = () => {
       container.removeEventListener("mouseleave", onLeave)
       wrappers.forEach((el) => gsap.killTweensOf(el))
     }
-  }, [numCards])
+  }, [visibleCount])
 
   return (
     <section
@@ -182,7 +183,7 @@ export const Hero = () => {
         </p>
       </div>
       <div
-        className="relative z-0 flex flex-1 items-end justify-center overflow-visible mb-8 md:mb-0"
+        className="relative z-0 flex flex-1 items-end justify-center overflow-visible mb-8 md:mb-0 hero-cards-wrapper"
         style={{
           paddingBottom: "clamp(2rem, 5vh, 7rem)",
           paddingTop: "clamp(2rem, 8vh, 7rem)",
@@ -198,9 +199,9 @@ export const Hero = () => {
               transition: { staggerChildren: 0.1, delayChildren: 0.5 },
             },
           }}
-          className="flex cursor-pointer items-end overflow-visible"
+          className="flex cursor-pointer items-end overflow-visible hero-cards-inner"
         >
-          {CARDS.slice(0, numCards).map((card, i) => (
+          {CARDS.map((card, i) => (
             <motion.div
               key={i}
               variants={{
@@ -211,9 +212,12 @@ export const Hero = () => {
                   transition: { type: "spring", stiffness: 45, damping: 12 },
                 },
               }}
-              className="w-[44vw] md:w-[30vw] lg:w-[23vw] max-w-[650px] min-w-[120px]"
+              className={cn(
+                "w-[44vw] md:w-[30vw] lg:w-[23vw] max-w-[650px] min-w-[120px] hero-card",
+                i === 2 && "hidden md:block",
+                i === 3 && "hidden lg:block"
+              )}
               style={{
-
                 flexShrink: 0,
                 marginLeft: i === 0 ? 0 : "clamp(-45px, -5vw, -25px)",
                 zIndex: 10 + i,

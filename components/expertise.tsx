@@ -1,7 +1,7 @@
 "use client"
 
 import { GlobalBtn } from "@/components/ui/global-btn"
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion"
+import { motion, useScroll, useTransform, MotionValue, useInView } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 import { useRef } from "react"
 
@@ -19,7 +19,7 @@ const EXPERTISE_DATA = [
     borderColor: "#EAE4D8",
     ghostColor: "#F0EBE1", // Matches the section background for a "cut-out" look
     rotate: "-2deg",
-    videoSrc: "./assets/expertise/expertise-1.mp4",
+    videoSrc: "/assets/expertise/expertise-1.mp4",
   },
   {
     id: "02",
@@ -34,7 +34,7 @@ const EXPERTISE_DATA = [
     borderColor: "rgba(255, 255, 255, 0.3)",
     ghostColor: "rgba(255, 255, 255, 0.15)", // Brighter for clear visibility on red
     rotate: "2deg",
-    videoSrc: "./assets/expertise/expertise-2.mp4",
+    videoSrc: "/assets/expertise/expertise-2.mp4",
   },
   {
     id: "03",
@@ -49,7 +49,7 @@ const EXPERTISE_DATA = [
     borderColor: "#333333",
     ghostColor: "rgba(255, 255, 255, 0.07)", // Subtle but sharp on black
     rotate: "-1deg",
-    videoSrc: "./assets/expertise/expertise-3.mp4",
+    videoSrc: "/assets/expertise/expertise-3.mp4",
   },
   {
     id: "04",
@@ -64,7 +64,7 @@ const EXPERTISE_DATA = [
     borderColor: "rgba(255, 255, 255, 0.4)",
     ghostColor: "rgba(255, 255, 255, 0.2)", // High visibility for the final card
     rotate: "3deg",
-    videoSrc: "./assets/expertise/expertise-4.mp4",
+    videoSrc: "/assets/expertise/expertise-4.mp4",
   },
 ]
 
@@ -106,10 +106,12 @@ type CardProps = {
 }
 
 const Card = ({ item, index, total, progress }: CardProps) => {
+  const cardRef = useRef<HTMLDivElement>(null)
+  const isInView = useInView(cardRef, { once: true, margin: "200px" })
+
   const segment = total > 1 ? 1 / (total - 1) : 1
   const start = index * segment
   const end = (index + 1) * segment
-
 
   const isLast = index === total - 1
   const safeStart = isLast ? 0 : start
@@ -161,6 +163,7 @@ const Card = ({ item, index, total, progress }: CardProps) => {
 
   return (
     <motion.div
+      ref={cardRef}
       style={{
         backgroundColor: item.cardBg,
         zIndex: 10 + index,
@@ -242,15 +245,19 @@ const Card = ({ item, index, total, progress }: CardProps) => {
             border: `clamp(6px, 1.2vw, 12px) solid ${item.borderColor}`,
           }}
         >
-          <video
-            src={item.videoSrc}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            className="h-full w-full scale-105 object-cover"
-          />
+          {isInView ? (
+            <video
+              src={item.videoSrc}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              className="h-full w-full scale-105 object-cover"
+            />
+          ) : (
+            <div className="h-full w-full bg-neutral-100/10" />
+          )}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
         </motion.div>
       </div>
