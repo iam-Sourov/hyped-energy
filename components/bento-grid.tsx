@@ -3,6 +3,7 @@
 import { motion, useInView } from "framer-motion"
 import { ArrowRight, ArrowUpRight } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
+import { useModal } from "@/context/modal-context"
 import { GlobalBtn } from "./ui/global-btn"
 
 interface WorkCardProps {
@@ -126,6 +127,7 @@ const WorkCard = ({
 }
 
 export const BentoGrid = () => {
+  const { openModal } = useModal()
   return (
     <section id="work" className="overflow-hidden bg-[#FBF7EF] pb-[10vh]">
       <div className="mx-auto w-full max-w-[1920px] px-4 md:px-[clamp(16px,5vw,40px)]">
@@ -142,7 +144,7 @@ export const BentoGrid = () => {
             </p>
             <div className="mt-6 self-start md:mt-8 md:self-end">
               <GlobalBtn
-                href="#work"
+                onClick={openModal}
                 variant="outline"
                 icon={<ArrowRight size={18} />}
               >

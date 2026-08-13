@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { Flame, Mail } from "lucide-react"
 import Link from "next/link"
 import React, { useEffect, useRef, useState } from "react"
+import { useModal } from "@/context/modal-context"
 import { Logo } from "./logo"
 import { GlobalBtn } from "./ui/global-btn"
 
@@ -101,6 +102,7 @@ interface PopLogo {
 const shadowColors = ["#f4b0f3", "#ff5a1f", "#4ade80", "#60a5fa", "#fbbf24"]
 
 export const Footer = () => {
+  const { openModal } = useModal()
   const [logos, setLogos] = useState<PopLogo[]>([])
   const lastPos = useRef({ x: 0, y: 0 })
   const containerRef = useRef<HTMLDivElement>(null)
@@ -202,9 +204,9 @@ export const Footer = () => {
             Email us directly
           </GlobalBtn>
           <GlobalBtn
-            href="#contact"
+            onClick={openModal}
             variant="secondary"
-            className="w-full justify-center border-none bg-[#FF5A1F] text-white sm:w-auto md:w-auto"
+            className="w-full justify-center border-none bg-[#FF5A1F] text-[#FFFFFF] sm:w-auto md:w-auto"
             icon={
               <div className="rounded-md bg-white p-1 text-[#FF5A1F]">
                 <Flame size={20} className="fill-white text-[#ff5a1f]" />
@@ -231,7 +233,7 @@ export const Footer = () => {
         </div>
 
         {/* 2. Circular Badge - Scaled with Viewport Width */}
-        <div className="absolute top-[-9vw] right-[8vw] z-20 hidden md:block">
+        <div className="absolute top-[-20vw] right-5 z-20 hidden md:block">
           <CircularBadge />
         </div>
 
