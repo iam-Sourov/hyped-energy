@@ -45,6 +45,41 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - **Aesthetics First**: Designed keeping in mind visual excellence with custom vibrant color palettes, smooth gradient effects, and high contrast tracking text.
 - **Mobile-First Paradigm**: All components are optimized for smaller screens displaying an alternative UX that maintains visual integrity while circumventing performance-heavy effects only suitable on desktop.
 
+## 🚢 Deploying to Vercel
+
+This project is pre-configured and production-ready for deployment on [Vercel](https://vercel.com).
+
+### Option 1: Automatic Deployment via Git (Recommended)
+
+1. Push your changes to GitHub / GitLab / Bitbucket:
+   ```bash
+   git add .
+   git commit -m "Production readiness updates for Vercel deployment"
+   git push origin main
+   ```
+2. Import the repository in [Vercel Dashboard](https://vercel.com/new).
+3. Vercel automatically detects **Next.js** and configures the build settings:
+   - **Framework Preset**: Next.js
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `.next`
+4. Set optional Environment Variable:
+   - `NEXT_PUBLIC_SITE_URL`: `https://your-domain.com`
+5. Click **Deploy**.
+
+### Option 2: Deploy via Vercel CLI
+
+```bash
+# Install Vercel CLI globally
+npm i -g vercel
+
+# Deploy to preview environment
+vercel
+
+# Deploy to production environment
+vercel --prod
+```
+
 ---
 
 *Designed and engineered to bring energy right to your fingertips.*
+
